@@ -1,3 +1,3 @@
-import authProvider, { auth } from "@/auth";
+import authProvider from "@/auth";
 
 export default authProvider;

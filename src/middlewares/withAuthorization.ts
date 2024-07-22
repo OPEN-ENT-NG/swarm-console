@@ -1,14 +1,16 @@
-import type { NextMiddleware, NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import type { JWT } from "next-auth/jwt";
 import { getToken } from "next-auth/jwt";
+import { getCsrfToken } from "next-auth/react";
+
+import type { NextMiddleware, NextRequest } from "next/server";
+import type { JWT } from "next-auth/jwt";
+import type { BuiltInProviderType, RedirectableProviderType } from "next-auth/providers/index";
+import type { LiteralUnion } from "next-auth/react";
 import type {
   NextAuthMiddlewareOptions,
-  NextMiddlewareWithAuth, WithAuthArgs,
+  NextMiddlewareWithAuth,
+  WithAuthArgs,
 } from "next-auth/middleware";
-import type { BuiltInProviderType, RedirectableProviderType } from "next-auth/providers";
-import { getCsrfToken } from "next-auth/react";
-import type { LiteralUnion } from "next-auth/react";
 
 async function hash(value: string): Promise<string> {
   const encoder = new TextEncoder();
