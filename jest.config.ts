@@ -15,7 +15,10 @@ const config: Config = {
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   moduleNameMapper: {
     "^@/(./*)$": "<rootDir>/src/$1"
-  }
+  },
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  coverageReporters: ['cobertura', 'lcov'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

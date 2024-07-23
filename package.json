@@ -2,6 +2,9 @@
   "name": "swarm-console",
   "version": "1.0-SNAPSHOT",
   "private": true,
+  "docker": {
+    "group": "app-swarm"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

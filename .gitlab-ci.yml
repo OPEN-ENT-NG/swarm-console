@@ -1,0 +1,2 @@
+include:
+  - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-default-ci@1.6.0
