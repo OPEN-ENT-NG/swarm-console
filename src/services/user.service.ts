@@ -2,7 +2,9 @@ import { getServerSession } from "next-auth"
 
 import { authOptions } from "@/auth.config"
 
-const me = async () => {
+import type { User } from '@/types'
+
+const me = async (): Promise<User> => {
   const session: any = await getServerSession(authOptions)
   console.log(session.token)
   const res = await fetch(`${process.env.API_SERVER}/users/me`, {
