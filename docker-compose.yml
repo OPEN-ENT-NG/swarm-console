@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    image: "swarm-console:1.0.0"
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    container_name: swarm-console
+    network_mode: host
+    volumes:
+      - ./:/app
+      - ~/.pnpm:/.pnpm
+      - ~/.npm:/.npm
+      - ~/.cache:/.cache

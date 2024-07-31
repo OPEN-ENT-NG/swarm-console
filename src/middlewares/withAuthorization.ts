@@ -33,7 +33,7 @@ async function handleMiddleware(
 
   options.trustHost ??= !!(
     process.env.NEXTAUTH_URL ??
-    process.env.VERCEL ??
+    // process.env.VERCEL ??
     process.env.AUTH_TRUST_HOST
   );
 
@@ -68,30 +68,33 @@ async function handleMiddleware(
   const csrfTokenHash = cookieCsrfToken?.split("|")?.[1] ?? (await hash(`${csrfToken}${options.secret}`));
   const cookie = `${csrfToken}|${csrfTokenHash}`;
 
-  const res = await fetch(`${host}/api/auth/signin/${options.provider ?? ''}`, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "X-Auth-Return-Redirect": "1",
-      cookie: `next-auth.csrf-token=${cookie}`,
-    },
-    credentials: "include",
-    redirect: "follow",
-    body: new URLSearchParams({
-      csrfToken,
-      // Modified from the original middleware as redirect did not seem to work for me with req.url
-      callbackUrl: req.nextUrl.pathname,
-      json: "true",
-    }),
-  });
+  try {
+    const res = await fetch(`${host}/api/auth/signin/${options.provider ?? ''}`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-Auth-Return-Redirect": "1",
+        cookie: `next-auth.csrf-token=${cookie}`,
+      },
+      credentials: "include",
+      redirect: "follow",
+      body: new URLSearchParams({
+        csrfToken,
+        // Modified from the original middleware as redirect did not seem to work for me with req.url
+        callbackUrl: req.nextUrl.pathname,
+        json: "true",
+      }),
+    });
+    const data = (await res.json()) as { url: string };
 
-  const data = (await res.json()) as { url: string };
-
-  return NextResponse.redirect(data.url, {
-    headers: {
-      "Set-Cookie": res.headers.get("set-cookie") ?? ""
-    },
-  });
+    return NextResponse.redirect(data.url, {
+      headers: {
+        "Set-Cookie": res.headers.get("set-cookie") ?? ""
+      },
+    });
+  } catch(error) {
+    console.error('Fetch error:', error);
+  }
 }
 
 export declare type WithAuthProviderArgs = [
