@@ -1,0 +1,13 @@
+*.json# Ignore everything
+*
+
+# But not the src directory
+!src
+!src/**/*
+
+# Ignore JSON files everywhere, including in src
+**/*.json
+
+# Optionally, ignore other specific files or directories in src if needed
+# src/generated/**/*
+# src/assets/**/*

@@ -1,6 +1,13 @@
 /** @type {import('next').NextConfig} */
+// import nextI18NextConfig from "./next-i18next.config.js"
 const nextConfig = {
-  output: 'standalone'
+  // i18n: nextI18NextConfig.i18n,
+  output: 'standalone',
+  logging: {
+    fetches: {
+      fullUrl: process.env.DEBUG === 'true',
+    },
+  },
 };
 
 export default nextConfig;

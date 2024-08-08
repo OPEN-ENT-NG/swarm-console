@@ -1,22 +1,17 @@
-import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-
-import type { NextMiddleware, NextRequest } from "next/server";
 import type { JWT } from "next-auth/jwt";
+import type { NextAuthMiddlewareOptions, NextMiddlewareWithAuth, WithAuthArgs } from "next-auth/middleware";
 import type { BuiltInProviderType, RedirectableProviderType } from "next-auth/providers/index";
 import type { LiteralUnion } from "next-auth/react";
-import type {
-  NextAuthMiddlewareOptions,
-  NextMiddlewareWithAuth,
-  WithAuthArgs,
-} from "next-auth/middleware";
+import { NextResponse } from "next/server";
+import type { NextMiddleware, NextRequest } from "next/server";
 
 async function hash(value: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(value);
   const hash = await crypto.subtle.digest("SHA-256", data);
   const hashArray = Array.from(new Uint8Array(hash));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
 interface AuthMiddlewareOptions extends NextAuthMiddlewareOptions {
@@ -25,8 +20,8 @@ interface AuthMiddlewareOptions extends NextAuthMiddlewareOptions {
 
 async function handleMiddleware(
   req: NextRequest,
-  options: AuthMiddlewareOptions & { provider?: string } | undefined = {},
-  onSuccess?: (token: JWT | null) => ReturnType<NextMiddleware>
+  options: (AuthMiddlewareOptions & { provider?: string }) | undefined = {},
+  onSuccess?: (token: JWT | null) => ReturnType<NextMiddleware>,
 ) {
   const { origin, basePath } = req.nextUrl;
   const errorPage = options?.pages?.error ?? "/api/auth/error";
@@ -41,10 +36,7 @@ async function handleMiddleware(
 
   options.secret ??= process.env.NEXTAUTH_SECRET;
   if (!options.secret) {
-    console.error(
-      `[next-auth][error][NO_SECRET]`,
-      `\nhttps://next-auth.js.org/errors#no_secret`
-    );
+    console.error(`[next-auth][error][NO_SECRET]`, `\nhttps://next-auth.js.org/errors#no_secret`);
 
     const errorUrl = new URL(`${basePath}${errorPage}`, origin);
     errorUrl.searchParams.append("error", "Configuration");
@@ -69,7 +61,7 @@ async function handleMiddleware(
   const cookie = `${csrfToken}|${csrfTokenHash}`;
 
   try {
-    const res = await fetch(`${host}/api/auth/signin/${options.provider ?? ''}`, {
+    const res = await fetch(`${host}/api/auth/signin/${options.provider ?? ""}`, {
       method: "post",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -89,42 +81,46 @@ async function handleMiddleware(
 
     return NextResponse.redirect(data.url, {
       headers: {
-        "Set-Cookie": res.headers.get("set-cookie") ?? ""
+        "Set-Cookie": res.headers.get("set-cookie") ?? "",
       },
     });
-  } catch(error) {
-    console.error('Fetch error:', error);
+  } catch (error) {
+    console.error("Fetch error:", error);
   }
 }
 
 export declare type WithAuthProviderArgs = [
-  ...WithAuthArgs & [
-    {
-      provider: LiteralUnion<RedirectableProviderType | BuiltInProviderType>
-    }
-  ]
+  ...(WithAuthArgs &
+    [
+      {
+        provider: LiteralUnion<RedirectableProviderType | BuiltInProviderType>;
+      },
+    ]),
 ];
 
 export function withAuth(...args: WithAuthProviderArgs) {
-
   if (!args.length || args[0] instanceof Request) {
     return handleMiddleware(...(args as Parameters<typeof handleMiddleware>));
   }
 
   if (typeof args[0] === "function") {
-    const middleware = args[0];
+    const middleware = args[0] as NextMiddlewareWithAuth;
     const options = args[1] as NextAuthMiddlewareOptions | undefined;
     return async (...args: Parameters<NextMiddlewareWithAuth>) =>
-      await handleMiddleware(args[0], options, async (token) => {
+      await handleMiddleware(args[0], options, async token => {
         args[0].nextauth = { token };
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return await middleware(...args);
       });
   }
 
-  const options = args[0];
+  const options: AuthMiddlewareOptions = args[0] as AuthMiddlewareOptions;
   return async (...args: Parameters<NextMiddleware>) => await handleMiddleware(args[0], options);
 }
 
-export function withAuthProvider(provider: LiteralUnion<RedirectableProviderType | BuiltInProviderType>, ...args: WithAuthArgs) {
+export function withAuthProvider(
+  provider: LiteralUnion<RedirectableProviderType | BuiltInProviderType>,
+  ...args: WithAuthArgs
+) {
   return withAuth({ ...args, provider });
 }

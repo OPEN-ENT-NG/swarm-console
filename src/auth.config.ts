@@ -1,29 +1,29 @@
-import KeycloakProvider from 'next-auth/providers/keycloak'
+import { NextAuthOptions } from "next-auth";
+import KeycloakProvider from "next-auth/providers/keycloak";
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     KeycloakProvider({
-      clientId: process.env.KEYCLOAK_ID || '',
-      clientSecret: process.env.KEYCLOAK_SECRET || '',
-      issuer: process.env.KEYCLOAK_ISSUER
-    })
+      clientId: process.env.KEYCLOAK_ID || "",
+      clientSecret: process.env.KEYCLOAK_SECRET || "",
+      issuer: process.env.KEYCLOAK_ISSUER,
+    }),
   ],
   pages: {
-    signIn: '/'
+    signIn: "/auth",
   },
   callbacks: {
-    async jwt({ token, account, profile }: any) {
+    jwt({ token, account, user }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account && account.access_token) {
-        token.accessToken = account.access_token
-        token.id = profile.id
+      if (account?.access_token) {
+        token.accessToken = account.access_token;
+        token.id = user.id;
       }
-
-      return token
+      return token;
     },
-    session: async ({ session, token, user }: any) => {
+    session: ({ session, token }) => {
       // If we want to make the accessToken available in components, then we have to explicitly forward it here.
-      return { ...session, token: token.accessToken }
+      return { ...session, token: token.accessToken };
     },
-  }
-}
+  },
+};

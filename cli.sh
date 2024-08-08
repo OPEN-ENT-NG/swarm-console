@@ -23,7 +23,12 @@ case `uname -s` in
 esac
 
 clear () {
-  docker-compose down ; sudo rm -rf node_modules ; docker rmi swarm-console:1.0.0
+  docker-compose down; 
+  sudo rm -rf node_modules;
+  sudo rm -rf .pnpm-store;
+  sudo rm -rf .next;
+  sudo rm -rf coverage;
+  docker rmi swarm-console:1.0.0;
 }
 
 install () {
@@ -44,6 +49,10 @@ start() {
 
 test() {
   docker-compose run --rm -u "$USER_UID:$GROUP_GID" app pnpm run test
+}
+
+testWatch() {
+  docker-compose run --rm -u "$USER_UID:$GROUP_GID" app pnpm run test:watch
 }
 
 lint() {
@@ -74,6 +83,9 @@ do
       ;;
     test)
       test
+      ;;
+    testWatch)
+      testWatch
       ;;
     lint)
       lint
