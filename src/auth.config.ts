@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+coimport { NextAuthOptions } from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 
 export const authOptions: NextAuthOptions = {
@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth",
+    signIn: process.env.AUTH_PAGE || "/auth",
   },
   callbacks: {
     jwt({ token, account, user }) {
