@@ -1,4 +1,4 @@
-coimport { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import KeycloakProvider from "next-auth/providers/keycloak";
 
 export const authOptions: NextAuthOptions = {
