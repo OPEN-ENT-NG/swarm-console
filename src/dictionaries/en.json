@@ -1,3 +1,5 @@
 {
-    "title": "Ferme wordpress: console de gestion."
+    "title": "Server farm",
+    "swarm.empty.services":"You haven't created any services yet. Create WordPress or Prestashop sites, then distribute them.",
+    "swarm.create.service":"Create services"
 }

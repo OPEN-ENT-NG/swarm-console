@@ -3,12 +3,12 @@ import { screen, waitFor } from "@testing-library/react";
 import { setupServer } from "msw/node";
 
 import { ServiceList } from "@/components/ServicesList";
-import { handlers } from "@/test/handlers";
+import { createHandlers } from "@/test/handlers";
 import { renderWithProviders } from "@/test/testUtils";
 
-import { servicesMock } from "./mocks/servicesMock";
+import { servicesMock } from "../../../test/mocks/servicesMock";
 
-const server = setupServer(...handlers);
+const server = setupServer(...createHandlers());
 
 beforeAll(() => server.listen());
 
@@ -22,6 +22,7 @@ describe("ServiceList component", () => {
     const component = screen.getByTestId("service-list-component");
     expect(component).toBeInTheDocument();
   });
+
   it("renders services from mocked API", async () => {
     renderWithProviders(<ServiceList />);
     await screen.findByTestId("service-list-component");

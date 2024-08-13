@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 
-import { ServiceList } from "@/components/ServicesList";
-import { TabList } from "@/components/TabList";
+import { HomePage } from "@/containers/HomePage";
 import { METATITLE } from "@/core/const";
 
 export const metadata: Metadata = {
@@ -9,10 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <main>
-      <TabList />
-      <ServiceList />
-    </main>
-  );
+  return <HomePage />;
 }

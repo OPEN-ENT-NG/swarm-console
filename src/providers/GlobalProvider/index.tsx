@@ -17,8 +17,9 @@ export const useGlobalProvider = () => {
 
 export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) => {
   const [user] = useState<UserState>(prepareUser(session));
-  const [services, setServices] = useState<ServicesState>(null);
   const { data: servicesData } = useGetServicesQuery();
+  const [services, setServices] = useState<ServicesState>(null);
+
   useEffect(() => {
     if (servicesData) setServices(servicesData);
   }, [servicesData]);

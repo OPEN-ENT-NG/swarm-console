@@ -10,14 +10,12 @@ const tabsData: string[] = ["Tableau des sites", "Statistiques", "Paramètres"];
 describe("TabList component", () => {
   it("renders without crashing", () => {
     render(<TabList />);
-    screen.debug();
     const component = screen.getByTestId("tab-list-component");
     expect(component).toBeInTheDocument();
   });
 
   it("renders 2 tabs", () => {
     render(<TabList />);
-    screen.debug();
     expect(tabs).toHaveLength(tabsData.length);
     tabs.map(tab => {
       const currentTab = screen.getByTestId(`tab-${tab}`);

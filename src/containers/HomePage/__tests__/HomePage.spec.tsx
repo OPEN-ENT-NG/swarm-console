@@ -1,0 +1,56 @@
+import "@testing-library/jest-dom";
+import { screen, waitFor } from "@testing-library/react";
+import { setupServer } from "msw/node";
+import React from "react";
+
+import { api } from "@/services/api";
+import { store } from "@/stores/store";
+import { createHandlers } from "@/test/handlers";
+import { renderWithProviders } from "@/test/testUtils";
+
+import { HomePage } from "..";
+
+jest.mock("@/containers/MainView", () => ({
+  MainView: () => <div data-testid="main-view">Main View</div>,
+}));
+jest.mock("@/containers/NoServicesView", () => ({
+  NoServicesView: () => <div data-testid="no-services-view">No Services View</div>,
+}));
+
+describe("HomePage Component", () => {
+  const server = setupServer();
+
+  beforeAll(() => server.listen());
+  afterEach(() => {
+    server.resetHandlers();
+    jest.clearAllMocks();
+  });
+  afterAll(() => server.close());
+
+  it("display MainView when services", async () => {
+    server.use(
+      ...createHandlers({
+        services: [{ id: 1, name: "Service 1" }],
+      }),
+    );
+    renderWithProviders(<HomePage />);
+    await waitFor(() => {
+      expect(screen.getByTestId("main-view")).toBeInTheDocument();
+      expect(screen.queryByTestId("no-services-view")).not.toBeInTheDocument();
+    });
+  });
+
+  it("display NoServicesView when no services", async () => {
+    server.use(
+      ...createHandlers({
+        services: [],
+      }),
+    );
+    store.dispatch(api.util.invalidateTags(["Services"]));
+    renderWithProviders(<HomePage />);
+    await waitFor(() => {
+      expect(screen.getByTestId("no-services-view")).toBeInTheDocument();
+      expect(screen.queryByTestId("main-view")).not.toBeInTheDocument();
+    });
+  });
+});

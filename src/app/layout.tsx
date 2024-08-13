@@ -6,8 +6,6 @@ import { authOptions } from "@/auth.config";
 import { ClientLayout } from "@/layouts/ClientLayout";
 import { Session } from "@/types";
 
-import "../core/style/globals.css";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default async function RootLayout({

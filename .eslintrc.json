@@ -19,6 +19,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "ignorePatterns": ["src/test/mocks/@cgi-learning-hub/ui.ts"],
   // all plugins (eslint-plugin-xxx) go here:
   "plugins": [
     "@typescript-eslint",

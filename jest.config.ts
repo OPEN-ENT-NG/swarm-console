@@ -14,7 +14,8 @@ const config: Config = {
   coverageDirectory: "coverage",
   coverageReporters: ['cobertura', 'lcov'],
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1"
+    "^@/(.*)$": "<rootDir>/src/$1",
+    '@cgi-learning-hub/ui': '<rootDir>/src/test/mocks/@cgi-learning-hub/ui.ts',
   },
   setupFiles: ['./jest/jest.polyfills.ts', './jest/jest.setup.tsx'],
   testEnvironmentOptions: {
