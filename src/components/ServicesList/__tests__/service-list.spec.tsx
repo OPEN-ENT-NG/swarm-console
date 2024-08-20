@@ -6,7 +6,7 @@ import { ServiceList } from "@/components/ServicesList";
 import { createHandlers } from "@/test/handlers";
 import { renderWithProviders } from "@/test/testUtils";
 
-import { servicesMock } from "../../../test/mocks/servicesMock";
+import { servicesMock } from "../../../test/mocks/datasMock";
 
 const server = setupServer(...createHandlers());
 

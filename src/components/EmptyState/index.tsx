@@ -9,7 +9,7 @@ export const EmptyState: FC<EmptyStateProps> = ({ imageOrSVG, text }) => (
     <ST.ImgWrapper>
       {typeof imageOrSVG === "string" ? <ST.Img src={imageOrSVG} /> : <imageOrSVG.component {...imageOrSVG.props} />}
     </ST.ImgWrapper>
-    <Typography fontSize="fontSize.body1" color="text.primary" textAlign="center">
+    <Typography variant="body1" textAlign="center">
       {text}
     </Typography>
   </ST.EmptyStateWrapper>

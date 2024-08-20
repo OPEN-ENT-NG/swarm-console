@@ -1,5 +1,19 @@
 {
     "title": "Server farm",
     "swarm.empty.services":"You haven't created any services yet. Create WordPress or Prestashop sites, then distribute them.",
-    "swarm.create.service":"Create services"
+    "swarm.create.service.button":"Create services",
+    "swarm.create.service.title":"Services creation",
+    "swarm.create.service.modal.desc":"Each user can have a maximum of one WordPress service and one PrestaShop service. If one of the services already exists, it will not be recreated.",
+    "swarm.create.service.modal.user.selection":"Users selection",
+    "swarm.create.service.modal.search.input.placeHolder":"Search by first name, last name, class, or group",
+    "swarm.create.service.modal.search.user.empty":"No user, class, or group selected",
+    "swarm.create.service.modal.search.user.filter.empty":"No result",
+    "swarm.create.service.modal.search.user.expand":"See more...",
+    "swarm.create.service.modal.params.title":"Services settings",
+    "swarm.create.service.modal.supress.label":"Deletion date * :",
+    "swarm.create.service.modal.creation.in.progress":"Services currently being created...",
+    "swarm.create":"Create",
+    "swarm.cancel": "Cancel",
+    "swarm.wordpress.title":"Wordpress",
+    "swarm.prestashop.title":"PrestaShop"
 }

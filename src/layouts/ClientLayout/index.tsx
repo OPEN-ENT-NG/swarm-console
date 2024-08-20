@@ -2,9 +2,13 @@
 
 import { Loader } from "@cgi-learning-hub/ui";
 import { CssBaseline, ThemeProvider } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { FC, useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import theme from "@/core/style/theme";
 import { getI18nProvider } from "@/i18n";
@@ -41,9 +45,23 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <ST.ClientLayoutWrapper>
-            <GlobalProvider session={session}>{children}</GlobalProvider>
-          </ST.ClientLayoutWrapper>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ST.ClientLayoutWrapper>
+              <GlobalProvider session={session}>{children}</GlobalProvider>
+              <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </ST.ClientLayoutWrapper>
+          </LocalizationProvider>
         </ThemeProvider>
       </Provider>
     </I18nextProvider>

@@ -2,7 +2,7 @@ import { HttpResponse, http } from "msw";
 
 import { Service } from "@/types";
 
-import { servicesMock } from "./mocks/servicesMock";
+import { servicesMock } from "./mocks/datasMock";
 
 type MocksConfig = {
   services?: Service[];

@@ -1,5 +1,20 @@
 {
     "swarm.title": "Ferme de serveurs",
     "swarm.empty.services":"Vous n’avez pas encore créé de services. Créez des sites Wordpress ou Prestashop puis distribuez-les.",
-    "swarm.create.service":"Créer des services"
+    "swarm.create.service.button":"Créer des services",
+    "swarm.create.service.modal.title":"Création de services",
+    "swarm.create.service.modal.desc":"Chaque utilisateur peut posséder au maximum un service Wordpress et un service PrestaShop. Si un des services est déjà existant, il ne sera pas recréé.",
+    "swarm.create.service.modal.user.selection":"Sélection des utilisateurs",
+    "swarm.create.service.modal.search.input.placeHolder":"Rechercher par prénom, nom, classe ou groupe",
+    "swarm.create.service.modal.search.user.empty":"Aucun utilisateur, classe, groupe sélectionné",
+    "swarm.create.service.modal.search.user.filter.empty":"Aucun résultat",
+    "swarm.create.service.modal.search.user.expand":"Voir plus...",
+    "swarm.create.service.modal.params.title":"Paramètre des services",
+    "swarm.create.service.modal.supress.label":"Date de suppression * :",
+    "swarm.create.service.modal.creation.in.progress":"Services en cours de création...",
+    "swarm.create":"Créer",
+    "swarm.cancel": "Annuler",
+    "swarm.wordpress.title":"Wordpress",
+    "swarm.prestashop.title":"PrestaShop"
+    
 }

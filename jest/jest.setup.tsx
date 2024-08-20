@@ -20,14 +20,12 @@ jest.mock('react-i18next', () => ({
         init: () => { },
     }
 }));
-
 // jest.spyOn(i18nModule, 'getI18nProvider').mockReturnValue(provider)
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock('@/i18n', () => ({
     ...(jest.requireActual('@/i18n')),
     getI18nProvider: () => provider
 }));
-
 
 // jest.mock("@emotion/styled", function () {
 //     return function () {

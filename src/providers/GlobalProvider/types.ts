@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { Service, Session } from "@/types";
 
@@ -13,7 +13,13 @@ export interface UserState {
 }
 export type ServicesState = Service[] | null;
 
+export interface DisplayModalsState {
+  createServices: boolean;
+}
+
 export type GlobalProviderContextType = {
   services: ServicesState;
   user: UserState;
+  displayModals: DisplayModalsState;
+  setDisplayModals: Dispatch<SetStateAction<DisplayModalsState>>;
 };

@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { Typography } from "@mui/material";
+import { SvgIconComponent } from "@mui/icons-material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import path from "path";
 import { FC } from "react";
 
@@ -24,12 +25,19 @@ const Ht: HtFunction = function () {
 };
 
 const Loader: FC<LoaderProps> = actualModule.Loader || jest.fn(() => "Mocked Loader");
+const TextInput = TextField;
+
+const CloseIcon: SvgIconComponent = jest.fn(() => "Mocked CloseIcon");
 
 const mockedModule = {
   ...actualModule,
   Ht,
   Loader,
   Typography,
+  Box,
+  Button,
+  TextInput,
+  CloseIcon,
 };
 
 export = mockedModule;

@@ -4,7 +4,7 @@ import React from "react";
 
 import { EmptyState } from "@/components/EmptyState";
 import { EmptyStateIcon } from "@/components/SVG/EmptyStateIcon";
-import { renderWithTheme } from "@/test/testUtils";
+import { renderWithProviders } from "@/test/testUtils";
 
 import { NoServicesView } from "..";
 
@@ -18,7 +18,7 @@ jest.mock("@/components/SVG/EmptyStateIcon", () => ({
 
 describe("NoServicesView Component", () => {
   it("renders correctly", () => {
-    renderWithTheme(<NoServicesView />);
+    renderWithProviders(<NoServicesView />);
     expect(screen.getByTestId("no-services-view-wrapper")).toBeInTheDocument();
     expect(EmptyState).toHaveBeenCalledWith(
       {
