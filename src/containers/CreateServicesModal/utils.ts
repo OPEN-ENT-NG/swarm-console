@@ -14,3 +14,7 @@ export const serviceMapping: ServiceMap[] = [
   { name: "wordpress", label: "swarm.wordpress.title", icon: WordPressIcon },
   { name: "prestashop", label: "swarm.prestashop.title", icon: PrestashopIcon },
 ];
+
+export const isButtonDisabled = (state: InputValueState): boolean => {
+  return state.usersAndGroups.length === 0 || (!state.wordpress && !state.prestashop) || state.supressDate === null;
+};

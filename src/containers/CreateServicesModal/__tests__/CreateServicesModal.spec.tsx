@@ -52,21 +52,31 @@ describe("CreateServicesModal Component", () => {
     });
   });
 
-  it("resets input on submit", async () => {
-    renderWithProviders(<CreateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const submitButton = screen.getByText("swarm.create");
+  it("Disable the submit button when the conditions are not met and enable it when they are", async () => {
+    renderWithProviders(<CreateServicesModal isOpen={true} handleClose={jest.fn()} />);
+    const submitButton = screen.getByTestId("create-services-submit");
     const wordpressCheckbox = screen.getByTestId("wordpress");
-
+    const userInput = screen.getByPlaceholderText("swarm.create.service.modal.search.input.placeHolder");
+    const datePicker = screen.getByPlaceholderText("--/--/----");
+    expect(submitButton).toBeDisabled();
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).toBeChecked();
     });
-
-    fireEvent.click(submitButton);
-
+    expect(submitButton).toBeDisabled();
+    fireEvent.change(userInput, { target: { value: "John" } });
+    const userOption = await screen.findByText("John Doe");
+    fireEvent.click(userOption);
+    expect(submitButton).toBeDisabled();
+    fireEvent.change(datePicker, { target: { value: "15/05/2023" } });
+    await waitFor(() => {
+      expect(submitButton).toBeEnabled();
+    });
+    fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).not.toBeChecked();
     });
+    expect(submitButton).toBeDisabled();
   });
 
   it("resets input on cancel", async () => {

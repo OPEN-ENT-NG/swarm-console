@@ -24,7 +24,7 @@ import {
   supressDateWrapperStyle,
 } from "./style";
 import { CreateServicesModalProps, InputValueState } from "./types";
-import { initialInputValue, serviceMapping } from "./utils";
+import { initialInputValue, isButtonDisabled, serviceMapping } from "./utils";
 
 export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
@@ -164,7 +164,12 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
             </Button>
           </Box>
           <Box sx={{ width: "6.6rem" }}>
-            <Button variant="contained" data-testid="create-services-submit" onClick={handleSubmit} fullWidth>
+            <Button
+              disabled={isButtonDisabled(inputValue)}
+              variant="contained"
+              data-testid="create-services-submit"
+              onClick={handleSubmit}
+              fullWidth>
               {t("swarm.create")}
             </Button>
           </Box>
