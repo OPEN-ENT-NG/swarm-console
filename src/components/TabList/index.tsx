@@ -1,24 +1,35 @@
 "use client";
 
 import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
-import { FC, SyntheticEvent, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { FC, SyntheticEvent } from "react";
+
+import { useGlobalProvider } from "@/providers/GlobalProvider";
+import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/types";
+
+import { StyledTab } from "./style";
+import { useTabs } from "./utils";
 
 export const TabList: FC = () => {
-  const { t } = useTranslation();
-  const [value, setValue] = useState(0);
-  const tabs = ["Tableau des sites", "Statistiques", "Paramètres"];
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+  const { currentTab, setCurrentTab } = useGlobalProvider();
+
+  const handleChange = (event: SyntheticEvent, newValue: CURRENTTAB_STATE) => {
+    setCurrentTab(newValue);
   };
 
+  const tabs = useTabs();
+
   return (
-    <Box data-testid="tab-list-component" sx={{ borderBottom: 1, borderColor: "divider" }}>
-      <div>{t("title")}</div>
-      <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-        {tabs?.map(label => <Tab key={label} label={label} data-testid={`tab-${label}`} />)}
+    <Box data-testid="tab-list-component">
+      <Tabs value={currentTab} onChange={handleChange} aria-label="basic tabs example">
+        {tabs.map(item => (
+          <StyledTab
+            key={item.tabValue}
+            label={item.label}
+            value={item.tabValue}
+            data-testid={`tab-${item.tabValue}`}
+          />
+        ))}
       </Tabs>
     </Box>
   );

@@ -12,8 +12,22 @@
     "swarm.create.service.modal.params.title":"Services settings",
     "swarm.create.service.modal.supress.label":"Deletion date * :",
     "swarm.create.service.modal.creation.in.progress":"Services currently being created...",
+    "swarm.status.active":"Active",
+    "swarm.status.inactive":"Inactive",
+    "swarm.status.waiting":"In creation",
     "swarm.create":"Create",
     "swarm.cancel": "Cancel",
     "swarm.wordpress.title":"Wordpress",
-    "swarm.prestashop.title":"PrestaShop"
+    "swarm.prestashop.title":"PrestaShop",
+    "swarm.tab.main": "Services table",
+    "swarm.tab.stats": "Statistics",
+    "swarm.table.column.name": "Firstname, Lastname",
+    "swarm.table.column.class": "Class",
+    "swarm.table.column.etab": "Institution",
+    "swarm.table.column.services": "Services",
+    "swarm.table.column.status": "Services state",
+    "swarm.table.column.supressDate": "Deletion date",
+    "swarm.table.view.title":"Table of services created by students",
+    "swarm.table.view.search.input.placeHolder": "First name, Last name",
+    "swarm.table.view.search.input.empty": "No results"
 }

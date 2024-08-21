@@ -21,6 +21,23 @@
   }
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+  width: fit-content;
+  display: inline-block;
+  outline: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:focus {
+  outline: none;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: #f9f9f9;

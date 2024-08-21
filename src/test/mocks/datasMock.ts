@@ -1,13 +1,22 @@
-import { Service, UsersAndGroups } from "@/types";
+import { SERVICE_STATUS, SERVICE_TYPE, Service } from "@/providers/GlobalProvider/types";
+import { UsersAndGroups } from "@/types";
 
 export const servicesMock: Service[] = [
   {
+    type: SERVICE_TYPE.PRESTASHOP,
+    status: SERVICE_STATUS.ACTIVE,
     id: 1,
-    name: "wordpress",
+    userId: "USER1001",
+    url: "https://boutiquemarie.com",
+    supressDate: "2025-12-31",
   },
   {
+    type: SERVICE_TYPE.WORDPRESS,
+    status: SERVICE_STATUS.INACTIVE,
     id: 2,
-    name: "prestashop",
+    userId: "USER1002",
+    url: "https://blogpierre.com",
+    supressDate: "2023-10-15",
   },
 ];
 

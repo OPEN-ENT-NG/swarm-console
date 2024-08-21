@@ -25,6 +25,7 @@ const theme = createTheme({
       fontWeight: "bold",
     },
     h2: {
+      fontWeight: "bold",
       fontSize: "1.1rem",
       color: "#000000",
     },
@@ -91,6 +92,62 @@ const theme = createTheme({
           "&:hover": {
             color: "#FFFFFF",
           },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          color: "#000000",
+          fontWeight: "500",
+          textAlign: "center",
+          textWrap: "nowrap",
+          textOverflow: "ellipsis",
+        },
+        head: {
+          backgroundColor: "#EDEDED",
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#EDEDED",
+        },
+      },
+    },
+    MuiTableSortLabel: {
+      styleOverrides: {
+        root: {
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          "&:hover": {
+            color: "inherit",
+          },
+          "&.Mui-active": {
+            color: "inherit",
+          },
+          "& .MuiTableSortLabel-icon": {
+            opacity: 0,
+            marginLeft: "4px",
+            transition: "opacity 200ms ease-in-out, transform 200ms ease-in-out",
+          },
+          "&.Mui-active, &:hover": {
+            "& .MuiTableSortLabel-icon": {
+              opacity: 1,
+            },
+          },
+        },
+        icon: {
+          transition: "transform 200ms ease-in-out",
+        },
+        iconDirectionDesc: {
+          transform: "rotate(0deg)",
+        },
+        iconDirectionAsc: {
+          transform: "rotate(180deg)",
         },
       },
     },

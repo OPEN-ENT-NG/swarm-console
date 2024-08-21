@@ -39,3 +39,9 @@ export const centerBoxStyle = {
   alignItems: "center",
   justifyContent: "center",
 };
+
+export const columnBoxStyle = {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+};
