@@ -15,6 +15,7 @@ import { CreateServicesModal } from "../CreateServicesModal";
 import { DeleteServicesModal } from "../DeleteServicesModal";
 import { SendServicesModal } from "../SendServicesModal";
 import { ServiceTable } from "../ServiceTable";
+import { ToggleStatusServicesModal } from "../ToggleStatusServicesModal";
 import {
   buttonWrapperStyle,
   filtersAndButtonsWrapperStyle,
@@ -27,7 +28,7 @@ import { useCreatedropDownListItems } from "./utils";
 export const TableView: FC = () => {
   const { t } = useTranslation();
   const {
-    displayModals: { createServices, deleteServices, sendServices },
+    displayModals: { createServices, deleteServices, sendServices, toggleStatusServices },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
@@ -98,7 +99,10 @@ export const TableView: FC = () => {
         <Box sx={buttonWrapperStyle}>
           {!!tableSelected.length && (
             <>
-              <Button variant="outlined" data-testid="create-services-button" onClick={() => null}>
+              <Button
+                variant="outlined"
+                data-testid="toggle-status-services-button"
+                onClick={() => handleDisplayModal(MODAL_TYPE.TOGGLE_STATUS)}>
                 {t("swarm.button.activate")}
               </Button>
               <DropdownList
@@ -129,6 +133,10 @@ export const TableView: FC = () => {
       <CreateServicesModal isOpen={createServices} handleClose={() => handleDisplayModal(MODAL_TYPE.CREATE)} />
       <DeleteServicesModal isOpen={deleteServices} handleClose={() => handleDisplayModal(MODAL_TYPE.DELETE)} />
       <SendServicesModal isOpen={sendServices} handleClose={() => handleDisplayModal(MODAL_TYPE.SEND)} />
+      <ToggleStatusServicesModal
+        isOpen={toggleStatusServices}
+        handleClose={() => handleDisplayModal(MODAL_TYPE.TOGGLE_STATUS)}
+      />
     </Box>
   );
 };

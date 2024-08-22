@@ -32,4 +32,5 @@ export enum MODAL_TYPE {
   DELETE = "deleteServices",
   CONFIRMATION = "confirmation",
   SEND = "sendServices",
+  TOGGLE_STATUS = "toggleStatusServices",
 }

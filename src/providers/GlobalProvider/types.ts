@@ -20,6 +20,7 @@ export interface DisplayModalsState {
   [MODAL_TYPE.DELETE]: boolean;
   [MODAL_TYPE.CONFIRMATION]: boolean;
   [MODAL_TYPE.SEND]: boolean;
+  [MODAL_TYPE.TOGGLE_STATUS]: boolean;
 }
 
 export type Service = {

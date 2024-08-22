@@ -9,6 +9,7 @@ import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { UserSelectionSection } from "@/components/UserSelectionSection";
 import { UserSelectionSectionRef } from "@/components/UserSelectionSection/types";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
+import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { usersAndGroupListData } from "@/test/mocks/datasMock";
 import { ModalProps, OnChange, UsersAndGroups } from "@/types";
@@ -167,12 +168,12 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
-          <Box sx={{ width: "6.6rem" }}>
+          <Box sx={defaultWidthButtonWrapper}>
             <Button variant="outlined" data-testid="create-services-cancel" onClick={handleCancel} fullWidth>
               {t("swarm.cancel")}
             </Button>
           </Box>
-          <Box sx={{ width: "6.6rem" }}>
+          <Box sx={defaultWidthButtonWrapper}>
             <Button
               disabled={isButtonDisabled(inputValue)}
               variant="contained"

@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
+import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { ModalProps, OnChange } from "@/types";
@@ -105,12 +106,12 @@ export const SendServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
           ))}
         </Stack>
         <Box sx={actionButtonsBoxStyle}>
-          <Box sx={{ width: "6.6rem" }}>
+          <Box sx={defaultWidthButtonWrapper}>
             <Button variant="outlined" data-testid="create-services-cancel" onClick={handleCancel} fullWidth>
               {t("swarm.cancel")}
             </Button>
           </Box>
-          <Box sx={{ width: "6.6rem" }}>
+          <Box sx={defaultWidthButtonWrapper}>
             <Button
               disabled={isButtonDisabled(inputValue)}
               variant="contained"

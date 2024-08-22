@@ -10,6 +10,7 @@ export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.DELETE]: false,
   [MODAL_TYPE.CONFIRMATION]: false,
   [MODAL_TYPE.SEND]: false,
+  [MODAL_TYPE.TOGGLE_STATUS]: false,
 };
 
 export const initialCurrentTab: CURRENTTAB_STATE = CURRENTTAB_STATE.MAIN;
