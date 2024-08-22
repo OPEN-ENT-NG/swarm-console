@@ -11,5 +11,10 @@ export type UsersAndGroups = {
   type: "user" | "group" | "class";
 };
 
+export interface ModalProps {
+  isOpen: boolean;
+  handleClose: () => void;
+}
+
 export type OnChange = ChangeEventHandler<HTMLInputElement>;
 export type OnClickButton = MouseEventHandler<HTMLButtonElement>;

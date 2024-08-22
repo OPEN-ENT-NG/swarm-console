@@ -1,4 +1,5 @@
-import { RowItem, SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/types";
+import { SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { RowItem } from "@/providers/GlobalProvider/types";
 
 export const itemRowsMock: RowItem[] = [
   {

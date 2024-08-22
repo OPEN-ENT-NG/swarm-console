@@ -12,6 +12,10 @@
     "swarm.create.service.modal.params.title":"Paramètre des services",
     "swarm.create.service.modal.supress.label":"Date de suppression * :",
     "swarm.create.service.modal.creation.in.progress":"Services en cours de création...",
+    "swarm.delete.service.modal.title":"Supprimer les services",
+    "swarm.delete.service.modal.desc":"Supprimer les services sélectionnés",
+    "swarm.confirmation.modal.default":"Cette action est irréversible",
+    "swarm.modal.users.selected":"{{count}} utilisateurs sélectionnés",
     "swarm.status.active":"Actif",
     "swarm.status.inactive":"Inactif",
     "swarm.status.waiting":"En cours de création",
@@ -29,5 +33,11 @@
     "swarm.table.column.supressDate":"Date de suppression",
     "swarm.table.view.title":"Tableau des services créés par élèves",
     "swarm.table.view.search.input.placeHolder":"Prénom, Nom",
-    "swarm.table.view.search.input.empty":"Aucun résultat"
+    "swarm.table.view.search.input.empty":"Aucun résultat",
+    "swarm.button.options":"Options",
+    "swarm.button.update":"Modifier",
+    "swarm.button.share":"Distribuer",
+    "swarm.button.reload":"Réinitialiser",
+    "swarm.button.delete":"Supprimer",
+    "swarm.button.activate":"Activer"
 }

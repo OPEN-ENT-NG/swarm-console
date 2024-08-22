@@ -2,10 +2,13 @@ import { useTranslation } from "react-i18next";
 
 import { Session } from "@/types";
 
-import { COLUMN_ID, CURRENTTAB_STATE, DisplayModalsState, SORT, TableQueryParamsState } from "./types";
+import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, SORT } from "./enums";
+import { DisplayModalsState, TableQueryParamsState } from "./types";
 
 export const initialDisplayModalsState: DisplayModalsState = {
-  createServices: false,
+  [MODAL_TYPE.CREATE]: false,
+  [MODAL_TYPE.DELETE]: false,
+  [MODAL_TYPE.CONFIRMATION]: false,
 };
 
 export const initialCurrentTab: CURRENTTAB_STATE = CURRENTTAB_STATE.MAIN;

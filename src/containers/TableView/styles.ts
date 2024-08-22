@@ -1,4 +1,4 @@
-import { columnBoxStyle, flexStartBoxStyle } from "@/core/style/boxStyles";
+import { columnBoxStyle, flexEndBoxStyle, flexStartBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import theme from "@/core/style/theme";
 
 export const tableViewWrapperStyle = {
@@ -16,4 +16,13 @@ export const paperStyle = {
 
 export const searchAndFilterWrapperStyle = {
   ...flexStartBoxStyle,
+};
+
+export const filtersAndButtonsWrapperStyle = {
+  ...spaceBetweenBoxStyle,
+};
+
+export const buttonWrapperStyle = {
+  ...flexEndBoxStyle,
+  gap: ".5rem",
 };

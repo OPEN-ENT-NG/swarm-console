@@ -1,22 +1,15 @@
-import { Dayjs } from "dayjs";
-
 import { SVGComponent } from "@/components/SVG/types";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { UsersAndGroups } from "@/types";
-
-export interface CreateServicesModalProps {
-  isOpen: boolean;
-  handleClose: () => void;
-}
 
 export interface InputValueState {
   usersAndGroups: UsersAndGroups[];
-  wordpress: boolean;
-  prestashop: boolean;
-  supressDate: Dayjs | null;
+  type: SERVICE_TYPE[];
+  supressDate: number | null;
 }
 
 export interface ServiceMap {
-  name: "prestashop" | "wordpress";
+  name: SERVICE_TYPE;
   label: string;
   icon: SVGComponent;
 }

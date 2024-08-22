@@ -45,6 +45,7 @@ const theme = createTheme({
           fontFamily: "robotoRegular",
           textTransform: "none",
           minWidth: "0",
+          fontWeight: "bold",
         },
         contained: {
           backgroundColor: "#3C2386",

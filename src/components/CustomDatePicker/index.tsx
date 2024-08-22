@@ -1,5 +1,6 @@
 import { Box } from "@cgi-learning-hub/ui";
 import { DatePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 import { FC } from "react";
 
 import { DatePickerIcon } from "../SVG/DatePickerIcon";
@@ -15,9 +16,11 @@ import {
 import { CustomDatePickerProps } from "./types";
 
 export const CustomDatePicker: FC<CustomDatePickerProps> = ({ value, onChange, displayInfo = false }) => {
+  const tomorrow = dayjs().add(1, "day").startOf("day");
   return (
     <Box sx={customDatePickerWrapperStyle}>
       <DatePicker
+        minDate={tomorrow}
         format="DD/MM/YYYY"
         value={value}
         onChange={onChange}

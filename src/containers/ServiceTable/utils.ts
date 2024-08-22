@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
-import { COLUMN_ID, Column } from "@/providers/GlobalProvider/types";
+import { COLUMN_ID } from "@/providers/GlobalProvider/enums";
+import { Column } from "@/providers/GlobalProvider/types";
 
 export const useColumns: () => Column[] = () => {
   const { t } = useTranslation();

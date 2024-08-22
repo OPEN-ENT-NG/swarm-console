@@ -3,11 +3,12 @@ import { FC, createContext, useContext, useEffect, useMemo, useState } from "rea
 import { useGetServicesQuery } from "@/services/api";
 import { servicesMock } from "@/test/mocks/datasMock";
 
+import { CURRENTTAB_STATE, MODAL_TYPE } from "./enums";
 import {
-  CURRENTTAB_STATE,
   DisplayModalsState,
   GlobalProviderContextType,
   GlobalProviderProps,
+  RowItem,
   ServicesState,
   TableQueryParamsState,
   UserState,
@@ -30,12 +31,16 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [displayModals, setDisplayModals] = useState<DisplayModalsState>(initialDisplayModalsState);
   const [currentTab, setCurrentTab] = useState<CURRENTTAB_STATE>(initialCurrentTab);
   const [tableQueryParams, setTableQueryParams] = useState<TableQueryParamsState>(initialTableQueryParamsState);
-  const [tableSelected, setTableSelected] = useState<string[]>([]);
+  const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
   const { data: servicesData } = useGetServicesQuery();
 
-  useEffect(() => {
-    console.log(tableQueryParams);
-  }, [tableQueryParams]);
+  const handleDisplayModal = (modalType: MODAL_TYPE) =>
+    setDisplayModals(prevState => ({
+      ...prevState,
+      [modalType]: !prevState[modalType],
+    }));
+
+  useEffect(() => {}, [tableQueryParams]);
 
   useEffect(() => {
     if (servicesData) setServices(servicesMock);
@@ -53,6 +58,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
       setTableQueryParams,
       tableSelected,
       setTableSelected,
+      handleDisplayModal,
     }),
     [user, services, displayModals, currentTab, tableQueryParams, tableSelected],
   );

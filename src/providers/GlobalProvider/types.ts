@@ -2,6 +2,8 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 
 import { Session } from "@/types";
 
+import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, SERVICE_STATUS, SERVICE_TYPE, SORT } from "./enums";
+
 export interface GlobalProviderProps {
   children: ReactNode;
   session: Session;
@@ -14,20 +16,9 @@ export interface UserState {
 export type ServicesState = Service[] | null;
 
 export interface DisplayModalsState {
-  createServices: boolean;
-}
-export enum CURRENTTAB_STATE {
-  MAIN = "main",
-  STATS = "stats",
-}
-export enum SERVICE_TYPE {
-  PRESTASHOP = "prestashop",
-  WORDPRESS = "wordpress",
-}
-export enum SERVICE_STATUS {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  WAITING = "waiting",
+  [MODAL_TYPE.CREATE]: boolean;
+  [MODAL_TYPE.DELETE]: boolean;
+  [MODAL_TYPE.CONFIRMATION]: boolean;
 }
 
 export type Service = {
@@ -49,20 +40,6 @@ export type RowItem = {
   etabId: string;
   services: Service[];
 };
-export enum COLUMN_ID {
-  SELECT = "select",
-  NAME = "name",
-  CLASS = "class",
-  ETAB = "etab",
-  SERVICES = "services",
-  STATUS = "status",
-  SUPRESSDATE = "supressDate",
-}
-
-export enum SORT {
-  ASC = "asc",
-  DESC = "desc",
-}
 
 export interface Column {
   id: COLUMN_ID;
@@ -86,6 +63,7 @@ export type GlobalProviderContextType = {
   setCurrentTab: Dispatch<SetStateAction<CURRENTTAB_STATE>>;
   tableQueryParams: TableQueryParamsState;
   setTableQueryParams: Dispatch<SetStateAction<TableQueryParamsState>>;
-  tableSelected: string[];
-  setTableSelected: Dispatch<SetStateAction<string[]>>;
+  tableSelected: RowItem[];
+  setTableSelected: Dispatch<SetStateAction<RowItem[]>>;
+  handleDisplayModal: (modalType: MODAL_TYPE) => void;
 };

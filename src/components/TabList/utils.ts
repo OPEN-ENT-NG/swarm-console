@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/types";
+import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/enums";
 
 export const useTabs = () => {
   const { t } = useTranslation();

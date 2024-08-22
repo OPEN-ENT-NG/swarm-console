@@ -4,6 +4,7 @@ import { Loader } from "@cgi-learning-hub/ui";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import "dayjs/locale/fr";
 import { FC, useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
@@ -45,7 +46,7 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
             <ST.ClientLayoutWrapper>
               <GlobalProvider session={session}>{children}</GlobalProvider>
               <ToastContainer

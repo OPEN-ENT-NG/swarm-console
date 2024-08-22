@@ -1,4 +1,5 @@
-import { SERVICE_STATUS, SERVICE_TYPE, Service } from "@/providers/GlobalProvider/types";
+import { SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { Service } from "@/providers/GlobalProvider/types";
 import { UsersAndGroups } from "@/types";
 
 export const servicesMock: Service[] = [

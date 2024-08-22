@@ -1,20 +1,20 @@
 import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
 import { WordPressIcon } from "@/components/SVG/WordPressIcon";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
 import { InputValueState, ServiceMap } from "./types";
 
 export const initialInputValue: InputValueState = {
   usersAndGroups: [],
-  wordpress: false,
-  prestashop: false,
+  type: [],
   supressDate: null,
 };
 
 export const serviceMapping: ServiceMap[] = [
-  { name: "wordpress", label: "swarm.wordpress.title", icon: WordPressIcon },
-  { name: "prestashop", label: "swarm.prestashop.title", icon: PrestashopIcon },
+  { name: SERVICE_TYPE.WORDPRESS, label: "swarm.wordpress.title", icon: WordPressIcon },
+  { name: SERVICE_TYPE.PRESTASHOP, label: "swarm.prestashop.title", icon: PrestashopIcon },
 ];
 
 export const isButtonDisabled = (state: InputValueState): boolean => {
-  return state.usersAndGroups.length === 0 || (!state.wordpress && !state.prestashop) || state.supressDate === null;
+  return !state.usersAndGroups.length || !state.type.length || state.supressDate === null;
 };

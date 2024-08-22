@@ -1,6 +1,6 @@
 import { Box, Button, CloseIcon, Typography } from "@cgi-learning-hub/ui";
 import { Checkbox, Divider, FormControlLabel, Modal, Stack } from "@mui/material";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { FC, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -9,10 +9,9 @@ import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { UserSelectionSection } from "@/components/UserSelectionSection";
 import { UserSelectionSectionRef } from "@/components/UserSelectionSection/types";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
-import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { initialDisplayModalsState } from "@/providers/GlobalProvider/utils";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { usersAndGroupListData } from "@/test/mocks/datasMock";
-import { OnChange, UsersAndGroups } from "@/types";
+import { ModalProps, OnChange, UsersAndGroups } from "@/types";
 
 import {
   actionButtonsBoxStyle,
@@ -23,15 +22,14 @@ import {
   serviceStackStyle,
   supressDateWrapperStyle,
 } from "./style";
-import { CreateServicesModalProps, InputValueState } from "./types";
+import { InputValueState } from "./types";
 import { initialInputValue, isButtonDisabled, serviceMapping } from "./utils";
 
-export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, handleClose }) => {
+export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
-  const { setDisplayModals } = useGlobalProvider();
   const [inputValue, setInputValue] = useState<InputValueState>(initialInputValue);
   const userSelectionRef = useRef<UserSelectionSectionRef>(null);
-  const { usersAndGroups, supressDate } = inputValue;
+  const { usersAndGroups, supressDate, type } = inputValue;
 
   const userSelectionTranslations = {
     title: t("swarm.create.service.modal.user.selection"),
@@ -41,7 +39,7 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
     expandButton: t("swarm.create.service.modal.search.user.expand"),
   };
   const handleSubmit = () => {
-    setDisplayModals(initialDisplayModalsState);
+    handleClose();
     setInputValue(initialInputValue);
     toast.success(t("swarm.create.service.modal.creation.in.progress"), {
       position: "top-right",
@@ -54,30 +52,29 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
   };
 
   const handleCancel = () => {
-    setDisplayModals(initialDisplayModalsState);
+    handleClose();
     setInputValue(initialInputValue);
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      supressDate: newValue,
+      supressDate: newValue ? newValue.unix() : null,
     }));
   };
 
-  const createHandleClick = (name: "wordpress" | "prestashop") => () => {
-    setInputValue(prevState => ({
-      ...prevState,
-      [name]: !prevState[name],
-    }));
+  const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
+    setInputValue(prevState => {
+      const newType = prevState.type.includes(serviceType)
+        ? prevState.type.filter(t => t !== serviceType)
+        : [...prevState.type, serviceType];
+      return { ...prevState, type: newType };
+    });
   };
 
   const handleCheckboxChange: OnChange = event => {
-    const { name, checked } = event.target;
-    setInputValue(prevState => ({
-      ...prevState,
-      [name]: checked,
-    }));
+    const { name } = event.target;
+    handleServiceTypeChange(name as SERVICE_TYPE);
   };
 
   const handleUserSelectionChange = (newSelectedUsers: UsersAndGroups[]) => {
@@ -124,13 +121,19 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
           flexWrap="nowrap"
           sx={serviceStackStyle}>
           {serviceMapping.map(item => (
-            <Box key={item.label} onClick={createHandleClick(item.name)} sx={checkBoxWrapperStyle}>
+            <Box
+              key={item.label}
+              onClick={e => {
+                e.preventDefault();
+                handleServiceTypeChange(item.name);
+              }}
+              sx={checkBoxWrapperStyle}>
               <FormControlLabel
                 control={
                   <Checkbox
                     data-testid={item.name}
                     sx={noHoverCheckBoxStyle}
-                    checked={inputValue[item.name]}
+                    checked={type.includes(item.name)}
                     onChange={handleCheckboxChange}
                     name={item.name}
                     color="primary"
@@ -141,9 +144,11 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
                     sx={checkBoxLabelStyle}
                     onClick={e => {
                       e.preventDefault();
-                      createHandleClick(item.name);
+                      handleServiceTypeChange(item.name);
                     }}>
-                    <Typography variant="body1">{t(`${item.label}`)}</Typography>
+                    <Typography fontWeight="bold" variant="body1">
+                      {t(`${item.label}`)}
+                    </Typography>
                     <item.icon fill="black" />
                   </Box>
                 }
@@ -155,7 +160,11 @@ export const CreateServicesModal: FC<CreateServicesModalProps> = ({ isOpen, hand
           <Typography sx={{ paddingTop: "1.5rem" }} variant="h3">
             {t("swarm.create.service.modal.supress.label")}
           </Typography>
-          <CustomDatePicker value={supressDate} onChange={handleDateChange} displayInfo />
+          <CustomDatePicker
+            value={supressDate ? dayjs.unix(supressDate) : null}
+            onChange={handleDateChange}
+            displayInfo
+          />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
           <Box sx={{ width: "6.6rem" }}>

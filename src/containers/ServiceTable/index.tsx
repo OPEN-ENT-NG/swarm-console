@@ -19,7 +19,8 @@ import { useTranslation } from "react-i18next";
 import { LinkIcon } from "@/components/SVG/LinkIcon";
 import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { COLUMN_ID, SERVICE_STATUS, SERVICE_TYPE, SORT } from "@/providers/GlobalProvider/types";
+import { COLUMN_ID, SERVICE_STATUS, SERVICE_TYPE, SORT } from "@/providers/GlobalProvider/enums";
+import { RowItem } from "@/providers/GlobalProvider/types";
 import { itemRowsMock } from "@/test/mocks/itemRowsMock";
 
 import { PrestashopIcon } from "../../components/SVG/PrestashopIcon";
@@ -46,7 +47,7 @@ export const ServiceTable: FC = () => {
     setTableQueryParams(prev => ({ ...prev, page: newPage }));
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
     setTableQueryParams(prev => ({ ...prev, rowsPerPage: newRowsPerPage, page: 0 }));
   };
@@ -60,18 +61,18 @@ export const ServiceTable: FC = () => {
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowItems.map(item => item.userId);
+      const newSelected = rowItems;
       setTableSelected(newSelected);
       return;
     }
     setTableSelected([]);
   };
 
-  const handleClick = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
-    setTableSelected(prev => (event.target.checked ? [...prev, id] : prev.filter(item => item !== id)));
+  const handleClick = (event: ChangeEvent<HTMLInputElement>, row: RowItem) => {
+    setTableSelected(prev => (event.target.checked ? [...prev, row] : prev.filter(item => item.userId !== row.userId)));
   };
 
-  const isSelected = (id: string) => tableSelected.indexOf(id) !== -1;
+  const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
 
   const prepareStatusText = (status: SERVICE_STATUS) => {
     if (status === SERVICE_STATUS.ACTIVE) return t("swarm.status.active");
@@ -141,7 +142,7 @@ export const ServiceTable: FC = () => {
                     <Checkbox
                       checked={isItemSelected}
                       inputProps={{ "aria-labelledby": labelId }}
-                      onChange={event => handleClick(event, item.userId)}
+                      onChange={event => handleClick(event, item)}
                     />
                   </TableCell>
                   <TableCell>{`${item.lastName} ${item.firstName}`}</TableCell>
@@ -192,15 +193,17 @@ export const ServiceTable: FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={totalCount}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {totalCount > 10 && (
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50]}
+          component="div"
+          count={totalCount}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
     </Paper>
   );
 };

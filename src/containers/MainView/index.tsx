@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import { TabList } from "@/components/TabList";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/types";
+import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/enums";
 
 import { StatsView } from "../StatsView";
 import { TableView } from "../TableView";

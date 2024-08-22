@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 import { centerBoxStyle, columnBoxStyle } from "@/core/style/boxStyles";
-import { SERVICE_STATUS } from "@/providers/GlobalProvider/types";
+import { SERVICE_STATUS } from "@/providers/GlobalProvider/enums";
 
 import { SVGWrapperProps, StatusPointProps } from "./types";
 

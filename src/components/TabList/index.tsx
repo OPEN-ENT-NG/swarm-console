@@ -5,7 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import { FC, SyntheticEvent } from "react";
 
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/types";
+import { CURRENTTAB_STATE } from "@/providers/GlobalProvider/enums";
 
 import { StyledTab } from "./style";
 import { useTabs } from "./utils";
