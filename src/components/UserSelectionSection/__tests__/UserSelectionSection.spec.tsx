@@ -16,6 +16,19 @@ const mockTranslations = {
 };
 
 describe("UserSelectionSection Component", () => {
+  jest.useFakeTimers({
+    now: new Date("2024-02-07T00:00:01.123Z"),
+  });
+  const start = performance.now();
+
+  jest.advanceTimersByTime(1234.5678);
+  const end = performance.now();
+
+  expect(end - start).toBe(1234.5678);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   it("renders the title correctly", async () => {
     renderWithTheme(
       <UserSelectionSection

@@ -13,6 +13,7 @@ import { UsersAndGroups } from "@/types";
 
 import { CreateServicesModal } from "../CreateServicesModal";
 import { DeleteServicesModal } from "../DeleteServicesModal";
+import { SendServicesModal } from "../SendServicesModal";
 import { ServiceTable } from "../ServiceTable";
 import {
   buttonWrapperStyle,
@@ -26,7 +27,7 @@ import { useCreatedropDownListItems } from "./utils";
 export const TableView: FC = () => {
   const { t } = useTranslation();
   const {
-    displayModals: { createServices, deleteServices },
+    displayModals: { createServices, deleteServices, sendServices },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
@@ -127,6 +128,7 @@ export const TableView: FC = () => {
       <ServiceTable />
       <CreateServicesModal isOpen={createServices} handleClose={() => handleDisplayModal(MODAL_TYPE.CREATE)} />
       <DeleteServicesModal isOpen={deleteServices} handleClose={() => handleDisplayModal(MODAL_TYPE.DELETE)} />
+      <SendServicesModal isOpen={sendServices} handleClose={() => handleDisplayModal(MODAL_TYPE.SEND)} />
     </Box>
   );
 };

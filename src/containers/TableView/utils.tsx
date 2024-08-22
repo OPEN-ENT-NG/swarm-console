@@ -20,7 +20,7 @@ export const useCreatedropDownListItems: () => DropDownListItem[] = () => {
     {
       primary: <ShareIcon />,
       secondary: t("swarm.button.share"),
-      OnClick: () => null,
+      OnClick: () => handleDisplayModal(MODAL_TYPE.SEND),
     },
     {
       primary: <ReloadIcon />,

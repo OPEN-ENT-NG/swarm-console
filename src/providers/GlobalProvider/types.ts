@@ -19,6 +19,7 @@ export interface DisplayModalsState {
   [MODAL_TYPE.CREATE]: boolean;
   [MODAL_TYPE.DELETE]: boolean;
   [MODAL_TYPE.CONFIRMATION]: boolean;
+  [MODAL_TYPE.SEND]: boolean;
 }
 
 export type Service = {

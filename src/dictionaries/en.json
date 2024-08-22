@@ -14,6 +14,8 @@
     "swarm.create.service.modal.creation.in.progress":"Services currently being created...",
     "swarm.delete.service.modal.title": "Delete services",
     "swarm.delete.service.modal.desc": "Delete the selected services",
+    "swarm.send.service.modal.title": "Distribute services",
+    "swarm.send.service.modal.desc": "An email will be sent to the users to provide them with the links to their respective sites",
     "swarm.confirmation.modal.default": "This action is irreversible",
     "swarm.modal.users.selected":"{{count}} selected users",
     "swarm.status.active":"Active",
@@ -39,5 +41,6 @@
     "swarm.button.share": "Share",
     "swarm.button.reload": "Reload",
     "swarm.button.delete": "Delete",
-    "swarm.button.activate": "Activate"
+    "swarm.button.activate": "Activate",
+    "swarm.button.send": "Distribute"
 }
