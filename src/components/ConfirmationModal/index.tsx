@@ -8,7 +8,13 @@ import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { buttonWrapperStyle, confirmationModalBoxStyle, textAndSVGWrapperStyle } from "./style";
 import { ConfirmationModalProps } from "./types";
 
-export const ConfirmationModal: FC<ConfirmationModalProps> = ({ label = null, handleConfirm, isOpen, handleClose }) => {
+export const ConfirmationModal: FC<ConfirmationModalProps> = ({
+  label = null,
+  handleConfirm,
+  isOpen,
+  handleClose,
+  confirmButtonLabel = null,
+}) => {
   const { t } = useTranslation();
   return (
     <Modal open={isOpen} aria-labelledby="confirmation-modal" aria-describedby="confirmation">
@@ -32,7 +38,7 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({ label = null, ha
                 handleClose();
               }}
               fullWidth>
-              {t("swarm.button.delete")}
+              {confirmButtonLabel || t("swarm.button.delete")}
             </Button>
           </Box>
         </Box>

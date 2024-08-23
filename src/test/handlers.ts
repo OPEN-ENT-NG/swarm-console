@@ -1,6 +1,6 @@
 import { HttpResponse, http } from "msw";
 
-import { Service } from "@/types";
+import { Service } from "@/providers/GlobalProvider/types";
 
 import { servicesMock } from "./mocks/datasMock";
 

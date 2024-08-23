@@ -7,7 +7,7 @@ import { InputValueState, ServiceMap } from "./types";
 export const initialInputValue: InputValueState = {
   usersAndGroups: [],
   type: [],
-  supressDate: null,
+  date: null,
 };
 
 export const serviceMapping: ServiceMap[] = [
@@ -16,5 +16,5 @@ export const serviceMapping: ServiceMap[] = [
 ];
 
 export const isButtonDisabled = (state: InputValueState): boolean => {
-  return !state.usersAndGroups.length || !state.type.length || state.supressDate === null;
+  return !state.usersAndGroups.length || !state.type.length || !state.date;
 };

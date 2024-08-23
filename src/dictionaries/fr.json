@@ -19,6 +19,9 @@
     "swarm.toggle.status.service.modal.title":"Activer/désactiver les services",
     "swarm.toggle.status.service.modal.desc":"L'activation permet aux utilisateurs de modifier leurs services.",
     "swarm.toggle.status.service.modal.activate":"Activation",
+    "swarm.reinit.service.modal.title":"Réinitialiser les services",
+    "swarm.reinit.service.modal.desc":"La réinitialisation supprime et recrée les services sélectionnés",
+    "swarm.reinit.service.modal.label":"Veuillez choisir les services à réinitialiser :",
     "swarm.confirmation.modal.default":"Cette action est irréversible",
     "swarm.modal.users.selected":"{{count}} utilisateurs sélectionnés",
     "swarm.status.active":"Actif",
@@ -45,5 +48,6 @@
     "swarm.button.reload":"Réinitialiser",
     "swarm.button.delete":"Supprimer",
     "swarm.button.activate":"Activer",
-    "swarm.button.send":"Distribuer"
+    "swarm.button.send":"Distribuer",
+    "swarm.button.reinit":"Réinitialiser"
 }

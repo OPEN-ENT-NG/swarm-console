@@ -21,6 +21,7 @@ export interface DisplayModalsState {
   [MODAL_TYPE.CONFIRMATION]: boolean;
   [MODAL_TYPE.SEND]: boolean;
   [MODAL_TYPE.TOGGLE_STATUS]: boolean;
+  [MODAL_TYPE.REINIT]: boolean;
 }
 
 export type Service = {

@@ -5,7 +5,7 @@ import { UsersAndGroups } from "@/types";
 export interface InputValueState {
   usersAndGroups: UsersAndGroups[];
   type: SERVICE_TYPE[];
-  supressDate: number | null;
+  date: number | null;
 }
 
 export interface ServiceMap {

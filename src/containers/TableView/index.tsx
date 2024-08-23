@@ -13,6 +13,7 @@ import { UsersAndGroups } from "@/types";
 
 import { CreateServicesModal } from "../CreateServicesModal";
 import { DeleteServicesModal } from "../DeleteServicesModal";
+import { ReinitServicesModal } from "../ReinitServicesModal";
 import { SendServicesModal } from "../SendServicesModal";
 import { ServiceTable } from "../ServiceTable";
 import { ToggleStatusServicesModal } from "../ToggleStatusServicesModal";
@@ -28,7 +29,7 @@ import { useCreatedropDownListItems } from "./utils";
 export const TableView: FC = () => {
   const { t } = useTranslation();
   const {
-    displayModals: { createServices, deleteServices, sendServices, toggleStatusServices },
+    displayModals: { createServices, deleteServices, sendServices, toggleStatusServices, reinitServices },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
@@ -137,6 +138,7 @@ export const TableView: FC = () => {
         isOpen={toggleStatusServices}
         handleClose={() => handleDisplayModal(MODAL_TYPE.TOGGLE_STATUS)}
       />
+      <ReinitServicesModal isOpen={reinitServices} handleClose={() => handleDisplayModal(MODAL_TYPE.REINIT)} />
     </Box>
   );
 };

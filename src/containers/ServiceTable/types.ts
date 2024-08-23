@@ -1,4 +1,4 @@
-import { SERVICE_STATUS } from "@/providers/GlobalProvider/types";
+import { SERVICE_STATUS } from "@/providers/GlobalProvider/enums";
 
 export interface SVGWrapperProps {
   isActive: boolean;

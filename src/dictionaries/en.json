@@ -20,6 +20,9 @@
     "swarm.toggle.status.service.modal.desc": "Enabling allows users to modify their services.",
     "swarm.toggle.status.service.modal.activate":"Activation",
     "swarm.confirmation.modal.default": "This action is irreversible",
+    "swarm.reinit.service.modal.title": "Reset services",
+    "swarm.reinit.service.modal.desc": "Resetting deletes and recreates the selected services",
+    "swarm.reinit.service.modal.label": "Please choose the services to reset:",
     "swarm.modal.users.selected":"{{count}} selected users",
     "swarm.status.active":"Active",
     "swarm.status.inactive":"Inactive",
@@ -45,5 +48,7 @@
     "swarm.button.reload": "Reload",
     "swarm.button.delete": "Delete",
     "swarm.button.activate": "Activate",
-    "swarm.button.send": "Distribute"
+    "swarm.button.send": "Distribute",
+    "swarm.button.reinit": "Reset"
+
 }

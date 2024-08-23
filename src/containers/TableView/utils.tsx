@@ -25,7 +25,7 @@ export const useCreatedropDownListItems: () => DropDownListItem[] = () => {
     {
       primary: <ReloadIcon />,
       secondary: t("swarm.button.reload"),
-      OnClick: () => null,
+      OnClick: () => handleDisplayModal(MODAL_TYPE.REINIT),
     },
     {
       primary: <TrashIcon />,

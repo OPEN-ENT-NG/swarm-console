@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { Service } from "@/providers/GlobalProvider/types";
 import { RootState } from "@/stores/store";
-import type { Service } from "@/types";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER;
 const baseQuery = fetchBaseQuery({
