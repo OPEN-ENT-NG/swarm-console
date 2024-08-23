@@ -55,7 +55,7 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      date: newValue ? newValue.unix() : null,
+      date: newValue ? newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss") : null,
     }));
   };
   const handleSubmit = () => {
@@ -126,7 +126,10 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           ))}
         </Stack>
         <Box sx={supressDateWrapperStyle}>
-          <CustomDatePicker value={date ? dayjs.unix(date) : null} onChange={handleDateChange} />
+          <Typography variant="body1" sx={{ fontWeight: "600", paddingTop: "1rem" }}>
+            {t("swarm.table.column.supressDate")}
+          </Typography>
+          <CustomDatePicker value={date ? dayjs(date) : null} onChange={handleDateChange} displayInfo />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
           <Box sx={{ width: "6.6rem" }}>

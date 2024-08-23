@@ -14,7 +14,8 @@ export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.REINIT]: false,
 };
 
-export const initialCurrentTab: CURRENTTAB_STATE = CURRENTTAB_STATE.MAIN;
+export const initialCurrentTab: (pathname: string) => CURRENTTAB_STATE = pathname =>
+  pathname === "/stats" ? CURRENTTAB_STATE.STATS : CURRENTTAB_STATE.MAIN;
 
 export const initialTableQueryParamsState: TableQueryParamsState = {
   page: 0,

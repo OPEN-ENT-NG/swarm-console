@@ -27,6 +27,18 @@ jest.mock('@/i18n', () => ({
     getI18nProvider: () => provider
 }));
 
+jest.mock('next/navigation', () => ({
+    useRouter: () => ({
+      push: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    }),
+    usePathname: () => '/',
+    useSearchParams: () => ({
+      get: jest.fn(),
+    }),
+  }));
+
 // jest.mock("@emotion/styled", function () {
 //     return function () {
 //         return () => jest.fn()

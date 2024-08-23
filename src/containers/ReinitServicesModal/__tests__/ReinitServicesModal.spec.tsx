@@ -67,7 +67,7 @@ describe("ReinitServicesModal Component", () => {
     });
     expect(submitButton).toBeDisabled();
 
-    fireEvent.change(datePicker, { target: { value: "15/05/2023" } });
+    fireEvent.change(datePicker, { target: { value: "15/05/2030" } });
     await waitFor(() => {
       expect(submitButton).toBeEnabled();
     });

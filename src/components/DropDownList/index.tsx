@@ -1,4 +1,4 @@
-import { Box, List, ListItem } from "@mui/material";
+import { Box, Divider, List, ListItem } from "@mui/material";
 import React, { FC, useState } from "react";
 
 import { DropdownButton, DropdownListWrapper, DropdownWrapper, SVGWrapperStyle, StyledListItemText } from "./style";
@@ -23,14 +23,17 @@ export const DropdownList: FC<DropdownListProps> = ({ items, variant = "containe
       </DropdownButton>
       {isOpen && (
         <DropdownListWrapper styledvariant={variant}>
-          <List>
+          <List sx={{ paddingTop: "0", paddingBottom: "0" }}>
             {items.map((item, index) => (
-              <ListItem key={`option-${index}`} onClick={() => handleItemClick(item.OnClick)}>
-                <StyledListItemText
-                  primary={<Box sx={SVGWrapperStyle}>{item.primary}</Box>}
-                  secondary={item.secondary}
-                />
-              </ListItem>
+              <>
+                {item.divider && <Divider />}
+                <ListItem key={`option-${index}`} onClick={() => handleItemClick(item.OnClick)}>
+                  <StyledListItemText
+                    primary={<Box sx={SVGWrapperStyle}>{item.primary}</Box>}
+                    secondary={item.secondary}
+                  />
+                </ListItem>
+              </>
             ))}
           </List>
         </DropdownListWrapper>

@@ -68,7 +68,7 @@ describe("CreateServicesModal Component", () => {
     const userOption = await screen.findByText("John Doe");
     fireEvent.click(userOption);
     expect(submitButton).toBeDisabled();
-    fireEvent.change(datePicker, { target: { value: "15/05/2023" } });
+    fireEvent.change(datePicker, { target: { value: "15/05/2030" } });
     await waitFor(() => {
       expect(submitButton).toBeEnabled();
     });

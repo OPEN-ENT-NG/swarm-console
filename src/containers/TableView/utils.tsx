@@ -31,6 +31,7 @@ export const useCreatedropDownListItems: () => DropDownListItem[] = () => {
       primary: <TrashIcon />,
       secondary: t("swarm.button.delete"),
       OnClick: () => handleDisplayModal(MODAL_TYPE.DELETE),
+      divider: true,
     },
   ];
 };

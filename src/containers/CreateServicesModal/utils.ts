@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
 import { WordPressIcon } from "@/components/SVG/WordPressIcon";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
@@ -16,5 +18,6 @@ export const serviceMapping: ServiceMap[] = [
 ];
 
 export const isButtonDisabled = (state: InputValueState): boolean => {
-  return !state.usersAndGroups.length || !state.type.length || !state.date;
+  const tomorrow = dayjs().add(1, "day").startOf("day");
+  return !state.usersAndGroups.length || !state.type.length || !state.date || dayjs(state.date).isBefore(tomorrow);
 };

@@ -60,7 +60,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      date: newValue ? newValue.unix() : null,
+      date: newValue ? newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss") : null,
     }));
   };
 
@@ -161,7 +161,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           <Typography sx={{ paddingTop: "1.5rem" }} variant="h3">
             {t("swarm.create.service.modal.supress.label")}
           </Typography>
-          <CustomDatePicker value={date ? dayjs.unix(date) : null} onChange={handleDateChange} displayInfo />
+          <CustomDatePicker value={date ? dayjs(date) : null} onChange={handleDateChange} displayInfo />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
           <Box sx={defaultWidthButtonWrapper}>

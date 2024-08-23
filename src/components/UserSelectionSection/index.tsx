@@ -24,6 +24,10 @@ export const UserSelectionSection: UserSelectionSectionComponent = forwardRef<
   }));
 
   useEffect(() => {
+    if (!displaySeeMore) setIsScrollable(false);
+  }, [filteredUsers, displaySeeMore]);
+
+  useEffect(() => {
     const lowercaseSearch = search.toLowerCase();
     const filtered = users.reduce((acc: UsersAndGroups[], user) => {
       if (

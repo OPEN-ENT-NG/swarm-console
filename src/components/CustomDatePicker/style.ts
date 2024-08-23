@@ -2,7 +2,7 @@ import { centerBoxStyle } from "@/core/style/boxStyles";
 
 export const datePickerStyles = {
   textField: {
-    width: "9rem",
+    width: "10rem",
   },
   input: {
     bgcolor: "transparent",
@@ -15,11 +15,12 @@ export const datePickerStyles = {
   },
   inputProps: {
     sx: {
-      letterSpacing: ".2rem",
+      letterSpacing: ".1rem",
       textAlign: "center",
       fontWeight: "bold",
       color: "black",
       "&::placeholder": {
+        letterSpacing: ".3rem",
         color: "black",
         opacity: 1,
         fontWeight: "bold",
