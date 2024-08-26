@@ -15,7 +15,7 @@ export const useCreatedropDownListItems: () => DropDownListItem[] = () => {
     {
       primary: <PencilIcon />,
       secondary: t("swarm.button.update"),
-      OnClick: () => null,
+      OnClick: () => handleDisplayModal(MODAL_TYPE.UPDATE),
     },
     {
       primary: <ShareIcon />,

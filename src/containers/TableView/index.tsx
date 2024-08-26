@@ -17,6 +17,7 @@ import { ReinitServicesModal } from "../ReinitServicesModal";
 import { SendServicesModal } from "../SendServicesModal";
 import { ServiceTable } from "../ServiceTable";
 import { ToggleStatusServicesModal } from "../ToggleStatusServicesModal";
+import { UpdateServicesModal } from "../UpdateServicesModal";
 import {
   buttonWrapperStyle,
   filtersAndButtonsWrapperStyle,
@@ -29,7 +30,14 @@ import { useCreatedropDownListItems } from "./utils";
 export const TableView: FC = () => {
   const { t } = useTranslation();
   const {
-    displayModals: { createServices, deleteServices, sendServices, toggleStatusServices, reinitServices },
+    displayModals: {
+      createServices,
+      deleteServices,
+      sendServices,
+      toggleStatusServices,
+      reinitServices,
+      updateServices,
+    },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
@@ -139,6 +147,7 @@ export const TableView: FC = () => {
         handleClose={() => handleDisplayModal(MODAL_TYPE.TOGGLE_STATUS)}
       />
       <ReinitServicesModal isOpen={reinitServices} handleClose={() => handleDisplayModal(MODAL_TYPE.REINIT)} />
+      <UpdateServicesModal isOpen={updateServices} handleClose={() => handleDisplayModal(MODAL_TYPE.UPDATE)} />
     </Box>
   );
 };

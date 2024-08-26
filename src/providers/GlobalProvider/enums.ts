@@ -34,6 +34,7 @@ export enum MODAL_TYPE {
   SEND = "sendServices",
   TOGGLE_STATUS = "toggleStatusServices",
   REINIT = "reinitServices",
+  UPDATE = "updateServices",
 }
 
 export enum PATH {

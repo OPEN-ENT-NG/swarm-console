@@ -22,6 +22,8 @@
     "swarm.reinit.service.modal.title":"Réinitialiser les services",
     "swarm.reinit.service.modal.desc":"La réinitialisation supprime et recrée les services sélectionnés",
     "swarm.reinit.service.modal.label":"Veuillez choisir les services à réinitialiser :",
+    "swarm.update.service.modal.title":"Modifier les services",
+    "swarm.update.service.modal.label":"Sites {{type}}",
     "swarm.confirmation.modal.default":"Cette action est irréversible",
     "swarm.modal.users.selected":"{{count}} utilisateurs sélectionnés",
     "swarm.status.active":"Actif",

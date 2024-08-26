@@ -23,6 +23,8 @@
     "swarm.reinit.service.modal.title": "Reset services",
     "swarm.reinit.service.modal.desc": "Resetting deletes and recreates the selected services",
     "swarm.reinit.service.modal.label": "Please choose the services to reset:",
+    "swarm.update.service.modal.title":"Edit services",
+    "swarm.update.service.modal.label":"{{type}} sites",
     "swarm.modal.users.selected":"{{count}} selected users",
     "swarm.status.active":"Active",
     "swarm.status.inactive":"Inactive",
