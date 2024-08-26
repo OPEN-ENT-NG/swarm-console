@@ -2,7 +2,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { useGetServicesQuery } from "@/services/api";
-import { servicesMock } from "@/test/mocks/datasMock";
+import { servicesMock, servicesStatsMocks } from "@/test/mocks/datasMock";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, PATH } from "./enums";
 import {
@@ -10,6 +10,7 @@ import {
   GlobalProviderContextType,
   GlobalProviderProps,
   RowItem,
+  ServiceStat,
   ServicesState,
   TableQueryParamsState,
   UserState,
@@ -35,6 +36,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [currentTab, setCurrentTab] = useState<CURRENTTAB_STATE>(initialCurrentTab(pathname));
   const [tableQueryParams, setTableQueryParams] = useState<TableQueryParamsState>(initialTableQueryParamsState);
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
+  const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
   const { data: servicesData } = useGetServicesQuery();
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
@@ -71,9 +73,11 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
       setTableQueryParams,
       tableSelected,
       setTableSelected,
+      servicesStats,
+      setServicesStats,
       handleDisplayModal,
     }),
-    [user, services, displayModals, currentTab, tableQueryParams, tableSelected],
+    [user, services, displayModals, currentTab, tableQueryParams, tableSelected, servicesStats],
   );
 
   return <GlobalProviderContext.Provider value={value}>{children}</GlobalProviderContext.Provider>;

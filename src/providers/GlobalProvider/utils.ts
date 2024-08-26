@@ -30,7 +30,7 @@ export const prepareUser = (session: Session) => {
     user: { name, email, image },
     token,
   } = session;
-  return { name, email, image: image || "", token };
+  return { name, email, image: image ?? "", token };
 };
 
 export const useTabs = () => {

@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 
+import { SVGComponent } from "@/components/SVG/types";
 import { Session } from "@/types";
 
 import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, SERVICE_STATUS, SERVICE_TYPE, SORT } from "./enums";
@@ -58,6 +59,15 @@ export interface TableQueryParamsState {
   order: SORT;
 }
 
+export type ServiceStat = {
+  type: SERVICE_TYPE;
+  icon: SVGComponent;
+  total: number;
+  active: number;
+  inactive: number;
+  toDelete: number;
+};
+
 export type GlobalProviderContextType = {
   services: ServicesState;
   user: UserState;
@@ -69,5 +79,7 @@ export type GlobalProviderContextType = {
   setTableQueryParams: Dispatch<SetStateAction<TableQueryParamsState>>;
   tableSelected: RowItem[];
   setTableSelected: Dispatch<SetStateAction<RowItem[]>>;
+  servicesStats: ServiceStat[];
+  setServicesStats: Dispatch<SetStateAction<ServiceStat[]>>;
   handleDisplayModal: (modalType: MODAL_TYPE) => void;
 };

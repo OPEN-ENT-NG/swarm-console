@@ -1,5 +1,7 @@
+import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
+import { WordPressIcon } from "@/components/SVG/WordPressIcon";
 import { SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
-import { Service } from "@/providers/GlobalProvider/types";
+import { Service, ServiceStat } from "@/providers/GlobalProvider/types";
 import { UsersAndGroups } from "@/types";
 
 export const servicesMock: Service[] = [
@@ -18,6 +20,25 @@ export const servicesMock: Service[] = [
     userId: "USER1002",
     url: "https://blogpierre.com",
     supressDate: "2023-10-15",
+  },
+];
+
+export const servicesStatsMocks: ServiceStat[] = [
+  {
+    type: SERVICE_TYPE.WORDPRESS,
+    icon: WordPressIcon,
+    total: 12,
+    active: 124,
+    inactive: 67,
+    toDelete: 97,
+  },
+  {
+    type: SERVICE_TYPE.PRESTASHOP,
+    icon: PrestashopIcon,
+    total: 12,
+    active: 124,
+    inactive: 67,
+    toDelete: 97,
   },
 ];
 
