@@ -138,7 +138,7 @@ export const ServiceTable: FC = () => {
               return (
                 <TableRow
                   hover
-                  type="checkbox"
+                  role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
                   key={item.userId}
