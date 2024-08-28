@@ -9,9 +9,6 @@ export const authOptions: NextAuthOptions = {
       issuer: process.env.KEYCLOAK_ISSUER,
     }),
   ],
-  pages: {
-    signIn: process.env.AUTH_PAGE || "/api/auth/signin",
-  },
   callbacks: {
     jwt({ token, account, user }) {
       // Persist the OAuth access_token and or the user id to the token right after signin
