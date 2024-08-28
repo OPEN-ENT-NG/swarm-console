@@ -21,7 +21,7 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
       <Box sx={confirmationModalBoxStyle} data-testid="confirmation-modal">
         <Box sx={textAndSVGWrapperStyle}>
           <WarningIcon />
-          <Typography variant="h2">{label || t("swarm.confirmation.modal.default")}</Typography>
+          <Typography variant="h2">{label ?? t("swarm.confirmation.modal.default")}</Typography>
         </Box>
         <Box sx={buttonWrapperStyle}>
           <Box sx={defaultWidthButtonWrapper}>
@@ -38,7 +38,7 @@ export const ConfirmationModal: FC<ConfirmationModalProps> = ({
                 handleClose();
               }}
               fullWidth>
-              {confirmButtonLabel || t("swarm.button.delete")}
+              {confirmButtonLabel ?? t("swarm.button.delete")}
             </Button>
           </Box>
         </Box>

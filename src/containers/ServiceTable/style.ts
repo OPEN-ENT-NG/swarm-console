@@ -33,11 +33,19 @@ export const SVGWrapper = styled(Box)<SVGWrapperProps>(({ isActive, theme: { pal
   color: isActive ? palette.text.secondary : palette.text.disabled,
 }));
 
-export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => ({
-  width: ".7rem",
-  height: ".7rem",
-  borderRadius: "50%",
-  background: status === SERVICE_STATUS.ACTIVE ? "#228665" : status === SERVICE_STATUS.INACTIVE ? "#E20037" : "#FFC900",
-}));
+export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => {
+  const statusColorMap = {
+    [SERVICE_STATUS.ACTIVE]: "#228665",
+    [SERVICE_STATUS.INACTIVE]: "#E20037",
+    [SERVICE_STATUS.WAITING]: "#FFC900",
+  };
+
+  return {
+    width: ".7rem",
+    height: ".7rem",
+    borderRadius: "50%",
+    background: statusColorMap[status] || "#FFC900",
+  };
+});
 
 export const tableSortLabelWrapper = { position: "relative", display: "inline-block" };

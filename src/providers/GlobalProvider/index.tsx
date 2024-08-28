@@ -30,7 +30,7 @@ export const useGlobalProvider = () => {
 export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [user] = useState<UserState>(prepareUser(session));
+  const [user, setUser] = useState<UserState>(prepareUser(session));
   const [services, setServices] = useState<ServicesState>([]);
   const [displayModals, setDisplayModals] = useState<DisplayModalsState>(initialDisplayModalsState);
   const [currentTab, setCurrentTab] = useState<CURRENTTAB_STATE>(initialCurrentTab(pathname));
@@ -64,6 +64,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const value = useMemo<GlobalProviderContextType>(
     () => ({
       user,
+      setUser,
       services,
       displayModals,
       setDisplayModals,

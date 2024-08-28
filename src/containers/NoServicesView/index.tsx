@@ -8,7 +8,7 @@ import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
 
 import { CreateServicesModal } from "../CreateServicesModal";
-import * as ST from "./style";
+import { NoServicesViewWrapper } from "./style";
 
 export const NoServicesView: FC = () => {
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export const NoServicesView: FC = () => {
   } = useGlobalProvider();
 
   return (
-    <ST.NoServicesViewWrapper data-testid="no-services-view-wrapper">
+    <NoServicesViewWrapper data-testid="no-services-view-wrapper">
       <EmptyState imageOrSVG={{ component: EmptyStateIcon }} text={t("swarm.empty.services")} />
       <Button
         variant="contained"
@@ -27,6 +27,6 @@ export const NoServicesView: FC = () => {
         {t("swarm.create.service.button")}
       </Button>
       <CreateServicesModal isOpen={createServices} handleClose={() => handleDisplayModal(MODAL_TYPE.CREATE)} />
-    </ST.NoServicesViewWrapper>
+    </NoServicesViewWrapper>
   );
 };

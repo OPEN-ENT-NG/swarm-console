@@ -27,7 +27,7 @@ export const DropdownList: FC<DropdownListProps> = ({ items, variant = "containe
             {items.map((item, index) => (
               <>
                 {item.divider && <Divider />}
-                <ListItem key={`option-${index}`} onClick={() => handleItemClick(item.OnClick)}>
+                <ListItem key={`option-${index + Date.now()}`} onClick={() => handleItemClick(item.OnClick)}>
                   <StyledListItemText
                     primary={<Box sx={SVGWrapperStyle}>{item.primary}</Box>}
                     secondary={item.secondary}

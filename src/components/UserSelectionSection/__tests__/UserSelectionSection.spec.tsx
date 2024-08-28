@@ -121,10 +121,19 @@ describe("UserSelectionSection Component", () => {
   });
 
   it('shows "See more" button when more than 8 users are selected', async () => {
+    const getType = (i: number) => {
+      if (i % 3 === 0) {
+        return "user";
+      } else if (i % 3 === 1) {
+        return "group";
+      } else {
+        return "class";
+      }
+    };
     const manyUsersAndGroups: UsersAndGroups[] = Array.from({ length: 10 }, (_, i) => ({
       id: `${i}`,
       name: `Item ${i}`,
-      type: i % 3 === 0 ? "user" : i % 3 === 1 ? "group" : "class",
+      type: getType(i),
     }));
     renderWithTheme(
       <UserSelectionSection

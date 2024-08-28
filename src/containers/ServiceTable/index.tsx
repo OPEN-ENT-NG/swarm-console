@@ -87,7 +87,6 @@ export const ServiceTable: FC = () => {
           <TableHead>
             <TableRow>
               {columns.map(column => {
-                const isOrderBy = column.id === COLUMN_ID.NAME;
                 return (
                   <TableCell
                     key={column.id}
@@ -102,23 +101,29 @@ export const ServiceTable: FC = () => {
                       />
                     ) : (
                       <Box sx={tableSortLabelWrapper}>
-                        {isOrderBy ? (
-                          <TableSortLabel
-                            active={orderBy === column.id}
-                            direction={orderBy === column.id ? order : "asc"}
-                            onClick={() => handleSort()}>
-                            {column.label}
-                          </TableSortLabel>
-                        ) : column.id === COLUMN_ID.SERVICES ? (
-                          <Box sx={{ ...centerBoxStyle, wrap: "nowrap" }}>
-                            <Typography sx={{ ...typoStyle, textAlign: "center" }}>{column.label} </Typography>
-                            <Box sx={{ width: "1rem" }}>
-                              <LinkIcon />
-                            </Box>
-                          </Box>
-                        ) : (
-                          <Typography sx={{ ...typoStyle, textAlign: "center" }}>{column.label}</Typography>
-                        )}
+                        {(() => {
+                          if (column.id === COLUMN_ID.NAME) {
+                            return (
+                              <TableSortLabel
+                                active={orderBy === column.id}
+                                direction={orderBy === column.id ? order : "asc"}
+                                onClick={() => handleSort()}>
+                                {column.label}
+                              </TableSortLabel>
+                            );
+                          }
+                          if (column.id === COLUMN_ID.SERVICES) {
+                            return (
+                              <Box sx={{ ...centerBoxStyle, wrap: "nowrap" }}>
+                                <Typography sx={{ ...typoStyle, textAlign: "center" }}>{column.label} </Typography>
+                                <Box sx={{ width: "1rem" }}>
+                                  <LinkIcon />
+                                </Box>
+                              </Box>
+                            );
+                          }
+                          return <Typography sx={{ ...typoStyle, textAlign: "center" }}>{column.label}</Typography>;
+                        })()}
                       </Box>
                     )}
                   </TableCell>
@@ -133,7 +138,7 @@ export const ServiceTable: FC = () => {
               return (
                 <TableRow
                   hover
-                  role="checkbox"
+                  type="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
                   key={item.userId}

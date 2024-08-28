@@ -1,18 +1,18 @@
 import { FC } from "react";
 
-import * as ST from "./style";
+import { HeaderWrapper, Img, ImgWrapper } from "./style";
 import { HeaderProps } from "./types";
 
 export const Header: FC<HeaderProps> = ({ items = [] }) => (
-  <ST.HeaderWrapper>
+  <HeaderWrapper>
     {items.map((item, index) => (
-      <ST.ImgWrapper key={`header-item-${index}`}>
+      <ImgWrapper key={`header-item-${index + Date.now()}`}>
         {typeof item === "string" ? (
-          <ST.Img src={item} alt={`Header image ${index}`} />
+          <Img src={item} alt={`Header image ${index}`} />
         ) : (
           <item.component {...item.props} />
         )}
-      </ST.ImgWrapper>
+      </ImgWrapper>
     ))}
-  </ST.HeaderWrapper>
+  </HeaderWrapper>
 );

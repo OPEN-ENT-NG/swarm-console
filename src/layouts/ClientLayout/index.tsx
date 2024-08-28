@@ -18,7 +18,7 @@ import { GlobalProvider } from "@/providers/GlobalProvider";
 import { setToken, store } from "@/stores/store";
 
 import "../../core/style/globals.css";
-import * as ST from "./style";
+import { ClientLayoutWrapper, LoaderWrapper } from "./style";
 import { ClientLayoutProps } from "./types";
 
 export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
@@ -33,11 +33,11 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
 
   if (!isTokenSet) {
     return (
-      <ST.ClientLayoutWrapper>
-        <ST.LoaderWrapper>
+      <ClientLayoutWrapper>
+        <LoaderWrapper>
           <Loader />
-        </ST.LoaderWrapper>
-      </ST.ClientLayoutWrapper>
+        </LoaderWrapper>
+      </ClientLayoutWrapper>
     );
   }
 
@@ -47,7 +47,7 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="fr">
-            <ST.ClientLayoutWrapper>
+            <ClientLayoutWrapper>
               <GlobalProvider session={session}>{children}</GlobalProvider>
               <ToastContainer
                 position="top-right"
@@ -61,7 +61,7 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
                 pauseOnHover
                 theme="light"
               />
-            </ST.ClientLayoutWrapper>
+            </ClientLayoutWrapper>
           </LocalizationProvider>
         </ThemeProvider>
       </Provider>

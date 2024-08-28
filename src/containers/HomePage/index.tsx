@@ -9,7 +9,7 @@ import { useGlobalProvider } from "@/providers/GlobalProvider";
 
 import { MainView } from "../MainView";
 import { NoServicesView } from "../NoServicesView";
-import * as ST from "./style";
+import { MainWrapper } from "./style";
 import { headerImages } from "./utils";
 
 export const HomePage: FC = () => {
@@ -19,10 +19,10 @@ export const HomePage: FC = () => {
   return (
     <>
       <Header items={headerImages} />
-      <ST.MainWrapper>
+      <MainWrapper>
         <Title text={t("swarm.title")} />
         {services?.length ? <MainView /> : <NoServicesView />}
-      </ST.MainWrapper>
+      </MainWrapper>
     </>
   );
 };

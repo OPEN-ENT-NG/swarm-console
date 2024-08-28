@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import React from "react";
 
+import { RowItem, Service } from "@/providers/GlobalProvider/types";
 import { itemRowsMock } from "@/test/mocks/itemRowsMock";
 import { renderWithProviders } from "@/test/testUtils";
 
@@ -21,6 +22,21 @@ describe("ServiceTable Component", () => {
   const end = performance.now();
 
   expect(end - start).toBe(1234.5678);
+
+  const checkServiceSuppressionDate = (service: Service) => {
+    if (service.supressDate) {
+      const dateCell = screen.getByText(service.supressDate);
+      expect(dateCell).toBeInTheDocument();
+    }
+  };
+
+  const checkItemServices = (item: RowItem) => {
+    item.services.forEach(checkServiceSuppressionDate);
+  };
+
+  const checkAllItemRows = () => {
+    itemRowsMock.forEach(checkItemServices);
+  };
 
   it("renders the table with correct headers", async () => {
     renderWithProviders(<ServiceTable />);
@@ -51,14 +67,7 @@ describe("ServiceTable Component", () => {
     renderWithProviders(<ServiceTable />);
 
     await waitFor(() => {
-      itemRowsMock.forEach(item => {
-        item.services.forEach(service => {
-          if (service.supressDate) {
-            const dateCell = screen.getByText(service.supressDate);
-            expect(dateCell).toBeInTheDocument();
-          }
-        });
-      });
+      checkAllItemRows();
     });
   });
 

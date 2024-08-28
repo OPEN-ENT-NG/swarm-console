@@ -2,6 +2,10 @@ stages: [test, analysis, build]
 
 include:
   - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-unit-tests@1.8.0
+    inputs:
+      artifacts:
+        - coverage
+        - gl-codequality.json
   - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-sonarqube-analysis@1.8.0
     inputs:
       dependencies:

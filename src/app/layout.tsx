@@ -14,7 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const headersList = headers();
-  const locale = headersList.get("x-default-locale") || "fr";
+  const locale = headersList.get("x-default-locale") ?? "fr";
   const session: Session | null = await getServerSession(authOptions);
 
   if (session) {

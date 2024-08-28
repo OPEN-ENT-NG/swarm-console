@@ -3,6 +3,7 @@ import { screen, waitFor } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import React from "react";
 
+import { SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { api } from "@/services/api";
 import { store } from "@/stores/store";
 import { createHandlers } from "@/test/handlers";
@@ -30,7 +31,16 @@ describe("HomePage Component", () => {
   it("display MainView when services", async () => {
     server.use(
       ...createHandlers({
-        services: [{ id: 1, name: "Service 1" }],
+        services: [
+          {
+            type: SERVICE_TYPE.PRESTASHOP,
+            status: SERVICE_STATUS.ACTIVE,
+            id: 1,
+            userId: "USER1001",
+            url: "https://boutiquemarie.com",
+            supressDate: "2025-12-31",
+          },
+        ],
       }),
     );
     renderWithProviders(<HomePage />);
