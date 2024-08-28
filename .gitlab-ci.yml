@@ -1,14 +1,5 @@
 stages: [test, analysis, build]
 
-variables:
-  SONAR_PROJECT_KEY: "CGI_app-swarm_swarm-console_c43212d6-26c5-48d9-871a-6b198ea69d48"
-  SONAR_QUALITYGATE_WAIT: "true"
-  SONAR_TYPESCRIPT_TSLINT_REPORTPATHS: "gl-codequality.json"
-  SONAR_JAVASCRIPT_LCOV_REPORTPATHS: "coverage/lcov.info"
-  SONAR_QUALITYGATE_TIMEOUT: "5000"
-  SONAR_SOURCES: "src/"
-  SONAR_EXCLUSIONS: "next.config.js"
-
 include:
   - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-unit-tests@1.8.0
   - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-sonarqube-analysis@1.8.0
