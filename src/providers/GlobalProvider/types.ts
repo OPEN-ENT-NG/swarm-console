@@ -82,4 +82,5 @@ export type GlobalProviderContextType = {
   servicesStats: ServiceStat[];
   setServicesStats: Dispatch<SetStateAction<ServiceStat[]>>;
   handleDisplayModal: (modalType: MODAL_TYPE) => void;
+  handleSwitchServices: () => void;
 };

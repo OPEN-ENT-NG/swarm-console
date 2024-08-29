@@ -1,7 +1,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import { useGetServicesQuery } from "@/services/api";
+// import { useGetServicesQuery } from "@/services/api";
 import { servicesMock, servicesStatsMocks } from "@/test/mocks/datasMock";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, PATH } from "./enums";
@@ -37,13 +37,19 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [tableQueryParams, setTableQueryParams] = useState<TableQueryParamsState>(initialTableQueryParamsState);
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
   const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
-  const { data: servicesData } = useGetServicesQuery();
+  // const { data: servicesData } = useGetServicesQuery();
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
     setDisplayModals(prevState => ({
       ...prevState,
       [modalType]: !prevState[modalType],
     }));
+
+  //pour demo
+  const handleSwitchServices = () => {
+    if (!services?.length) return setServices(servicesMock);
+    return setServices([]);
+  };
 
   useEffect(() => {
     const newPath = currentTab === CURRENTTAB_STATE.STATS ? PATH.STATS : PATH.MAIN;
@@ -57,9 +63,9 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
     }
   }, [pathname, services, router]);
 
-  useEffect(() => {
-    if (servicesData) setServices(servicesMock);
-  }, [servicesData]);
+  // useEffect(() => {
+  //   if (servicesData) setServices(servicesMock);
+  // }, [servicesData]);
 
   const value = useMemo<GlobalProviderContextType>(
     () => ({
@@ -77,6 +83,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
       servicesStats,
       setServicesStats,
       handleDisplayModal,
+      handleSwitchServices,
     }),
     [user, services, displayModals, currentTab, tableQueryParams, tableSelected, servicesStats],
   );
