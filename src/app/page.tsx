@@ -12,4 +12,6 @@ export default function Home() {
   return <HomePage />;
 }
 
-export default () => <button onClick={() => signIn()}>Sign in</button>
+export default () => (
+  <button onClick={() => signIn("google")}>Sign in with Google</button>
+)
