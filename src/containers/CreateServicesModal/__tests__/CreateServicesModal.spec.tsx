@@ -36,7 +36,7 @@ describe("CreateServicesModal Component", () => {
 
   it("updates checkbox state when clicked", async () => {
     renderWithProviders(<CreateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).toBeChecked();
@@ -55,7 +55,7 @@ describe("CreateServicesModal Component", () => {
   it("Disable the submit button when the conditions are not met and enable it when they are", async () => {
     renderWithProviders(<CreateServicesModal isOpen={true} handleClose={jest.fn()} />);
     const submitButton = screen.getByTestId("create-services-submit");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     const userInput = screen.getByPlaceholderText("swarm.create.service.modal.search.input.placeHolder");
     const datePicker = screen.getByPlaceholderText("--/--/----");
     expect(submitButton).toBeDisabled();
@@ -82,7 +82,7 @@ describe("CreateServicesModal Component", () => {
   it("resets input on cancel", async () => {
     renderWithProviders(<CreateServicesModal isOpen={true} handleClose={mockHandleClose} />);
     const cancelButton = screen.getByText("swarm.cancel");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
 
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {

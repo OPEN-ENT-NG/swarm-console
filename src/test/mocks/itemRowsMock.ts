@@ -13,7 +13,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 1,
         userId: "USER1001",
         url: "https://boutiquemarie.com",
@@ -21,7 +21,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 2,
         userId: "USER1001",
         url: "https://blogmarie.com",
@@ -40,7 +40,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 3,
         userId: "USER1002",
         url: "https://sitelucas.com",
@@ -59,7 +59,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 4,
         userId: "USER1003",
         url: "https://boutiquesophie.com",
@@ -78,7 +78,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 5,
         userId: "USER1004",
         url: "https://blogthomas.com",
@@ -86,7 +86,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 6,
         userId: "USER1004",
         url: "https://boutiquethomas.com",
@@ -105,7 +105,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 7,
         userId: "USER1005",
         url: "https://siteemma.com",
@@ -124,7 +124,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 8,
         userId: "USER1006",
         url: "https://boutiqueantoine.com",
@@ -143,7 +143,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 9,
         userId: "USER1007",
         url: "https://blogcamille.com",
@@ -162,7 +162,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 10,
         userId: "USER1008",
         url: "https://boutiqueluc.com",
@@ -170,7 +170,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 11,
         userId: "USER1008",
         url: "https://siteluc.com",
@@ -189,7 +189,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 12,
         userId: "USER1009",
         url: "https://bloglea.com",
@@ -208,7 +208,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 13,
         userId: "USER1010",
         url: "https://boutiquehugo.com",
@@ -227,7 +227,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 14,
         userId: "USER1011",
         url: "https://sitechloe.com",
@@ -246,7 +246,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 15,
         userId: "USER1012",
         url: "https://boutiquemaxime.com",
@@ -254,7 +254,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 16,
         userId: "USER1012",
         url: "https://blogmaxime.com",
@@ -273,7 +273,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 17,
         userId: "USER1013",
         url: "https://siteines.com",
@@ -292,7 +292,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 18,
         userId: "USER1014",
         url: "https://boutiquenathan.com",
@@ -311,7 +311,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 19,
         userId: "USER1015",
         url: "https://blogzoe.com",
@@ -330,7 +330,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 20,
         userId: "USER1016",
         url: "https://boutiquelouis.com",
@@ -338,7 +338,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 21,
         userId: "USER1016",
         url: "https://sitelouis.com",
@@ -357,7 +357,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 22,
         userId: "USER1017",
         url: "https://blogmanon.com",
@@ -376,7 +376,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.WAITING,
+        status: SERVICE_STATUS.SCHEDULED,
         id: 23,
         userId: "USER1018",
         url: "https://boutiquetheo.com",
@@ -395,7 +395,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.WORDPRESS,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 24,
         userId: "USER1019",
         url: "https://sitelena.com",
@@ -403,7 +403,7 @@ export const itemRowsMock: RowItem[] = [
       },
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.INACTIVE,
+        status: SERVICE_STATUS.DISABLED,
         id: 25,
         userId: "USER1019",
         url: "https://boutiquelena.com",
@@ -422,7 +422,7 @@ export const itemRowsMock: RowItem[] = [
     services: [
       {
         type: SERVICE_TYPE.PRESTASHOP,
-        status: SERVICE_STATUS.ACTIVE,
+        status: SERVICE_STATUS.DEPLOYED,
         id: 26,
         userId: "USER1020",
         url: "https://boutiqueenzo.com",

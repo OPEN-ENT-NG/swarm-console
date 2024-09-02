@@ -37,7 +37,7 @@ describe("ReinitServicesModal Component", () => {
 
   it("updates checkbox state when clicked", async () => {
     renderWithProviders(<ReinitServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).toBeChecked();
@@ -56,7 +56,7 @@ describe("ReinitServicesModal Component", () => {
   it("Disable the submit button when the conditions are not met and enable it when they are", async () => {
     renderWithProviders(<ReinitServicesModal isOpen={true} handleClose={jest.fn()} />);
     const submitButton = screen.getByTestId("create-services-submit");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     const datePicker = screen.getByPlaceholderText("--/--/----");
 
     expect(submitButton).toBeDisabled();
@@ -82,7 +82,7 @@ describe("ReinitServicesModal Component", () => {
   it("resets input on cancel", async () => {
     renderWithProviders(<ReinitServicesModal isOpen={true} handleClose={mockHandleClose} />);
     const cancelButton = screen.getByTestId("create-services-cancel");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
 
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {

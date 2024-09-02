@@ -3,7 +3,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 import { SVGComponent } from "@/components/SVG/types";
 import { Session } from "@/types";
 
-import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, SERVICE_STATUS, SERVICE_TYPE, SORT } from "./enums";
+import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATUS, SERVICE_TYPE } from "./enums";
 
 export interface GlobalProviderProps {
   children: ReactNode;
@@ -53,10 +53,12 @@ export interface Column {
 }
 
 export interface TableQueryParamsState {
+  query: string;
   page: number;
-  rowsPerPage: number;
+  limit: number;
   orderBy: COLUMN_ID.NAME;
-  order: SORT;
+  order: ORDER_TYPE;
+  type: SERVICE_TYPE[];
 }
 
 export type ServiceStat = {

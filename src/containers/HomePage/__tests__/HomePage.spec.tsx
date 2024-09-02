@@ -34,7 +34,7 @@ describe("HomePage Component", () => {
         services: [
           {
             type: SERVICE_TYPE.PRESTASHOP,
-            status: SERVICE_STATUS.ACTIVE,
+            status: SERVICE_STATUS.DEPLOYED,
             id: 1,
             userId: "USER1001",
             url: "https://boutiquemarie.com",

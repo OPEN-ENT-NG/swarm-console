@@ -40,7 +40,7 @@ describe("ToggleStatusServicesModal Component", () => {
 
   it("updates switch state when clicked", async () => {
     renderWithProviders(<ToggleStatusServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressSwitch = screen.getByTestId("wordpress");
+    const wordpressSwitch = screen.getByTestId("WORDPRESS");
     const switchInput = wordpressSwitch.querySelector('input[type="checkbox"]');
     expect(switchInput).not.toBeChecked();
     fireEvent.click(wordpressSwitch);
@@ -57,7 +57,7 @@ describe("ToggleStatusServicesModal Component", () => {
 
   it("enables the activate button when at least one service is selected", async () => {
     renderWithProviders(<ToggleStatusServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressSwitch = screen.getByTestId("wordpress");
+    const wordpressSwitch = screen.getByTestId("WORDPRESS");
     const activateButton = screen.getByText("swarm.button.activate");
 
     expect(activateButton).toBeDisabled();
@@ -72,7 +72,7 @@ describe("ToggleStatusServicesModal Component", () => {
   it("resets input on cancel", async () => {
     renderWithProviders(<ToggleStatusServicesModal isOpen={true} handleClose={mockHandleClose} />);
     const cancelButton = screen.getByText("swarm.cancel");
-    const wordpressSwitch = screen.getByTestId("wordpress");
+    const wordpressSwitch = screen.getByTestId("WORDPRESS");
     const switchInput = wordpressSwitch.querySelector('input[type="checkbox"]');
 
     fireEvent.click(wordpressSwitch);

@@ -32,11 +32,11 @@ describe("StatsView Component", () => {
     renderWithProviders(<StatsView />);
 
     await waitFor(() => {
-      expect(screen.getByTestId("stat-card-prestashop")).toBeInTheDocument();
-      expect(screen.getByTestId("stat-card-wordpress")).toBeInTheDocument();
+      expect(screen.getByTestId("stat-card-PRESTASHOP")).toBeInTheDocument();
+      expect(screen.getByTestId("stat-card-WORDPRESS")).toBeInTheDocument();
     });
 
-    expect(screen.getByText("Mocked ServiceStatCard for prestashop")).toBeInTheDocument();
-    expect(screen.getByText("Mocked ServiceStatCard for wordpress")).toBeInTheDocument();
+    expect(screen.getByText("Mocked ServiceStatCard for PRESTASHOP")).toBeInTheDocument();
+    expect(screen.getByText("Mocked ServiceStatCard for WORDPRESS")).toBeInTheDocument();
   });
 });

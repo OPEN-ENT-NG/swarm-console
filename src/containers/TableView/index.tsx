@@ -40,22 +40,22 @@ export const TableView: FC = () => {
     },
     handleDisplayModal,
     tableSelected,
+    tableQueryParams: { query },
+    setTableQueryParams,
   } = useGlobalProvider();
-  const [search, setSearch] = useState<string>("");
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
   const [filteredUsers, setFilteredUsers] = useState<UsersAndGroups[]>([]);
   const users = usersAndGroupListData;
   const DropDownListItems = useCreatedropDownListItems();
-  const selectedsHasAllServices = tableSelected.every(item => item.services.length === 2);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setSearch(value);
+    setTableQueryParams(prevState => ({ ...prevState, query: value }));
     if (!isListOpen) setIsListOpen(true);
   };
 
   useEffect(() => {
-    const lowercaseSearch = search.toLowerCase();
+    const lowercaseSearch = query.toLowerCase();
     const filtered = users.reduce((acc: UsersAndGroups[], user) => {
       if (acc.length < 5 && user.name.toLowerCase().includes(lowercaseSearch)) {
         return [...acc, user];
@@ -63,7 +63,7 @@ export const TableView: FC = () => {
       return acc;
     }, []);
     setFilteredUsers(filtered);
-  }, [search, users]);
+  }, [query, users]);
 
   return (
     <Box sx={tableViewWrapperStyle} onClick={() => setIsListOpen(false)}>
@@ -75,13 +75,13 @@ export const TableView: FC = () => {
               Recherche
             </Typography>
             <TextInput
-              name="search"
+              name="query"
               placeholder={t("swarm.table.view.search.input.placeHolder")}
               fullWidth
-              value={search}
+              value={query}
               onChange={handleChange}
             />
-            {search.length >= 3 && isListOpen && (
+            {query.length >= 3 && isListOpen && (
               <Paper sx={paperStyle}>
                 {filteredUsers.length ? (
                   <List>
@@ -89,7 +89,7 @@ export const TableView: FC = () => {
                       <ListItemButton
                         key={item.id}
                         onClick={() => {
-                          setSearch(item.name);
+                          setTableQueryParams(prevState => ({ ...prevState, query: item.name }));
                           setIsListOpen(false);
                         }}>
                         <ListItemText primary={item.name} />
@@ -128,14 +128,12 @@ export const TableView: FC = () => {
               />
             </>
           )}
-          {!selectedsHasAllServices && (
-            <Button
-              variant="contained"
-              data-testid="create-services-button"
-              onClick={() => handleDisplayModal(MODAL_TYPE.CREATE)}>
-              {t("swarm.create.service.button")}
-            </Button>
-          )}
+          <Button
+            variant="contained"
+            data-testid="create-services-button"
+            onClick={() => handleDisplayModal(MODAL_TYPE.CREATE)}>
+            {t("swarm.create.service.button")}
+          </Button>
         </Box>
       </Box>
       <ServiceTable />

@@ -44,6 +44,7 @@
     "swarm.table.view.title":"Table of services created by students",
     "swarm.table.view.search.input.placeHolder": "First name, Last name",
     "swarm.table.view.search.input.empty": "No results",
+    "swarm.table.empty": "No students found",
     "swarm.stats.total":"Number of created sites",
     "swarm.stats.active":"Number of active sites",
     "swarm.stats.inactive":"Number of inactive sites",

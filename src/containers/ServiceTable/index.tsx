@@ -19,8 +19,15 @@ import { useTranslation } from "react-i18next";
 import { LinkIcon } from "@/components/SVG/LinkIcon";
 import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { COLUMN_ID, SERVICE_STATUS, SERVICE_TYPE, SORT } from "@/providers/GlobalProvider/enums";
+import {
+  COLUMN_ID,
+  ORDER_TYPE,
+  SERVICE_STATE_DISPLAY,
+  SERVICE_STATUS,
+  SERVICE_TYPE,
+} from "@/providers/GlobalProvider/enums";
 import { RowItem } from "@/providers/GlobalProvider/types";
+import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
 import { itemRowsMock } from "@/test/mocks/itemRowsMock";
 
 import { PrestashopIcon } from "../../components/SVG/PrestashopIcon";
@@ -33,11 +40,12 @@ import {
   tableSortLabelWrapper,
   typoStyle,
 } from "./style";
+import { LowerCaseOrder } from "./types";
 import { useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
   const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected } = useGlobalProvider();
-  const { order, orderBy, page, rowsPerPage } = tableQueryParams;
+  const { order, orderBy, page, limit, query } = tableQueryParams;
   const { t } = useTranslation();
   const rowItems = itemRowsMock;
   const totalCount = rowItems.length;
@@ -49,13 +57,13 @@ export const ServiceTable: FC = () => {
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
     const newRowsPerPage = parseInt(event.target.value, 10);
-    setTableQueryParams(prev => ({ ...prev, rowsPerPage: newRowsPerPage, page: 0 }));
+    setTableQueryParams(prev => ({ ...prev, limit: newRowsPerPage, page: 0 }));
   };
 
   const handleSort = () => {
     setTableQueryParams(prev => ({
       ...prev,
-      order: prev.order === SORT.ASC ? SORT.DESC : SORT.ASC,
+      order: prev.order === ORDER_TYPE.ASC ? ORDER_TYPE.DESC : ORDER_TYPE.ASC,
     }));
   };
 
@@ -75,10 +83,11 @@ export const ServiceTable: FC = () => {
   const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
 
   const prepareStatusText = (status: SERVICE_STATUS) => {
-    if (status === SERVICE_STATUS.ACTIVE) return t("swarm.status.active");
-    if (status === SERVICE_STATUS.INACTIVE) return t("swarm.status.inactive");
+    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.ACTIVE) return t("swarm.status.active");
+    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.INACTIVE) return t("swarm.status.inactive");
     return t("swarm.status.waiting");
   };
+  const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -91,7 +100,7 @@ export const ServiceTable: FC = () => {
                   <TableCell
                     key={column.id}
                     style={{ width: column.width }}
-                    sortDirection={orderBy === column.id ? order : false}>
+                    sortDirection={orderBy === column.id ? lowerCaseOrder : false}>
                     {column.id === COLUMN_ID.SELECT ? (
                       <Checkbox
                         indeterminate={tableSelected.length > 0 && tableSelected.length < rowItems.length}
@@ -106,7 +115,7 @@ export const ServiceTable: FC = () => {
                             return (
                               <TableSortLabel
                                 active={orderBy === column.id}
-                                direction={orderBy === column.id ? order : "asc"}
+                                direction={orderBy === column.id ? lowerCaseOrder : "asc"}
                                 onClick={() => handleSort()}>
                                 {column.label}
                               </TableSortLabel>
@@ -158,7 +167,7 @@ export const ServiceTable: FC = () => {
                       {item.services.map(serviceItem => {
                         const IconComponent =
                           serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
-                        const isActive = serviceItem.status !== SERVICE_STATUS.WAITING;
+                        const isActive = getServiceStateDisplay(serviceItem.status) !== SERVICE_STATE_DISPLAY.WAITING;
                         return isActive ? (
                           <Link key={serviceItem.id} href={serviceItem.url} target="_blank" rel="noopener noreferrer">
                             <SVGWrapper isActive={true}>
@@ -177,7 +186,7 @@ export const ServiceTable: FC = () => {
                     <Box sx={ServiceWrapperStyle}>
                       {item.services.map(serviceItem => (
                         <Box key={`${serviceItem.id}-status`} sx={serviceStatusWrapperStyle}>
-                          <StatusPoint status={serviceItem.status} />
+                          <StatusPoint status={getServiceStateDisplay(serviceItem.status)} />
                           <Typography sx={typoStyle}>{prepareStatusText(serviceItem.status)}</Typography>
                         </Box>
                       ))}
@@ -195,15 +204,16 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
+            {!rowItems.length && !!query && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
       </TableContainer>
       {totalCount > 10 && (
         <TablePagination
+          component={"div"}
           rowsPerPageOptions={[10, 25, 50]}
-          component="div"
           count={totalCount}
-          rowsPerPage={rowsPerPage}
+          rowsPerPage={limit}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}

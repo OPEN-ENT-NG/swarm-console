@@ -7,7 +7,7 @@ import { UsersAndGroups } from "@/types";
 export const servicesMock: Service[] = [
   {
     type: SERVICE_TYPE.PRESTASHOP,
-    status: SERVICE_STATUS.ACTIVE,
+    status: SERVICE_STATUS.DEPLOYED,
     id: 1,
     userId: "USER1001",
     url: "https://boutiquemarie.com",
@@ -15,7 +15,7 @@ export const servicesMock: Service[] = [
   },
   {
     type: SERVICE_TYPE.WORDPRESS,
-    status: SERVICE_STATUS.INACTIVE,
+    status: SERVICE_STATUS.DISABLED,
     id: 2,
     userId: "USER1002",
     url: "https://blogpierre.com",

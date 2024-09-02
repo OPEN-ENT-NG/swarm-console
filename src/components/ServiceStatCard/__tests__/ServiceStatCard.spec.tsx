@@ -39,7 +39,7 @@ describe("ServiceStatCard Component", () => {
     renderWithProviders(<ServiceStatCard serviceStatItem={mockServiceStatItem} />);
 
     await waitFor(() => {
-      expect(screen.getByText("Prepared prestashop")).toBeInTheDocument();
+      expect(screen.getByText("Prepared PRESTASHOP")).toBeInTheDocument();
       expect(screen.getByTestId("mock-icon")).toBeInTheDocument();
       expect(screen.getByText("swarm.stats.total")).toBeInTheDocument();
       expect(screen.getByText("100")).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe("ServiceStatCard Component", () => {
   it("has the correct test id", async () => {
     renderWithProviders(<ServiceStatCard serviceStatItem={mockServiceStatItem} />);
     await waitFor(() => {
-      expect(screen.getByTestId("stat-card-prestashop")).toBeInTheDocument();
+      expect(screen.getByTestId("stat-card-PRESTASHOP")).toBeInTheDocument();
     });
   });
 

@@ -12,7 +12,7 @@ export const useColumns: () => Column[] = () => {
     { id: COLUMN_ID.ETAB, label: t("swarm.table.column.etab"), width: "20%" },
     { id: COLUMN_ID.SERVICES, label: t("swarm.table.column.services"), width: "15%" },
     { id: COLUMN_ID.STATUS, label: t("swarm.table.column.status"), width: "10%" },
-    { id: COLUMN_ID.SUPRESSDATE, label: t("swarm.table.column.supressDate"), width: "20%" },
+    { id: COLUMN_ID.DELETION_DATE, label: t("swarm.table.column.supressDate"), width: "20%" },
   ];
 };
 

@@ -41,7 +41,7 @@ describe("SendServicesModal Component", () => {
 
   it("updates checkbox state when clicked", async () => {
     renderWithProviders(<SendServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).toBeChecked();
@@ -56,7 +56,7 @@ describe("SendServicesModal Component", () => {
 
   it("enables the send button when at least one service is selected", async () => {
     renderWithProviders(<SendServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     const sendButton = screen.getByText("swarm.button.send");
 
     expect(sendButton).toBeDisabled();
@@ -71,7 +71,7 @@ describe("SendServicesModal Component", () => {
   it("resets input on cancel", async () => {
     renderWithProviders(<SendServicesModal isOpen={true} handleClose={mockHandleClose} />);
     const cancelButton = screen.getByText("swarm.cancel");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
 
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {

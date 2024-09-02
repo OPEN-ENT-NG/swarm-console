@@ -3,28 +3,41 @@ export enum CURRENTTAB_STATE {
   STATS = "stats",
 }
 export enum SERVICE_TYPE {
-  PRESTASHOP = "prestashop",
-  WORDPRESS = "wordpress",
+  PRESTASHOP = "PRESTASHOP",
+  WORDPRESS = "WORDPRESS",
 }
 export enum SERVICE_STATUS {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-  WAITING = "waiting",
+  SCHEDULED = "SCHEDULED",
+  IN_PROGRESS = "IN_PROGRESS",
+  DEPLOYED = "DEPLOYED",
+  DELETION_SCHEDULED = "DELETION_SCHEDULED",
+  DELETION_IN_PROGRESS = "DELETION_IN_PROGRESS",
+  RESET_SCHEDULED = "RESET_SCHEDULED",
+  RESET_IN_PROGRESS = "RESET_IN_PROGRESS",
+  DEACTIVATION_SCHEDULED = "DEACTIVATION_SCHEDULED",
+  DISABLED = "DISABLED",
+  REACTIVATION_SCHEDULED = "REACTIVATION_SCHEDULED",
+}
+
+export enum SERVICE_STATE_DISPLAY {
+  ACTIVE = "ACTIVE",
+  WAITING = "WAITING",
+  INACTIVE = "INACTIVE",
 }
 
 export enum COLUMN_ID {
-  SELECT = "select",
-  NAME = "name",
-  CLASS = "class",
-  ETAB = "etab",
-  SERVICES = "services",
-  STATUS = "status",
-  SUPRESSDATE = "supressDate",
+  SELECT = "SELECT",
+  NAME = "NAME",
+  CLASS = "CLASS",
+  ETAB = "ETAB",
+  SERVICES = "SERVICES",
+  STATUS = "STATUS",
+  DELETION_DATE = "DELETION_DATE",
 }
 
-export enum SORT {
-  ASC = "asc",
-  DESC = "desc",
+export enum ORDER_TYPE {
+  ASC = "ASC",
+  DESC = "DESC",
 }
 
 export enum MODAL_TYPE {

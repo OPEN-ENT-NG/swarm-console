@@ -40,7 +40,7 @@ describe("DeleteServicesModal Component", () => {
 
   it("updates checkbox state when clicked", async () => {
     renderWithProviders(<DeleteServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {
       expect(wordpressCheckbox.querySelector("input")).toBeChecked();
@@ -55,7 +55,7 @@ describe("DeleteServicesModal Component", () => {
 
   it("enables the delete button when at least one service is selected", async () => {
     renderWithProviders(<DeleteServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
     const deleteButton = screen.getByText("swarm.button.delete");
 
     expect(deleteButton).toBeDisabled();
@@ -70,7 +70,7 @@ describe("DeleteServicesModal Component", () => {
   it("resets input on cancel", async () => {
     renderWithProviders(<DeleteServicesModal isOpen={true} handleClose={mockHandleClose} />);
     const cancelButton = screen.getByText("swarm.cancel");
-    const wordpressCheckbox = screen.getByTestId("wordpress");
+    const wordpressCheckbox = screen.getByTestId("WORDPRESS");
 
     fireEvent.click(wordpressCheckbox);
     await waitFor(() => {

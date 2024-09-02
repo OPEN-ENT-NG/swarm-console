@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 
 import { centerBoxStyle, columnBoxStyle } from "@/core/style/boxStyles";
-import { SERVICE_STATUS } from "@/providers/GlobalProvider/enums";
+import { SERVICE_STATE_DISPLAY } from "@/providers/GlobalProvider/enums";
 
 import { SVGWrapperProps, StatusPointProps } from "./types";
 
@@ -35,9 +35,9 @@ export const SVGWrapper = styled(Box)<SVGWrapperProps>(({ isActive, theme: { pal
 
 export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => {
   const statusColorMap = {
-    [SERVICE_STATUS.ACTIVE]: "#228665",
-    [SERVICE_STATUS.INACTIVE]: "#E20037",
-    [SERVICE_STATUS.WAITING]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.ACTIVE]: "#228665",
+    [SERVICE_STATE_DISPLAY.INACTIVE]: "#E20037",
+    [SERVICE_STATE_DISPLAY.WAITING]: "#FFC900",
   };
 
   return {
