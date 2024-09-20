@@ -2,16 +2,16 @@ import { usePathname, useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { useGetServicesQuery } from "@/services/api";
-import { servicesMock, servicesStatsMocks } from "@/test/mocks/datasMock";
+import { servicesStatsMocks } from "@/test/mocks/datasMock";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, PATH } from "./enums";
+import { Services } from "./serviceType";
 import {
   DisplayModalsState,
   GlobalProviderContextType,
   GlobalProviderProps,
   RowItem,
   ServiceStat,
-  ServicesState,
   TableQueryParamsState,
   UserState,
 } from "./types";
@@ -31,13 +31,14 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState<UserState>(prepareUser(session));
-  const [services, setServices] = useState<ServicesState>([]);
+  const [services, setServices] = useState<Services | null>(null);
   const [displayModals, setDisplayModals] = useState<DisplayModalsState>(initialDisplayModalsState);
   const [currentTab, setCurrentTab] = useState<CURRENTTAB_STATE>(initialCurrentTab(pathname));
   const [tableQueryParams, setTableQueryParams] = useState<TableQueryParamsState>(initialTableQueryParamsState);
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
   const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
-  const { data: servicesData } = useGetServicesQuery();
+  const { data: servicesData } = useGetServicesQuery(tableQueryParams);
+console.log({servicesData,tableQueryParams});
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
     setDisplayModals(prevState => ({
@@ -50,16 +51,15 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
     router.push(newPath);
   }, [currentTab, router]);
 
-  //voir si ça marchera avec le fetch des services
   useEffect(() => {
-    if (pathname === (PATH.STATS as string) && services?.length === 0) {
+    if (pathname === (PATH.STATS as string) && services?.filteredUsers.length === 0) {
       router.push(PATH.MAIN);
     }
   }, [pathname, services, router]);
 
   useEffect(() => {
-    if (servicesData) setServices(servicesMock);
-  }, [servicesData]);
+    if (servicesData) setServices(servicesData);
+  }, [servicesData, tableQueryParams]);
 
   const value = useMemo<GlobalProviderContextType>(
     () => ({

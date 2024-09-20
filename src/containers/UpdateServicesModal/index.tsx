@@ -1,7 +1,7 @@
 import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
@@ -50,9 +50,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     handleClose();
     setInputValue([]);
   };
-  useEffect(() => {
-    console.log(inputValue);
-  }, [inputValue]);
+
   return (
     <Modal
       open={isOpen}

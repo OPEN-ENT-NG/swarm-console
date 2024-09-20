@@ -2,10 +2,13 @@ import { Box, Button, TextInput, Typography } from "@cgi-learning-hub/ui";
 import { Chip, Collapse, List, ListItemButton, ListItemText, Paper } from "@mui/material";
 import { ChangeEvent, forwardRef, useEffect, useImperativeHandle, useState } from "react";
 
-import { UsersAndGroups } from "@/types";
-
 import { ChipBox, paperStyle, seeMoreButtonStyle, wrapperBoxStyle } from "./style";
-import { UserSelectionSectionComponent, UserSelectionSectionProps, UserSelectionSectionRef } from "./types";
+import {
+  UserSelectionSectionComponent,
+  UserSelectionSectionProps,
+  UserSelectionSectionRef,
+  UsersAndGroups,
+} from "./types";
 
 export const UserSelectionSection: UserSelectionSectionComponent = forwardRef<
   UserSelectionSectionRef,

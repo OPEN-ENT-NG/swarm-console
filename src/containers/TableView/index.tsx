@@ -5,12 +5,11 @@ import { useTranslation } from "react-i18next";
 
 import { DropdownList } from "@/components/DropDownList";
 import { ExpandCirclesIcon } from "@/components/SVG/ExpandCirclesIcon";
+import { TableFilters } from "@/components/TableFilters";
+import { UsersAndGroups } from "@/components/UserSelectionSection/types";
 import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
-import { usersAndGroupListData } from "@/test/mocks/datasMock";
-import { UsersAndGroups } from "@/types";
-
 import { CreateServicesModal } from "../CreateServicesModal";
 import { DeleteServicesModal } from "../DeleteServicesModal";
 import { ReinitServicesModal } from "../ReinitServicesModal";
@@ -40,22 +39,25 @@ export const TableView: FC = () => {
     },
     handleDisplayModal,
     tableSelected,
-    tableQueryParams: { query },
+    tableQueryParams: { search },
     setTableQueryParams,
+    services,
   } = useGlobalProvider();
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
   const [filteredUsers, setFilteredUsers] = useState<UsersAndGroups[]>([]);
-  const users = usersAndGroupListData;
+  const users: UsersAndGroups[] = services?.globalInfos.users.length
+    ? services.globalInfos.users.map(user => ({ name: `${user.lastName} ${user.firstName}`, id: user.id }))
+    : [];
   const DropDownListItems = useCreatedropDownListItems();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-    setTableQueryParams(prevState => ({ ...prevState, query: value }));
+    setTableQueryParams(prevState => ({ ...prevState, search: value }));
     if (!isListOpen) setIsListOpen(true);
   };
 
   useEffect(() => {
-    const lowercaseSearch = query.toLowerCase();
+    const lowercaseSearch = search.toLowerCase();
     const filtered = users.reduce((acc: UsersAndGroups[], user) => {
       if (acc.length < 5 && user.name.toLowerCase().includes(lowercaseSearch)) {
         return [...acc, user];
@@ -63,14 +65,14 @@ export const TableView: FC = () => {
       return acc;
     }, []);
     setFilteredUsers(filtered);
-  }, [query, users]);
+  }, [search]);
 
   return (
     <Box sx={tableViewWrapperStyle} onClick={() => setIsListOpen(false)}>
       <Typography variant="h2">{t("swarm.table.view.title")}</Typography>
       <Box sx={filtersAndButtonsWrapperStyle}>
         <Box sx={searchAndFilterWrapperStyle}>
-          <Box sx={{ width: "20%", position: "relative" }}>
+          <Box sx={{ width: "20rem", position: "relative" }}>
             <Typography variant="body1" sx={{ color: "black", fontWeight: "500" }}>
               Recherche
             </Typography>
@@ -78,10 +80,10 @@ export const TableView: FC = () => {
               name="query"
               placeholder={t("swarm.table.view.search.input.placeHolder")}
               fullWidth
-              value={query}
+              value={search}
               onChange={handleChange}
             />
-            {query.length >= 3 && isListOpen && (
+            {search.length >= 3 && isListOpen && (
               <Paper sx={paperStyle}>
                 {filteredUsers.length ? (
                   <List>
@@ -89,7 +91,7 @@ export const TableView: FC = () => {
                       <ListItemButton
                         key={item.id}
                         onClick={() => {
-                          setTableQueryParams(prevState => ({ ...prevState, query: item.name }));
+                          setTableQueryParams(prevState => ({ ...prevState, search: item.name }));
                           setIsListOpen(false);
                         }}>
                         <ListItemText primary={item.name} />
@@ -104,6 +106,7 @@ export const TableView: FC = () => {
               </Paper>
             )}
           </Box>
+          <TableFilters />
         </Box>
         <Box sx={buttonWrapperStyle}>
           {!!tableSelected.length && (

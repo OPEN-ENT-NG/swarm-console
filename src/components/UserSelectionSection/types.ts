@@ -1,7 +1,5 @@
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
-import { UsersAndGroups } from "@/types";
-
 export interface UserSelectionSectionTranslations {
   title: string;
   searchPlaceholder: string;
@@ -9,6 +7,12 @@ export interface UserSelectionSectionTranslations {
   emptySelection: string;
   expandButton: string;
 }
+
+export type UsersAndGroups = {
+  id: string;
+  name: string;
+  usertype?: string;
+};
 
 export interface UserSelectionSectionProps {
   users: UsersAndGroups[];

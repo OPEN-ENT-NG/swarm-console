@@ -57,6 +57,9 @@
     "swarm.button.delete": "Delete",
     "swarm.button.activate": "Activate",
     "swarm.button.send": "Distribute",
-    "swarm.button.reinit": "Reset"
-
+    "swarm.button.reinit": "Reset",
+    "swarm.button.filters": "Filters",
+    "swarm.button.etabs":"Establishments",
+    "swarm.button.classes":"Classes",
+    "swarm.button.groups":"Groups"
 }

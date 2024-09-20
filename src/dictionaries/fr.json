@@ -57,5 +57,9 @@
     "swarm.button.delete":"Supprimer",
     "swarm.button.activate":"Activer",
     "swarm.button.send":"Distribuer",
-    "swarm.button.reinit":"Réinitialiser"
+    "swarm.button.reinit":"Réinitialiser",
+    "swarm.button.filters": "Filtres",
+    "swarm.button.etabs":"Établissements",
+    "swarm.button.classes":"Classes",
+    "swarm.button.groups":"Groupes"
 }

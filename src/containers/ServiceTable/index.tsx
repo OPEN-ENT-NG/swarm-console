@@ -22,13 +22,12 @@ import { useGlobalProvider } from "@/providers/GlobalProvider";
 import {
   COLUMN_ID,
   ORDER_TYPE,
+  SERVICE_STATE,
   SERVICE_STATE_DISPLAY,
-  SERVICE_STATUS,
   SERVICE_TYPE,
 } from "@/providers/GlobalProvider/enums";
 import { RowItem } from "@/providers/GlobalProvider/types";
 import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
-import { itemRowsMock } from "@/test/mocks/itemRowsMock";
 
 import { PrestashopIcon } from "../../components/SVG/PrestashopIcon";
 import { WordPressIcon } from "../../components/SVG/WordPressIcon";
@@ -41,16 +40,18 @@ import {
   typoStyle,
 } from "./style";
 import { LowerCaseOrder } from "./types";
-import { useColumns } from "./utils";
+import { formatDate, transformRawDatas, useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
-  const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected } = useGlobalProvider();
-  const { order, orderBy, page, limit, query } = tableQueryParams;
+  const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected, services } = useGlobalProvider();
+  const { order, page, limit, search } = tableQueryParams;
   const { t } = useTranslation();
-  const rowItems = itemRowsMock;
-  const totalCount = rowItems.length;
+  const rowItems = services?.filteredUsers.length ? transformRawDatas(services.filteredUsers) : [];
+  console.log(rowItems);
+  
   const columns = useColumns();
-
+  const orderBy = COLUMN_ID.NAME;
+  const totalCount = services?.globalInfos.totalUsers ?? 0;
   const handleChangePage = (event: unknown, newPage: number) => {
     setTableQueryParams(prev => ({ ...prev, page: newPage }));
   };
@@ -82,7 +83,7 @@ export const ServiceTable: FC = () => {
 
   const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
 
-  const prepareStatusText = (status: SERVICE_STATUS) => {
+  const prepareStatusText = (status: SERVICE_STATE) => {
     if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.ACTIVE) return t("swarm.status.active");
     if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.INACTIVE) return t("swarm.status.inactive");
     return t("swarm.status.waiting");
@@ -150,7 +151,7 @@ export const ServiceTable: FC = () => {
                   role="checkbox"
                   aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={item.userId}
+                  key={`${item.userId}-${index}`}
                   selected={isItemSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -167,9 +168,13 @@ export const ServiceTable: FC = () => {
                       {item.services.map(serviceItem => {
                         const IconComponent =
                           serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
-                        const isActive = getServiceStateDisplay(serviceItem.status) !== SERVICE_STATE_DISPLAY.WAITING;
+                        const isActive = getServiceStateDisplay(serviceItem.state) !== SERVICE_STATE_DISPLAY.WAITING;
                         return isActive ? (
-                          <Link key={serviceItem.id} href={serviceItem.url} target="_blank" rel="noopener noreferrer">
+                          <Link
+                            key={serviceItem.id}
+                            href={serviceItem.serviceName}
+                            target="_blank"
+                            rel="noopener noreferrer">
                             <SVGWrapper isActive={true}>
                               <IconComponent />
                             </SVGWrapper>
@@ -186,8 +191,8 @@ export const ServiceTable: FC = () => {
                     <Box sx={ServiceWrapperStyle}>
                       {item.services.map(serviceItem => (
                         <Box key={`${serviceItem.id}-status`} sx={serviceStatusWrapperStyle}>
-                          <StatusPoint status={getServiceStateDisplay(serviceItem.status)} />
-                          <Typography sx={typoStyle}>{prepareStatusText(serviceItem.status)}</Typography>
+                          <StatusPoint status={getServiceStateDisplay(serviceItem.state)} />
+                          <Typography sx={typoStyle}>{prepareStatusText(serviceItem.state)}</Typography>
                         </Box>
                       ))}
                     </Box>
@@ -196,7 +201,7 @@ export const ServiceTable: FC = () => {
                     <Box sx={ServiceWrapperStyle}>
                       {item.services.map(serviceItem => (
                         <Box key={`${serviceItem.id}-date`} sx={serviceStatusWrapperStyle}>
-                          {serviceItem.supressDate}
+                          {formatDate(serviceItem.deletionDate)}
                         </Box>
                       ))}
                     </Box>
@@ -204,7 +209,7 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
-            {!rowItems.length && !!query && <TableCell>{t("swarm.table.empty")}</TableCell>}
+            {!rowItems.length && !!search && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
       </TableContainer>

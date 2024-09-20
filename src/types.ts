@@ -5,12 +5,6 @@ export type Session = {
   token: string;
 };
 
-export type UsersAndGroups = {
-  id: string;
-  name: string;
-  type: "user" | "group" | "class";
-};
-
 export interface ModalProps {
   isOpen: boolean;
   handleClose: () => void;

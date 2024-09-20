@@ -1,18 +1,18 @@
 import { Box, Button, CloseIcon, Typography } from "@cgi-learning-hub/ui";
 import { Checkbox, Divider, FormControlLabel, Modal, Stack } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { UserSelectionSection } from "@/components/UserSelectionSection";
-import { UserSelectionSectionRef } from "@/components/UserSelectionSection/types";
+import { UserSelectionSectionRef, UsersAndGroups } from "@/components/UserSelectionSection/types";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
-import { usersAndGroupListData } from "@/test/mocks/datasMock";
-import { ModalProps, OnChange, UsersAndGroups } from "@/types";
+import { useCreateServicesMutation, useGetUsersQuery } from "@/services/api";
+import { ModalProps, OnChange } from "@/types";
 
 import {
   actionButtonsBoxStyle,
@@ -24,13 +24,22 @@ import {
   supressDateWrapperStyle,
 } from "./style";
 import { InputValueState } from "./types";
-import { initialInputValue, isButtonDisabled, serviceMapping } from "./utils";
+import {
+  extractIdAndName,
+  initialInputValue,
+  isButtonDisabled,
+  serviceMapping,
+  updateInputValueFromUsersAndGroups,
+} from "./utils";
 
 export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
-  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<InputValueState>(initialInputValue);
+  const [usersAndGroups, setUsersAndGroups] = useState<UsersAndGroups[]>([]);
+  const { t } = useTranslation();
+  const { data: usersData } = useGetUsersQuery();
+  const [createServices] = useCreateServicesMutation();
   const userSelectionRef = useRef<UserSelectionSectionRef>(null);
-  const { usersAndGroups, date, type } = inputValue;
+  const { deletion_date, types } = inputValue;
 
   const userSelectionTranslations = {
     title: t("swarm.create.service.modal.user.selection"),
@@ -39,37 +48,42 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     emptySelection: t("swarm.create.service.modal.search.user.empty"),
     expandButton: t("swarm.create.service.modal.search.user.expand"),
   };
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue(initialInputValue);
-    toast.success(t("swarm.create.service.modal.creation.in.progress"), {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+  const handleSubmit = async () => {
+    try {
+      await createServices(inputValue).unwrap();
+      toast.success(t("swarm.create.service.modal.creation.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
-    handleClose();
     setInputValue(initialInputValue);
+    setUsersAndGroups([]);
+    handleClose();
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      date: newValue ? newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss") : null,
+      deletion_date: newValue ? newValue.valueOf() : null,
     }));
   };
 
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
-      const newType = prevState.type.includes(serviceType)
-        ? prevState.type.filter(t => t !== serviceType)
-        : [...prevState.type, serviceType];
-      return { ...prevState, type: newType };
+      const newType = prevState.types.includes(serviceType)
+        ? prevState.types.filter(t => t !== serviceType)
+        : [...prevState.types, serviceType];
+      return { ...prevState, types: newType };
     });
   };
 
@@ -79,15 +93,16 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleUserSelectionChange = (newSelectedUsers: UsersAndGroups[]) => {
-    setInputValue(prevState => ({
-      ...prevState,
-      usersAndGroups: newSelectedUsers,
-    }));
+    setUsersAndGroups(newSelectedUsers);
   };
 
   const handleModalClick = () => {
     userSelectionRef.current?.closeList();
   };
+
+  useEffect(() => {
+    setInputValue(prevState => updateInputValueFromUsersAndGroups(prevState, usersAndGroups));
+  }, [usersAndGroups]);
 
   return (
     <Modal
@@ -106,7 +121,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           {t("swarm.create.service.modal.desc")}
         </Typography>
         <UserSelectionSection
-          users={usersAndGroupListData}
+          users={usersData ? extractIdAndName(usersData) : []}
           selectedUsers={usersAndGroups}
           onUserSelectionChange={handleUserSelectionChange}
           translations={userSelectionTranslations}
@@ -134,7 +149,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   <Checkbox
                     data-testid={item.name}
                     sx={noHoverCheckBoxStyle}
-                    checked={type.includes(item.name)}
+                    checked={types.includes(item.name)}
                     onChange={handleCheckboxChange}
                     name={item.name}
                     color="primary"
@@ -161,7 +176,11 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           <Typography sx={{ paddingTop: "1.5rem" }} variant="h3">
             {t("swarm.create.service.modal.supress.label")}
           </Typography>
-          <CustomDatePicker value={date ? dayjs(date) : null} onChange={handleDateChange} displayInfo />
+          <CustomDatePicker
+            value={deletion_date ? dayjs(deletion_date) : null}
+            onChange={handleDateChange}
+            displayInfo
+          />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
           <Box sx={defaultWidthButtonWrapper}>

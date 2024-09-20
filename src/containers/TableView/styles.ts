@@ -16,6 +16,7 @@ export const paperStyle = {
 
 export const searchAndFilterWrapperStyle = {
   ...flexStartBoxStyle,
+  gap: "1.5rem",
 };
 
 export const filtersAndButtonsWrapperStyle = {

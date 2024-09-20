@@ -1,13 +1,14 @@
 import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
 import { WordPressIcon } from "@/components/SVG/WordPressIcon";
-import { SERVICE_STATUS, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
-import { Service, ServiceStat } from "@/providers/GlobalProvider/types";
+import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { ServiceStat } from "@/providers/GlobalProvider/types";
+import { Service } from "@/providers/GlobalProvider/types/serviceType";
 import { UsersAndGroups } from "@/types";
 
 export const servicesMock: Service[] = [
   {
     type: SERVICE_TYPE.PRESTASHOP,
-    status: SERVICE_STATUS.DEPLOYED,
+    status: SERVICE_STATE.DEPLOYED,
     id: 1,
     userId: "USER1001",
     url: "https://boutiquemarie.com",
@@ -15,7 +16,7 @@ export const servicesMock: Service[] = [
   },
   {
     type: SERVICE_TYPE.WORDPRESS,
-    status: SERVICE_STATUS.DISABLED,
+    status: SERVICE_STATE.DISABLED,
     id: 2,
     userId: "USER1002",
     url: "https://blogpierre.com",

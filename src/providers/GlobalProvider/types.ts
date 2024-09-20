@@ -3,7 +3,8 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 import { SVGComponent } from "@/components/SVG/types";
 import { Session } from "@/types";
 
-import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATUS, SERVICE_TYPE } from "./enums";
+import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_TYPE } from "./enums";
+import { Service, Services } from "./serviceType";
 
 export interface GlobalProviderProps {
   children: ReactNode;
@@ -14,7 +15,6 @@ export interface UserState {
   email: string;
   image: string;
 }
-export type ServicesState = Service[] | null;
 
 export interface DisplayModalsState {
   [MODAL_TYPE.CREATE]: boolean;
@@ -25,15 +25,6 @@ export interface DisplayModalsState {
   [MODAL_TYPE.REINIT]: boolean;
   [MODAL_TYPE.UPDATE]: boolean;
 }
-
-export type Service = {
-  type: SERVICE_TYPE;
-  status: SERVICE_STATUS;
-  id: number;
-  userId: string;
-  url: string;
-  supressDate: string;
-};
 
 export type RowItem = {
   userId: string;
@@ -53,12 +44,14 @@ export interface Column {
 }
 
 export interface TableQueryParamsState {
-  query: string;
+  search: string;
+  structures: string[];
+  classes: string[];
+  groups: string[];
   page: number;
   limit: number;
-  orderBy: COLUMN_ID.NAME;
   order: ORDER_TYPE;
-  type: SERVICE_TYPE[];
+  types: SERVICE_TYPE[];
 }
 
 export type ServiceStat = {
@@ -71,7 +64,7 @@ export type ServiceStat = {
 };
 
 export type GlobalProviderContextType = {
-  services: ServicesState;
+  services: Services | null;
   user: UserState;
   displayModals: DisplayModalsState;
   setDisplayModals: Dispatch<SetStateAction<DisplayModalsState>>;

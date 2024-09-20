@@ -1,7 +1,10 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { useTranslation } from "react-i18next";
 
 import { COLUMN_ID } from "@/providers/GlobalProvider/enums";
-import { Column } from "@/providers/GlobalProvider/types";
+import { User } from "@/providers/GlobalProvider/serviceType";
+import { Column, RowItem } from "@/providers/GlobalProvider/types";
 
 export const useColumns: () => Column[] = () => {
   const { t } = useTranslation();
@@ -17,3 +20,24 @@ export const useColumns: () => Column[] = () => {
 };
 
 export const orderByValues = [COLUMN_ID.NAME, COLUMN_ID.CLASS, COLUMN_ID.ETAB];
+
+export const transformRawDatas = (users: User[]): RowItem[] => {
+  return users.flatMap(user =>
+    user.structures.flatMap(structure =>
+      user.classes.map(classe => ({
+        userId: user.services[0]?.userId ?? "",
+        lastName: user.services[0]?.lastName ?? "",
+        firstName: user.services[0]?.firstName ?? "",
+        className: classe.name,
+        classId: classe.id,
+        etabName: structure.name,
+        etabId: structure.id,
+        services: user.services,
+      })),
+    ),
+  );
+};
+dayjs.extend(utc);
+export const formatDate = (dateString: Date): string => {
+  return dayjs(dateString).utc().format("DD/MM/YYYY");
+};

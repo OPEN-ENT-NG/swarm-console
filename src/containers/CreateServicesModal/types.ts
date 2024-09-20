@@ -1,11 +1,12 @@
 import { SVGComponent } from "@/components/SVG/types";
-import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
-import { UsersAndGroups } from "@/types";
+import { PROFILE_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
 export interface InputValueState {
-  usersAndGroups: UsersAndGroups[];
-  type: SERVICE_TYPE[];
-  date: string | null;
+  users: string[];
+  classes: string[];
+  groups: string[];
+  types: SERVICE_TYPE[];
+  deletion_date: number | null | "Invalid Date";
 }
 
 export interface ServiceMap {
@@ -13,3 +14,29 @@ export interface ServiceMap {
   label: string;
   icon: SVGComponent;
 }
+
+type Class = {
+  id: string;
+  name: string;
+};
+
+type Group = {
+  id: string;
+  name: string;
+};
+
+type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  profiles: PROFILE_TYPE;
+  structures: string;
+  classes: Class[];
+  groups: Group[];
+};
+
+export type Users = {
+  users: User[];
+  classes: Class[];
+  groups: Group[];
+};
