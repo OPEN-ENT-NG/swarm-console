@@ -44,7 +44,7 @@ import { formatDate, transformRawDatas, useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
   const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected, services } = useGlobalProvider();
-  const { order, page, limit, search } = tableQueryParams;
+  const { order, page, limit } = tableQueryParams;
   const { t } = useTranslation();
   const rowItems = services?.filteredUsers.length ? transformRawDatas(services.filteredUsers) : [];
   console.log(rowItems);
@@ -209,7 +209,7 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
-            {!rowItems.length && !!search && <TableCell>{t("swarm.table.empty")}</TableCell>}
+            {!rowItems.length  && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
       </TableContainer>

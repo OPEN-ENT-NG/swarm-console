@@ -21,7 +21,7 @@ export const HomePage: FC = () => {
       <Header items={headerImages} />
       <MainWrapper>
         <Title text={t("swarm.title")} />
-        {services?.filteredUsers.length ? <MainView /> : <NoServicesView />}
+        {services?.globalInfos.users.length ? <MainView /> : <NoServicesView />}
       </MainWrapper>
     </>
   );
