@@ -38,7 +38,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
   const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
   const { data: servicesData } = useGetServicesQuery(tableQueryParams);
-console.log({servicesData,tableQueryParams});
+  console.log({servicesData,tableQueryParams});
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
     setDisplayModals(prevState => ({

@@ -17,9 +17,10 @@
     "format:write": "npx prettier --write ."
   },
   "dependencies": {
-    "@cgi-learning-hub/icons": "develop",
-    "@cgi-learning-hub/theme": "develop",
-    "@cgi-learning-hub/ui": "develop",
+    "@cgi-learning-hub/icons": "1.2.0",
+    "@cgi-learning-hub/theme": "1.2.0",
+    "@cgi-learning-hub/ui": "1.2.0",
+    "jwt-decode": "4.0.0",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
     "@mui/x-date-pickers": "^7.12.1",
@@ -53,7 +54,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-junit": "^16.0.0",
-    "msw": "^2.1.3",
+    "msw": "2.4.3",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",

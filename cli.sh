@@ -35,12 +35,20 @@ install () {
   docker-compose -p swarm-console run --rm -u "$USER_UID:$GROUP_GID" app pnpm install
 }
 
+installWithNpm() {
+  docker-compose -p swarm-console run --rm -u "$USER_UID:$GROUP_GID" app npm install
+}
+
 runDev () {
   docker-compose -p swarm-console run -u "$USER_UID:$GROUP_GID" app pnpm run dev
 }
 
 build() {
   docker-compose -p swarm-console run --rm -u "$USER_UID:$GROUP_GID" app pnpm run build
+}
+
+buildWithNpm() {
+  docker-compose -p swarm-console run --rm -u "$USER_UID:$GROUP_GID" app npm run build
 }
 
 start() {
@@ -51,8 +59,16 @@ test() {
   docker-compose run --rm -u "$USER_UID:$GROUP_GID" app pnpm run test
 }
 
+testWithNpm() {
+  docker-compose run --rm -u "$USER_UID:$GROUP_GID" app npm run test
+}
+
 testWatch() {
   docker-compose run --rm -u "$USER_UID:$GROUP_GID" app pnpm run test:watch
+}
+
+testWithNpmWatch() {
+  docker-compose run --rm -u "$USER_UID:$GROUP_GID" app npm run test:watch
 }
 
 lint() {
@@ -72,17 +88,29 @@ do
     install)
       install
       ;;
+    installWithNpm)
+      installWithNpm
+      ;;
     runDev)
       runDev
       ;;
     build)
       build
       ;;
+    buildWithNpm)
+      buildWithNpm
+      ;;
     start)
       start
       ;;
     test)
       test
+      ;;
+    testWithNpm)
+      testWithNpm
+      ;;
+    testWithNpmWatch)
+      testWithNpmWatch
       ;;
     testWatch)
       testWatch

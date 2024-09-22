@@ -2,27 +2,35 @@ import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
 import { WordPressIcon } from "@/components/SVG/WordPressIcon";
 import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { ServiceStat } from "@/providers/GlobalProvider/types";
-import { Service } from "@/providers/GlobalProvider/types/serviceType";
-import { UsersAndGroups } from "@/types";
+import { Service } from "@/providers/GlobalProvider/serviceType";
+import { UsersAndGroups } from "@/components/UserSelectionSection/types";
 
 export const servicesMock: Service[] = [
   {
     type: SERVICE_TYPE.PRESTASHOP,
-    status: SERVICE_STATE.DEPLOYED,
-    id: 1,
+    id: "1",
     userId: "USER1001",
-    url: "https://boutiquemarie.com",
-    supressDate: "2025-12-31",
+    firstName: "John",
+    lastName: "Doe2",
+    serviceName: "my-wp",
+    structureId: "structure1",
+    created: new Date("2023-10-15"),
+    deletionDate: new Date("2023-10-20"),
+    state: SERVICE_STATE.DEPLOYED
   },
   {
     type: SERVICE_TYPE.WORDPRESS,
-    status: SERVICE_STATE.DISABLED,
-    id: 2,
+    id: "2",
     userId: "USER1002",
-    url: "https://blogpierre.com",
-    supressDate: "2023-10-15",
-  },
-];
+    firstName: "John",
+    lastName: "Doe3",
+    serviceName: "my-wp2",
+    structureId: "structure2",
+    created: new Date("2023-10-15"),
+    deletionDate: new Date("2023-10-22"),
+    state: SERVICE_STATE.DISABLED
+  }
+] as Service[];
 
 export const servicesStatsMocks: ServiceStat[] = [
   {
@@ -47,81 +55,81 @@ export const usersAndGroupListData: UsersAndGroups[] = [
   {
     id: "1",
     name: "John Doe",
-    type: "user",
+    usertype: "user",
   },
   {
     id: "2",
     name: "Math Group",
-    type: "group",
+    usertype: "group",
   },
   {
     id: "3",
     name: "Science Class",
-    type: "class",
+    usertype: "class",
   },
   {
     id: "4",
     name: "Jane Smith",
-    type: "user",
+    usertype: "user",
   },
   {
     id: "5",
     name: "English Group",
-    type: "group",
+    usertype: "group",
   },
   {
     id: "6",
     name: "History Class",
-    type: "class",
+    usertype: "class",
   },
   {
     id: "7",
     name: "Alice Johnson",
-    type: "user",
+    usertype: "user",
   },
   {
     id: "8",
     name: "Physics Study Group",
-    type: "group",
+    usertype: "group",
   },
   {
     id: "9",
     name: "Art Workshop",
-    type: "class",
+    usertype: "class",
   },
   {
     id: "10",
     name: "Bob Williams",
-    type: "user",
+    usertype: "user",
   },
   {
     id: "11",
     name: "Chemistry Lab Group",
-    type: "group",
+    usertype: "group",
   },
   {
     id: "12",
     name: "Literature Seminar",
-    type: "class",
+    usertype: "class",
   },
   {
     id: "13",
     name: "Emma Davis",
-    type: "user",
+    usertype: "user",
   },
   {
     id: "14",
     name: "Coding Club",
-    type: "group",
+    usertype: "group",
   },
   {
     id: "15",
     name: "Physical Education",
-    type: "class",
+    usertype: "class",
   },
   {
     id: "16",
     name: "Michael Brown",
-    type: "user",
+    usertype: "user",
   },
 ];
