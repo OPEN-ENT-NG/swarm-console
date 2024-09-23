@@ -2,12 +2,14 @@ import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Checkbox, Divider, FormControlLabel, Modal, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { MODAL_TYPE, SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { useDeleteServicesMutation } from "@/services/api";
 import { ModalProps, OnChange } from "@/types";
 
 import {
@@ -19,11 +21,12 @@ import {
   serviceStackStyle,
 } from "../CreateServicesModal/style";
 import { serviceMapping } from "../CreateServicesModal/utils";
-import { isButtonDisabled } from "./utils";
+import { extractIdsServices, isButtonDisabled } from "./utils";
 
 export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<SERVICE_TYPE[]>([]);
+  const [deleteServices] = useDeleteServicesMutation();
   const {
     displayModals: { confirmation },
     handleDisplayModal,
@@ -45,10 +48,29 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
 
   const handleCancel = () => {
     handleClose();
+    handleDisplayModal(MODAL_TYPE.CONFIRMATION)
     setInputValue([]);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const payload = {
+      services_ids: extractIdsServices(tableSelected, inputValue),
+      state: SERVICE_STATE.DELETION_SCHEDULED,
+    };
+    try {
+      await deleteServices(payload).unwrap();
+      toast.success(t("swarm.create.service.modal.creation.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
     handleClose();
     setInputValue([]);
   };

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { Users } from "@/containers/CreateServicesModal/types";
+import { DeleteBody, Users } from "@/containers/CreateServicesModal/types";
 import { InputValueState as CreateBody } from "@/containers/CreateServicesModal/types";
 import { Services } from "@/providers/GlobalProvider/serviceType";
 import { RootState } from "@/stores/store";
@@ -55,7 +55,7 @@ export const api = createApi({
       }),
       invalidatesTags: ["Services"],
     }),
-    deleteServices: builder.mutation<void, CreateBody>({
+    deleteServices: builder.mutation<void, DeleteBody>({
       query: body => ({
         url: "/services",
         method: "DELETE",
@@ -66,4 +66,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetServicesQuery, useGetUsersQuery, useCreateServicesMutation } = api;
+export const { useGetServicesQuery, useGetUsersQuery, useCreateServicesMutation,useDeleteServicesMutation } = api;

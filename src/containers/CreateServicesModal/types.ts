@@ -1,5 +1,5 @@
 import { SVGComponent } from "@/components/SVG/types";
-import { PROFILE_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { PROFILE_TYPE, SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
 export interface InputValueState {
   users: string[];
@@ -40,3 +40,8 @@ export type Users = {
   classes: Class[];
   groups: Group[];
 };
+
+export interface DeleteBody {
+  services_ids: string[];
+  state: SERVICE_STATE;
+}
