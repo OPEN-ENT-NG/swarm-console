@@ -47,8 +47,7 @@ export const ServiceTable: FC = () => {
   const { order, page, limit } = tableQueryParams;
   const { t } = useTranslation();
   const rowItems = services?.filteredUsers.length ? transformRawDatas(services.filteredUsers) : [];
-  console.log(rowItems);
-  
+
   const columns = useColumns();
   const orderBy = COLUMN_ID.NAME;
   const totalCount = services?.globalInfos.totalUsers ?? 0;
@@ -209,7 +208,7 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
-            {!rowItems.length  && <TableCell>{t("swarm.table.empty")}</TableCell>}
+            {!rowItems.length && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
       </TableContainer>

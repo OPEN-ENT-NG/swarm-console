@@ -2,14 +2,15 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { Box, Button, Checkbox, ClickAwayListener, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import { Box, Button, Checkbox, ClickAwayListener, ListItemIcon, ListItemText, MenuItem } from "@mui/material";
 import { FC, MouseEvent, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { centerBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
+import { centerBoxStyle, flexStartBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
-import { filtersButtonsWrapperStyle } from "./style";
+import { StyledMenu, StyledMenuItem, StyledReinitListItemText, filtersButtonsWrapperStyle, itemBorder } from "./style";
 import { SUBFILTERS_STATE, SubOption, ToggleFiltersState } from "./types";
 import { useFiltersMapping } from "./useFiltersMapping";
 import { initialToggleFiltersState } from "./utils";
@@ -21,6 +22,8 @@ export const TableFilters: FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [subAnchorEl, setSubAnchorEl] = useState<null | HTMLElement>(null);
   const { services, setTableQueryParams, tableQueryParams } = useGlobalProvider();
+  const { t } = useTranslation();
+
   const handleFilterButtonClick = (event: MouseEvent<HTMLButtonElement>, method: ToggleFiltersState) => {
     setAnchorEl(event.currentTarget);
     setToggleFilters(method);
@@ -65,8 +68,33 @@ export const TableFilters: FC = () => {
       };
     });
   };
-  const reinitOneSubFilter = (subType: SUBFILTERS_STATE) => {
-    setTableQueryParams(prevState => ({ ...prevState, [subType]: [] }));
+
+  const toggleAllSubFilters = (subType: SUBFILTERS_STATE) => {
+    setTableQueryParams(prevState => {
+      const currentIds = prevState[subType] || [];
+      const allOptions =
+        subType === SUBFILTERS_STATE.CLASSES
+          ? services?.globalInfos?.classes || []
+          : services?.globalInfos?.structures || [];
+
+      const allOptionIds = allOptions.map(option => option.id);
+      const newIds = currentIds.length === allOptionIds.length ? [] : allOptionIds;
+
+      return {
+        ...prevState,
+        [subType]: newIds,
+      };
+    });
+  };
+
+  const areAllSubFiltersSelected = (subType: SUBFILTERS_STATE) => {
+    const currentIds = tableQueryParams[subType] || [];
+    const allOptions =
+      subType === SUBFILTERS_STATE.CLASSES
+        ? services?.globalInfos?.classes || []
+        : services?.globalInfos?.structures || [];
+
+    return currentIds.length === allOptions.length;
   };
 
   const isMenuOpen = toggleFilters.isFiltersOpen || toggleFilters.isServicesOpen;
@@ -80,6 +108,8 @@ export const TableFilters: FC = () => {
       ? services.globalInfos.classes
       : services.globalInfos.structures
     : [];
+  const subFilterToggleAllLabel =
+    toggleSubFilters === SUBFILTERS_STATE.STRUCTURES ? t("swarm.filters.all.etabs") : t("swarm.filters.all.classes");
 
   return (
     <ClickAwayListener onClickAway={handleFiltersClose}>
@@ -102,43 +132,52 @@ export const TableFilters: FC = () => {
             </Button>
           );
         })}
-        <Menu anchorEl={anchorEl} open={isMenuOpen} onClose={handleFiltersClose}>
+        <StyledMenu
+          anchorEl={anchorEl}
+          open={isMenuOpen}
+          onClose={handleFiltersClose}
+          sx={{
+            "& .MuiPaper-root": {
+              marginTop: ".2rem",
+            },
+          }}>
           {options === filtersOptions && (
             <Box>
               <MenuItem
                 onClick={() =>
                   setTableQueryParams(prevState => ({ ...prevState, groups: [], classes: [], structures: [] }))
-                }
-                sx={{ borderBottom: `1px solid gray` }}>
-                <ListItemText primary="Réinitialiser les filtres" />
+                }>
+                <StyledReinitListItemText primary={t("swarm.filters.reinit")} />
               </MenuItem>
               {options.map((option, index) => (
-                <MenuItem key={index} onClick={event => handleSubFilterSelect(event, option.sub)}>
-                  <ListItemIcon>{option.icon}</ListItemIcon>
+                <StyledMenuItem key={index} onClick={event => handleSubFilterSelect(event, option.sub)}>
+                  <ListItemIcon sx={{ color: "black" }}>{option.icon}</ListItemIcon>
                   <ListItemText primary={option.label} />
-                  <ListItemIcon>
+                  <ListItemIcon sx={{ color: "black" }}>
                     {option.sub === toggleSubFilters ? <ArrowLeftIcon /> : <ArrowRightIcon />}
                   </ListItemIcon>
-                </MenuItem>
+                </StyledMenuItem>
               ))}
             </Box>
           )}
           {options === servicesOptions &&
             options.map((option, index) => (
-              <MenuItem key={index} onClick={() => handleTypeToggle(option.state)}>
-                <Box sx={{ ...spaceBetweenBoxStyle, flexWrap: "nowrap" }}>
-                  <Box sx={{ width: "1.5rem", height: "1.5rem" }}>{option.icon}</Box>
-                  <ListItemText primary={option.label} />
+              <StyledMenuItem key={index} onClick={() => handleTypeToggle(option.state)}>
+                <Box sx={{ ...spaceBetweenBoxStyle, gap: "1rem", flexWrap: "nowrap" }}>
+                  <Box sx={{ ...flexStartBoxStyle, flexWrap: "nowrap", gap: ".5rem" }}>
+                    <Box sx={{ width: "1.5rem", height: "1.5rem", color: "black" }}>{option.icon}</Box>
+                    <ListItemText primary={option.label} />
+                  </Box>
                   <Checkbox
                     checked={tableQueryParams.types?.includes(option.state)}
                     onChange={() => handleTypeToggle(option.state)}
                     onClick={e => e.stopPropagation()}
                   />
                 </Box>
-              </MenuItem>
+              </StyledMenuItem>
             ))}
           {!!toggleSubFilters && (
-            <Menu
+            <StyledMenu
               anchorEl={subAnchorEl}
               open={!!toggleSubFilters}
               onClose={handleSubFilterClose}
@@ -149,27 +188,49 @@ export const TableFilters: FC = () => {
               transformOrigin={{
                 vertical: "top",
                 horizontal: "left",
+              }}
+              sx={{
+                "& .MuiPaper-root": {
+                  marginLeft: ".2rem",
+                },
               }}>
               <Box>
-                <MenuItem onClick={() => reinitOneSubFilter(toggleSubFilters)} sx={{ borderBottom: `1px solid gray` }}>
-                  <ListItemText primary="Réinitialiser les filtres" />
-                </MenuItem>
+                {options.length > 1 && (
+                  <StyledMenuItem onClick={() => toggleAllSubFilters(toggleSubFilters)} sx={itemBorder}>
+                    <Box
+                      sx={{
+                        ...spaceBetweenBoxStyle,
+                        gap: "1rem",
+                      }}>
+                      <ListItemText primary={subFilterToggleAllLabel} />
+                      <Checkbox
+                        sx={{ width: "1rem", height: "1rem" }}
+                        checked={areAllSubFiltersSelected(toggleSubFilters)}
+                        onChange={() => toggleAllSubFilters(toggleSubFilters)}
+                        onClick={e => e.stopPropagation()}
+                      />
+                    </Box>
+                  </StyledMenuItem>
+                )}
                 {subOptions.map(subOption => (
-                  <MenuItem onClick={() => handleSubOptionToggle(subOption.id, toggleSubFilters)} key={subOption.id}>
-                    <Box sx={{ ...spaceBetweenBoxStyle, flexWrap: "nowrap" }}>
+                  <StyledMenuItem
+                    onClick={() => handleSubOptionToggle(subOption.id, toggleSubFilters)}
+                    key={subOption.id}>
+                    <Box sx={{ ...spaceBetweenBoxStyle, flexWrap: "nowrap", gap: "1rem" }}>
                       <ListItemText primary={subOption.name} />
                       <Checkbox
+                        sx={{ width: "1rem", height: "1rem" }}
                         checked={tableQueryParams[toggleSubFilters]?.includes(subOption.id)}
                         onChange={() => handleSubOptionToggle(subOption.id, toggleSubFilters)}
                         onClick={e => e.stopPropagation()}
                       />
                     </Box>
-                  </MenuItem>
+                  </StyledMenuItem>
                 ))}
               </Box>
-            </Menu>
+            </StyledMenu>
           )}
-        </Menu>
+        </StyledMenu>
       </Box>
     </ClickAwayListener>
   );

@@ -115,7 +115,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -138,7 +138,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -161,7 +161,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -184,7 +184,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -219,7 +219,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -242,7 +242,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -265,7 +265,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -288,7 +288,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -323,7 +323,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -346,7 +346,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -369,7 +369,7 @@ export const itemRowsMock: RowItem[] = [
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
         state: SERVICE_STATE.DISABLED,
-      }
+      },
     ],
   },
   {
@@ -391,8 +391,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
   {
@@ -414,7 +414,7 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
+        state: SERVICE_STATE.DISABLED,
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
@@ -426,8 +426,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
   {
@@ -449,8 +449,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
   {
@@ -472,8 +472,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
   {
@@ -495,7 +495,7 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
+        state: SERVICE_STATE.DISABLED,
       },
       {
         type: SERVICE_TYPE.WORDPRESS,
@@ -507,8 +507,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
   {
@@ -530,8 +530,8 @@ export const itemRowsMock: RowItem[] = [
         structureId: "structure2",
         created: new Date("2023-10-15"),
         deletionDate: new Date("2023-10-22"),
-        state: SERVICE_STATE.DISABLED
-      }
+        state: SERVICE_STATE.DISABLED,
+      },
     ],
   },
 ];

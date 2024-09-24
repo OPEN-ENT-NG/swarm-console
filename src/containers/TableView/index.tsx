@@ -10,6 +10,7 @@ import { UsersAndGroups } from "@/components/UserSelectionSection/types";
 import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
+
 import { CreateServicesModal } from "../CreateServicesModal";
 import { DeleteServicesModal } from "../DeleteServicesModal";
 import { ReinitServicesModal } from "../ReinitServicesModal";
@@ -134,6 +135,7 @@ export const TableView: FC = () => {
           <Button
             variant="contained"
             data-testid="create-services-button"
+            sx={{ whiteSpace: "nowrap" }}
             onClick={() => handleDisplayModal(MODAL_TYPE.CREATE)}>
             {t("swarm.create.service.button")}
           </Button>

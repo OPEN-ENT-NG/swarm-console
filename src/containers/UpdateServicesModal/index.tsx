@@ -107,7 +107,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
               data-testid="create-services-submit"
               onClick={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
               fullWidth>
-              {t("swarm.button.reinit")}
+              {t("swarm.button.update")}
             </Button>
           </Box>
         </Box>
@@ -115,7 +115,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           isOpen={confirmation}
           handleClose={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
           handleConfirm={handleSubmit}
-          confirmButtonLabel={t("swarm.button.reinit")}
+          confirmButtonLabel={t("swarm.button.update")}
         />
       </Box>
     </Modal>

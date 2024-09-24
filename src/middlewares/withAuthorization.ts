@@ -18,23 +18,25 @@ interface AuthMiddlewareOptions extends NextAuthMiddlewareOptions {
   trustHost?: boolean;
 }
 
-
 function getHost(req: NextRequest): string {
-  console.log("MY HOST TO REQUEST:", process.env.NEXTAUTH_URL ?? req.headers?.get("x-forwarded-host") ?? "http://localhost:3000");
+  console.log(
+    "MY HOST TO REQUEST:",
+    process.env.NEXTAUTH_URL ?? req.headers?.get("x-forwarded-host") ?? "http://localhost:3000",
+  );
   return process.env.NEXTAUTH_URL ?? req.headers?.get("x-forwarded-host") ?? "http://localhost:3000";
 }
 
 type CsrfInfo = {
   csrfToken: string;
-  setCookies: string[]
-}
+  setCookies: string[];
+};
 export async function getCsrfInfo(req: NextRequest): Promise<CsrfInfo | null> {
   try {
     const response = await fetch(`${getHost(req)}/api/auth/csrf`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     });
 
     if (!response.ok) {
@@ -43,13 +45,13 @@ export async function getCsrfInfo(req: NextRequest): Promise<CsrfInfo | null> {
 
     const data = (await response.json()) as { csrfToken: string };
     console.log("fetching csrfToken Data: ", data.csrfToken);
-    response.headers.getSetCookie()
+    response.headers.getSetCookie();
     return {
       csrfToken: data.csrfToken,
-      setCookies: response.headers.getSetCookie()
+      setCookies: response.headers.getSetCookie(),
     };
   } catch (error) {
-    console.error('Error fetching CSRF token:', error);
+    console.error("Error fetching CSRF token:", error);
     return null;
   }
 }
@@ -75,7 +77,6 @@ async function handleMiddleware(
 
   options.trustHost ??= !!(process.env.NEXTAUTH_URL ?? process.env.AUTH_TRUST_HOST);
   console.log("Trust host:", options.trustHost);
-
 
   console.log("Host:", `${getHost(req)}`);
 
@@ -114,7 +115,7 @@ async function handleMiddleware(
   console.log("CSRF token from cookie:", cookieCsrfToken);
 
   // const csrfToken = cookieCsrfToken?.split("|")?.[0] ?? "";
-  const csrfInfo = await getCsrfInfo(req) as CsrfInfo ?? "";
+  const csrfInfo = ((await getCsrfInfo(req)) as CsrfInfo) ?? "";
 
   // const csrfTokenHash = cookieCsrfToken?.split("|")?.[1] ?? (await hash(`${csrfToken}${options.secret}`));
   // const cookie = `${csrfToken}|${csrfTokenHash}`;

@@ -1,9 +1,9 @@
 import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
 import { WordPressIcon } from "@/components/SVG/WordPressIcon";
-import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
-import { ServiceStat } from "@/providers/GlobalProvider/types";
-import { Service } from "@/providers/GlobalProvider/serviceType";
 import { UsersAndGroups } from "@/components/UserSelectionSection/types";
+import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { Service } from "@/providers/GlobalProvider/serviceType";
+import { ServiceStat } from "@/providers/GlobalProvider/types";
 
 export const servicesMock: Service[] = [
   {
@@ -16,7 +16,7 @@ export const servicesMock: Service[] = [
     structureId: "structure1",
     created: new Date("2023-10-15"),
     deletionDate: new Date("2023-10-20"),
-    state: SERVICE_STATE.DEPLOYED
+    state: SERVICE_STATE.DEPLOYED,
   },
   {
     type: SERVICE_TYPE.WORDPRESS,
@@ -28,8 +28,8 @@ export const servicesMock: Service[] = [
     structureId: "structure2",
     created: new Date("2023-10-15"),
     deletionDate: new Date("2023-10-22"),
-    state: SERVICE_STATE.DISABLED
-  }
+    state: SERVICE_STATE.DISABLED,
+  },
 ] as Service[];
 
 export const servicesStatsMocks: ServiceStat[] = [
