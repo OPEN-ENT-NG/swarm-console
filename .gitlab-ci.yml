@@ -1,4 +1,4 @@
-stages: [test, analysis, build]
+stages: [test, analysis, build, deploy]
 
 include:
   - component: $CI_SERVER_FQDN/devops/cicd/gitlab-ci-toolkit/nextjs-unit-tests@1.8.0
@@ -14,3 +14,17 @@ include:
     inputs:
       dependencies:
         - nextjs-sonarqube-analysis
+
+deploy:
+  image:
+    name: bitnami/kubectl:1.30.2
+    entrypoint: [ '' ]
+  stage: deploy
+  needs:
+    - nextjs-build-docker-image
+  only:
+    - dev
+  before_script:
+    - echo "$KUBE_CONFIG_DEV" | base64 -d > kubeconfig
+  script:
+    - kubectl --kubeconfig kubeconfig rollout restart deployment.apps/swarm-console -n swarm-dev
