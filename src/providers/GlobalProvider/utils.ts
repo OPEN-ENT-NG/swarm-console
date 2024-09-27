@@ -75,13 +75,13 @@ export const extractIdsServices = (tableSelected: RowItem[], inputValue: SERVICE
 export const getServiceStateDisplay = (status: SERVICE_STATE): SERVICE_STATE_DISPLAY => {
   switch (status) {
     case SERVICE_STATE.DEPLOYED:
+    case SERVICE_STATE.REACTIVATION_SCHEDULED:
       return SERVICE_STATE_DISPLAY.ACTIVE;
 
     case SERVICE_STATE.SCHEDULED:
     case SERVICE_STATE.IN_PROGRESS:
     case SERVICE_STATE.RESET_SCHEDULED:
     case SERVICE_STATE.RESET_IN_PROGRESS:
-    case SERVICE_STATE.REACTIVATION_SCHEDULED:
       return SERVICE_STATE_DISPLAY.WAITING;
 
     case SERVICE_STATE.DELETION_SCHEDULED:

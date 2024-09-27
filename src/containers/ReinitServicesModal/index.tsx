@@ -70,7 +70,7 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     };
     try {
       await resetServices(payload).unwrap();
-      toast.success(t("swarm.create.service.modal.deletion.in.progress"), {
+      toast.success(t("swarm.reinit.service.modal.reinit.in.progress"), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
