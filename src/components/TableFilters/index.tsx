@@ -10,7 +10,14 @@ import { centerBoxStyle, flexStartBoxStyle, spaceBetweenBoxStyle } from "@/core/
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
-import { StyledMenu, StyledMenuItem, StyledReinitListItemText, filtersButtonsWrapperStyle, itemBorder } from "./style";
+import {
+  StyledMenu,
+  StyledMenuItem,
+  StyledReinitListItemText,
+  filtersButtonsWrapperStyle,
+  filtersNumberStyle,
+  itemBorder,
+} from "./style";
 import { SUBFILTERS_STATE, SubOption, ToggleFiltersState } from "./types";
 import { useFiltersMapping } from "./useFiltersMapping";
 import { initialToggleFiltersState } from "./utils";
@@ -111,10 +118,13 @@ export const TableFilters: FC = () => {
   const subFilterToggleAllLabel =
     toggleSubFilters === SUBFILTERS_STATE.STRUCTURES ? t("swarm.filters.all.etabs") : t("swarm.filters.all.classes");
 
+  const filtersNumber =
+    tableQueryParams.classes.length + tableQueryParams.structures.length + tableQueryParams.groups.length;
+
   return (
     <ClickAwayListener onClickAway={handleFiltersClose}>
       <Box sx={filtersButtonsWrapperStyle}>
-        {buttonsMapping.map(item => {
+        {buttonsMapping.map((item, index) => {
           const isFilterOpen = toggleFilters[item.state];
           const method = isFilterOpen ? initialToggleFiltersState : item.method;
           return (
@@ -127,6 +137,7 @@ export const TableFilters: FC = () => {
               <Box sx={{ ...centerBoxStyle, gap: ".5rem" }}>
                 <Box sx={{ width: "1.2rem", height: "1.2rem" }}>{item.icon}</Box>
                 {item.label}
+                {!!filtersNumber && index === 0 && <Box sx={filtersNumberStyle}>{filtersNumber}</Box>}
                 {isFilterOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
               </Box>
             </Button>

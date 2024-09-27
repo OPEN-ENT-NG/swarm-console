@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { DeleteBody, Users } from "@/containers/CreateServicesModal/types";
+import { Users } from "@/containers/CreateServicesModal/types";
 import { InputValueState as CreateBody } from "@/containers/CreateServicesModal/types";
 import { Services } from "@/providers/GlobalProvider/serviceType";
 import { TableQueryParamsState } from "@/providers/GlobalProvider/types";
 import { RootState } from "@/stores/store";
+
+import { DeleteBody, DistributeBody, ResetBody, ToggleStatusBody, UpdateBody } from "./types";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER;
 const baseQuery = fetchBaseQuery({
@@ -64,7 +66,47 @@ export const api = createApi({
       }),
       invalidatesTags: ["Services"],
     }),
+    distributeServices: builder.mutation<void, DistributeBody>({
+      query: body => ({
+        url: "/services/emails",
+        method: "POST",
+        body,
+      }),
+    }),
+    updateServices: builder.mutation<void, UpdateBody>({
+      query: body => ({
+        url: "/services",
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    resetServices: builder.mutation<void, ResetBody>({
+      query: body => ({
+        url: "/services/reset",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Services"],
+    }),
+    toggleServices: builder.mutation<void, ToggleStatusBody>({
+      query: body => ({
+        url: "/services",
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Services"],
+    }),
   }),
 });
 
-export const { useGetServicesQuery, useGetUsersQuery, useCreateServicesMutation, useDeleteServicesMutation } = api;
+export const {
+  useGetServicesQuery,
+  useGetUsersQuery,
+  useCreateServicesMutation,
+  useDeleteServicesMutation,
+  useDistributeServicesMutation,
+  useResetServicesMutation,
+  useUpdateServicesMutation,
+  useToggleServicesMutation,
+} = api;

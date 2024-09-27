@@ -2,31 +2,48 @@ import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Divider, Modal, Stack, Switch, Typography } from "@mui/material";
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
+import { useToggleServicesMutation } from "@/services/api";
 import { ModalProps } from "@/types";
 
 import { actionButtonsBoxStyle, blueDividerStyle } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
 import { SVGWrapper, textAndSVGWrapper, toggleServiceStackStyle, toggleWrapperStyle } from "./style";
-import { isButtonDisabled } from "./utils";
+import { createToggleStatusBody } from "./utils";
 
 export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<SERVICE_TYPE[]>([]);
   const { tableSelected } = useGlobalProvider();
+  const [toggleServices] = useToggleServicesMutation();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
 
   const handleCancel = () => {
     handleClose();
     setInputValue([]);
   };
 
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue([]);
+  const handleSubmit = async () => {
+    const payload = createToggleStatusBody(tableSelected, inputValue);
+    try {
+      await toggleServices(payload).unwrap();
+      toast.success(t("swarm.create.service.modal.deletion.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleServiceTypeChange = (serviceName: SERVICE_TYPE) => {
@@ -60,7 +77,7 @@ export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose 
           alignItems="center"
           flexWrap="nowrap"
           sx={toggleServiceStackStyle}>
-          {serviceMapping.map(item => (
+          {formattedServiceMapping.map(item => (
             <Box
               key={item.label}
               sx={toggleWrapperStyle}
@@ -98,12 +115,7 @@ export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose 
             </Button>
           </Box>
           <Box sx={defaultWidthButtonWrapper}>
-            <Button
-              disabled={isButtonDisabled(inputValue)}
-              variant="contained"
-              data-testid="create-services-submit"
-              onClick={() => handleSubmit()}
-              fullWidth>
+            <Button variant="contained" data-testid="create-services-submit" onClick={() => handleSubmit()} fullWidth>
               {t("swarm.button.activate")}
             </Button>
           </Box>

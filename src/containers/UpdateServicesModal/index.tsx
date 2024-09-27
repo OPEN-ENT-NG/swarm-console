@@ -3,19 +3,21 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { columnBoxStyle, flexStartBoxStyle, modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
+import { useUpdateServicesMutation } from "@/services/api";
 import { ModalProps } from "@/types";
 
 import { actionButtonsBoxStyle, supressDateWrapperStyle } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
 import { SVGWrapper } from "./style";
 import { InputValueState } from "./types";
-import { isButtonDisabled } from "./utils";
+import { createUpdateBody, isButtonDisabled } from "./utils";
 
 export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
@@ -25,6 +27,8 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
+  const [updateServices] = useUpdateServicesMutation();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
 
   const handleCancel = () => {
     handleClose();
@@ -36,7 +40,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
       if (newValue === null) {
         return prevState.filter(item => item.type !== type);
       }
-      const newDate = newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss");
+      const newDate = newValue ? newValue.valueOf() : null;
       const existingIndex = prevState.findIndex(item => item.type === type);
       if (existingIndex !== -1) {
         return prevState.map((item, index) => (index === existingIndex ? { ...item, date: newDate } : item));
@@ -46,9 +50,22 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     });
   };
 
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue([]);
+  const handleSubmit = async () => {
+    const payload = createUpdateBody(tableSelected, inputValue);
+    try {
+      await updateServices(payload).unwrap();
+      toast.success(t("swarm.create.service.modal.deletion.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -68,7 +85,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           {t("swarm.modal.users.selected", { count: tableSelected.length })}
         </Typography>
         <Box sx={{ ...columnBoxStyle, gap: "1rem" }}>
-          {serviceMapping.map(item => {
+          {formattedServiceMapping.map(item => {
             const date = inputValue.find(value => value.type === item.name)?.date;
             return (
               <Box sx={columnBoxStyle} key={item.name}>

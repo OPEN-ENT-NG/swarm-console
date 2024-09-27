@@ -81,7 +81,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
       const newType = prevState.types.includes(serviceType)
-        ? prevState.types.filter(t => t !== serviceType)
+        ? prevState.types.filter(type => type !== serviceType)
         : [...prevState.types, serviceType];
       return { ...prevState, types: newType };
     });
@@ -156,12 +156,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   />
                 }
                 label={
-                  <Box
-                    sx={checkBoxLabelStyle}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleServiceTypeChange(item.name);
-                    }}>
+                  <Box sx={checkBoxLabelStyle}>
                     <Typography fontWeight="bold" variant="body1">
                       {t(`${item.label}`)}
                     </Typography>

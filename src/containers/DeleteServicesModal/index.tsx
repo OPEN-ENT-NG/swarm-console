@@ -9,6 +9,7 @@ import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE, SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { extractIdsServices, useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
 import { useDeleteServicesMutation } from "@/services/api";
 import { ModalProps, OnChange } from "@/types";
 
@@ -20,8 +21,7 @@ import {
   noHoverCheckBoxStyle,
   serviceStackStyle,
 } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
-import { extractIdsServices, isButtonDisabled } from "./utils";
+import { isButtonDisabled } from "./utils";
 
 export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
@@ -32,6 +32,7 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
       const newType = prevState.includes(serviceType)
@@ -47,8 +48,8 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleCancel = () => {
-    handleClose();
     setInputValue([]);
+    handleClose();
   };
 
   const handleSubmit = async () => {
@@ -75,13 +76,13 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   return (
     <Modal
       open={isOpen}
-      onClose={handleClose}
+      onClose={handleCancel}
       aria-labelledby="delete-services-modal"
       aria-describedby="delete-services">
       <Box sx={modalBoxStyle} data-testid="delete-services-modal">
         <Box sx={spaceBetweenBoxStyle}>
           <Typography variant="h1">{t("swarm.delete.service.modal.title")}</Typography>
-          <Button data-testid="close-delete-services-modal" onClick={handleClose}>
+          <Button data-testid="close-delete-services-modal" onClick={handleCancel}>
             <CloseIcon />
           </Button>
         </Box>
@@ -97,7 +98,7 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           alignItems="center"
           flexWrap="nowrap"
           sx={serviceStackStyle}>
-          {serviceMapping.map(item => (
+          {formattedServiceMapping.map(item => (
             <Box
               key={item.label}
               onClick={e => {
@@ -117,12 +118,7 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   />
                 }
                 label={
-                  <Box
-                    sx={checkBoxLabelStyle}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleServiceTypeChange(item.name);
-                    }}>
+                  <Box sx={checkBoxLabelStyle}>
                     <Typography fontWeight="bold" variant="body1">
                       {t(`${item.label}`)}
                     </Typography>

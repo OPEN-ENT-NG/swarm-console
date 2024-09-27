@@ -1,9 +1,11 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { serviceMapping } from "@/containers/CreateServicesModal/utils";
 import { Session } from "@/types";
 
-import { CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATE, SERVICE_STATE_DISPLAY } from "./enums";
-import { DisplayModalsState, TableQueryParamsState } from "./types";
+import { CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATE, SERVICE_STATE_DISPLAY, SERVICE_TYPE } from "./enums";
+import { DisplayModalsState, RowItem, TableQueryParamsState } from "./types";
 
 export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.CREATE]: false,
@@ -43,6 +45,31 @@ export const useTabs = () => {
     { tabValue: CURRENTTAB_STATE.MAIN, label: t("swarm.tab.main") },
     { tabValue: CURRENTTAB_STATE.STATS, label: t("swarm.tab.stats") },
   ];
+};
+
+export const useFormattedServiceMapping = (tableSelected: RowItem[]) => {
+  const formattedServiceMapping = useMemo(() => {
+    const presentServiceTypes = tableSelected.reduce((acc: SERVICE_TYPE[], item: RowItem) => {
+      item.services.forEach(service => {
+        if (!acc.includes(service.type)) {
+          acc.push(service.type);
+        }
+      });
+      return acc;
+    }, []);
+
+    return serviceMapping.filter(item => presentServiceTypes.includes(item.name));
+  }, [tableSelected]);
+  return formattedServiceMapping;
+};
+
+export const extractIdsServices = (tableSelected: RowItem[], inputValue: SERVICE_TYPE[]): string[] => {
+  return tableSelected.reduce<string[]>((acc, row) => {
+    const idsServicesCorrespondants = row.services
+      .filter(service => inputValue.includes(service.type))
+      .map(service => service.id);
+    return [...acc, ...idsServicesCorrespondants];
+  }, []);
 };
 
 export const getServiceStateDisplay = (status: SERVICE_STATE): SERVICE_STATE_DISPLAY => {

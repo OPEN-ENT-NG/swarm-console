@@ -1,6 +1,6 @@
 import { ListItemText, Menu, MenuItem, Paper, styled } from "@mui/material";
 
-import { flexStartBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
+import { centerBoxStyle, flexStartBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import theme from "@/core/style/theme";
 
 export const filtersButtonsWrapperStyle = {
@@ -73,3 +73,13 @@ export const StyledReinitListItemText = styled(ListItemText)(({ theme }) => ({
     ...itemBorder,
   },
 }));
+
+export const filtersNumberStyle = {
+  ...centerBoxStyle,
+  width: "1.5rem",
+  height: "1.5rem",
+  backgroundColor: theme.palette.primary.main,
+  borderRadius: "50%",
+  fontSize: "1rem",
+  color: theme.palette.common.white,
+};
