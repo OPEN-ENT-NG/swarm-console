@@ -78,6 +78,8 @@ export const filtersNumberStyle = {
   ...centerBoxStyle,
   width: "1.5rem",
   height: "1.5rem",
+  minWidth: "1.5rem",
+  minHheight: "1.5rem",
   backgroundColor: theme.palette.primary.main,
   borderRadius: "50%",
   fontSize: "1rem",

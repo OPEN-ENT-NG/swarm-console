@@ -153,7 +153,7 @@ export const ServiceTable: FC = () => {
                   tabIndex={-1}
                   key={`${item.userId}-${index}`}
                   selected={isItemSelected}>
-                  <TableCell padding="checkbox">
+                  <TableCell sx={{ padding: 0 }} padding="checkbox">
                     <Checkbox
                       checked={isItemSelected}
                       inputProps={{ "aria-labelledby": labelId }}

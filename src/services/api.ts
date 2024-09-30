@@ -33,7 +33,9 @@ export const api = createApi({
         queryParams.append("order", params.order);
 
         if (params.search) queryParams.append("search", params.search);
-        if (params.types && params.types.length > 0) queryParams.append("types", params.types.join(","));
+        if (params.types && params.types.length > 0) {
+          params.types.forEach(type => queryParams.append("types", type));
+        }
         if (params.structures && params.structures.length > 0)
           queryParams.append("structures", params.structures.join(","));
         if (params.classes && params.classes.length > 0) queryParams.append("classes", params.classes.join(","));
