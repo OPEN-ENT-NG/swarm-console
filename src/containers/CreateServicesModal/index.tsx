@@ -1,6 +1,8 @@
 import { Box, Button, CloseIcon, Typography } from "@cgi-learning-hub/ui";
 import { Checkbox, Divider, FormControlLabel, Modal, Stack } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -31,6 +33,9 @@ import {
   serviceMapping,
   updateInputValueFromUsersAndGroups,
 } from "./utils";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const [inputValue, setInputValue] = useState<InputValueState>(initialInputValue);
@@ -72,9 +77,10 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
+    const newDate = newValue ? newValue.endOf("day").local().valueOf() : null;
     setInputValue(prevState => ({
       ...prevState,
-      deletion_date: newValue ? newValue.valueOf() : null,
+      deletion_date: newDate,
     }));
   };
 

@@ -1,6 +1,8 @@
 import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -18,6 +20,9 @@ import { actionButtonsBoxStyle, supressDateWrapperStyle } from "../CreateService
 import { SVGWrapper } from "./style";
 import { InputValueState } from "./types";
 import { createUpdateBody, isButtonDisabled } from "./utils";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
@@ -40,7 +45,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
       if (newValue === null) {
         return prevState.filter(item => item.type !== type);
       }
-      const newDate = newValue ? newValue.valueOf() : null;
+      const newDate = newValue ? newValue.endOf("day").local().valueOf() : null;
       const existingIndex = prevState.findIndex(item => item.type === type);
       if (existingIndex !== -1) {
         return prevState.map((item, index) => (index === existingIndex ? { ...item, date: newDate } : item));

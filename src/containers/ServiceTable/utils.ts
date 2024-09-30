@@ -22,7 +22,8 @@ export const useColumns: () => Column[] = () => {
 export const orderByValues = [COLUMN_ID.NAME, COLUMN_ID.CLASS, COLUMN_ID.ETAB];
 
 export const transformRawDatas = (users: User[]): RowItem[] => {
-  return users.flatMap(user =>
+  const filtered = users.filter(item => !!item.services.length);
+  return filtered.flatMap(user =>
     user.structures.flatMap(structure =>
       user.classes.map(classe => ({
         userId: user.services[0]?.userId ?? "",
@@ -37,7 +38,10 @@ export const transformRawDatas = (users: User[]): RowItem[] => {
     ),
   );
 };
+
 dayjs.extend(utc);
 export const formatDate = (dateString: Date): string => {
+  console.log({ dateString, formated: dayjs(dateString).utc().format("DD/MM/YYYY") });
+
   return dayjs(dateString).utc().format("DD/MM/YYYY");
 };
