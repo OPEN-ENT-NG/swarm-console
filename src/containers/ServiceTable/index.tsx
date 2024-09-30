@@ -36,6 +36,7 @@ import {
   ServiceWrapperStyle,
   StatusPoint,
   serviceStatusWrapperStyle,
+  tableEmptyStyle,
   tableSortLabelWrapper,
   typoStyle,
 } from "./style";
@@ -208,9 +209,9 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
-            {!rowItems.length && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
+        {!rowItems.length && <Box sx={tableEmptyStyle}>{t("swarm.table.empty")}</Box>}
       </TableContainer>
       {totalCount > 10 && (
         <TablePagination

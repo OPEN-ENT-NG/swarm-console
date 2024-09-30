@@ -41,7 +41,5 @@ export const transformRawDatas = (users: User[]): RowItem[] => {
 
 dayjs.extend(utc);
 export const formatDate = (dateString: Date): string => {
-  console.log({ dateString, formated: dayjs(dateString).utc().format("DD/MM/YYYY") });
-
   return dayjs(dateString).utc().format("DD/MM/YYYY");
 };
