@@ -57,7 +57,10 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   }, [pathname, services, router]);
 
   useEffect(() => {
-    if (servicesData) setServices(servicesData);
+    if (servicesData) {
+      setServices(servicesData);
+      setTableSelected([]);
+    }
   }, [servicesData, tableQueryParams]);
 
   const value = useMemo<GlobalProviderContextType>(
