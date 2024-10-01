@@ -7,11 +7,10 @@ import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
-import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { columnBoxStyle, flexStartBoxStyle, modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import {  SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
 import { useUpdateServicesMutation } from "@/services/api";
 import { ModalProps } from "@/types";
@@ -28,8 +27,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<InputValueState>([]);
   const {
-    displayModals: { confirmation },
-    handleDisplayModal,
+
     tableSelected,
   } = useGlobalProvider();
   const [updateServices] = useUpdateServicesMutation();
@@ -127,18 +125,12 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
               disabled={isButtonDisabled(inputValue)}
               variant="contained"
               data-testid="create-services-submit"
-              onClick={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
+              onClick={handleSubmit}
               fullWidth>
               {t("swarm.button.update")}
             </Button>
           </Box>
         </Box>
-        <ConfirmationModal
-          isOpen={confirmation}
-          handleClose={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
-          handleConfirm={handleSubmit}
-          confirmButtonLabel={t("swarm.button.update")}
-        />
       </Box>
     </Modal>
   );
