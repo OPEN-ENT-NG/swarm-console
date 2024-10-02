@@ -4,7 +4,6 @@ import { PROFILE_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 export interface InputValueState {
   users: string[];
   classes: string[];
-  groups: string[];
   types: SERVICE_TYPE[];
   deletion_date: number | null | "Invalid Date";
 }
@@ -20,11 +19,6 @@ type Class = {
   name: string;
 };
 
-type Group = {
-  id: string;
-  name: string;
-};
-
 type User = {
   id: string;
   firstName: string;
@@ -32,11 +26,9 @@ type User = {
   profiles: PROFILE_TYPE;
   structures: string;
   classes: Class[];
-  groups: Group[];
 };
 
 export type Users = {
   users: User[];
   classes: Class[];
-  groups: Group[];
 };

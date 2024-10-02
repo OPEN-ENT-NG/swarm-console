@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { columnBoxStyle, flexStartBoxStyle, modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import {  SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
 import { useUpdateServicesMutation } from "@/services/api";
 import { ModalProps } from "@/types";
@@ -26,10 +26,7 @@ dayjs.extend(timezone);
 export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<InputValueState>([]);
-  const {
-
-    tableSelected,
-  } = useGlobalProvider();
+  const { tableSelected } = useGlobalProvider();
   const [updateServices] = useUpdateServicesMutation();
   const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
 
@@ -43,7 +40,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
       if (newValue === null) {
         return prevState.filter(item => item.type !== type);
       }
-      const newDate = newValue ? newValue.endOf("day").local().valueOf() : null;
+      const newDate = newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null;
       const existingIndex = prevState.findIndex(item => item.type === type);
       if (existingIndex !== -1) {
         return prevState.map((item, index) => (index === existingIndex ? { ...item, date: newDate } : item));

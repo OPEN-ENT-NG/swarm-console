@@ -56,6 +56,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleSubmit = async () => {
     try {
       await createServices(inputValue).unwrap();
+
       toast.success(t("swarm.create.service.modal.creation.in.progress"), {
         position: "top-right",
         autoClose: 3000,
@@ -77,7 +78,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
-    const newDate = newValue ? newValue.endOf("day").local().valueOf() : null;
+    const newDate = newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null;
     setInputValue(prevState => ({
       ...prevState,
       deletion_date: newDate,
@@ -107,6 +108,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   useEffect(() => {
+    if (!usersData) return;
     setInputValue(prevState => updateInputValueFromUsersAndGroups(prevState, usersAndGroups));
   }, [usersAndGroups]);
 

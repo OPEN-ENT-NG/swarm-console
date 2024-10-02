@@ -39,7 +39,10 @@ export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => {
   const statusColorMap = {
     [SERVICE_STATE_DISPLAY.ACTIVE]: "#228665",
     [SERVICE_STATE_DISPLAY.INACTIVE]: "#E20037",
-    [SERVICE_STATE_DISPLAY.WAITING]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.CREATION]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.ERROR]: "#E20037",
+    [SERVICE_STATE_DISPLAY.DELETION]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.REINIT]: "#FFC900",
   };
 
   return {

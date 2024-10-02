@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { Users } from "@/containers/CreateServicesModal/types";
 import { InputValueState as CreateBody } from "@/containers/CreateServicesModal/types";
 import { Services } from "@/providers/GlobalProvider/serviceType";
 import { TableQueryParamsState } from "@/providers/GlobalProvider/types";
 import { RootState } from "@/stores/store";
 
-import { DeleteBody, DistributeBody, ResetBody, ToggleStatusBody, UpdateBody } from "./types";
+import { DeleteBody, DistributeBody, ResetBody, ToggleStatusBody, UpdateBody, UsersData } from "./types";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER;
 const baseQuery = fetchBaseQuery({
@@ -48,7 +47,7 @@ export const api = createApi({
       },
       providesTags: ["Services"],
     }),
-    getUsers: builder.query<Users, void>({
+    getUsers: builder.query<UsersData, void>({
       query: () => "/users",
       providesTags: ["Users"],
     }),

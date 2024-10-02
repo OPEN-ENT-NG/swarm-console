@@ -64,7 +64,7 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      deletion_date: newValue ? newValue.endOf("day").local().valueOf() : null,
+      deletion_date: newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null,
     }));
   };
   const handleSubmit = async () => {

@@ -41,7 +41,7 @@ import {
   typoStyle,
 } from "./style";
 import { LowerCaseOrder } from "./types";
-import { formatDate, transformRawDatas, useColumns } from "./utils";
+import { formatDate, statusMap, transformRawDatas, useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
   const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected, services } = useGlobalProvider();
@@ -83,11 +83,11 @@ export const ServiceTable: FC = () => {
 
   const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
 
-  const prepareStatusText = (status: SERVICE_STATE) => {
-    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.ACTIVE) return t("swarm.status.active");
-    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.INACTIVE) return t("swarm.status.inactive");
-    return t("swarm.status.waiting");
+  const prepareStatusText = (status: SERVICE_STATE): string => {
+    const statusDisplay = getServiceStateDisplay(status);
+    return t(statusMap[statusDisplay] || "swarm.status.error");
   };
+
   const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
 
   return (
@@ -168,7 +168,9 @@ export const ServiceTable: FC = () => {
                       {item.services.map(serviceItem => {
                         const IconComponent =
                           serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
-                        const isActive = getServiceStateDisplay(serviceItem.state) !== SERVICE_STATE_DISPLAY.WAITING;
+                        const isActive =
+                          getServiceStateDisplay(serviceItem.state) ===
+                          (SERVICE_STATE_DISPLAY.ACTIVE || SERVICE_STATE_DISPLAY.INACTIVE);
                         return isActive ? (
                           <Link
                             key={serviceItem.id}

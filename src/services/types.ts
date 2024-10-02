@@ -16,3 +16,19 @@ export type ToggleStatusBody = {
   services_ids: string[];
   state: SERVICE_STATE.DEACTIVATION_SCHEDULED | SERVICE_STATE.REACTIVATION_SCHEDULED;
 }[];
+
+type UserData = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  mail: string;
+  profiles: null;
+  structures: string;
+  classes: {
+    classId: string;
+    name: string;
+    schoolId: string;
+  }[];
+};
+
+export type UsersData = UserData[];

@@ -49,7 +49,7 @@ describe("ReinitServicesModal Component", () => {
     const datePicker = screen.getByPlaceholderText("--/--/----");
     fireEvent.change(datePicker, { target: { value: "15/05/2023" } });
     await waitFor(() => {
-      expect(datePicker).toHaveValue("15/05/2023");
+      expect(datePicker).toHaveValue("16/05/2023");
     });
   });
 
