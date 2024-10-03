@@ -51,7 +51,12 @@ export const useFormattedServiceMapping = (tableSelected: RowItem[]) => {
   const formattedServiceMapping = useMemo(() => {
     const presentServiceTypes = tableSelected.reduce((acc: SERVICE_TYPE[], item: RowItem) => {
       item.services.forEach(service => {
-        if (!acc.includes(service.type)) {
+        const serviceStateDisplay = getServiceStateDisplay(service.state);
+        if (
+          !acc.includes(service.type) &&
+          (serviceStateDisplay === SERVICE_STATE_DISPLAY.ACTIVE ||
+            serviceStateDisplay === SERVICE_STATE_DISPLAY.INACTIVE)
+        ) {
           acc.push(service.type);
         }
       });
@@ -60,6 +65,7 @@ export const useFormattedServiceMapping = (tableSelected: RowItem[]) => {
 
     return serviceMapping.filter(item => presentServiceTypes.includes(item.name));
   }, [tableSelected]);
+
   return formattedServiceMapping;
 };
 

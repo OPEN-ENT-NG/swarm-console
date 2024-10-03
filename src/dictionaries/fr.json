@@ -1,6 +1,6 @@
 {
     "swarm.title": "Ferme de serveurs",
-    "swarm.empty.services":"Vous n’avez pas encore créé de services. Créez des sites Wordpress ou Prestashop puis distribuez-les.",
+    "swarm.empty.services":"Vous n’avez pas encore créé de services. Créez des sites Wordpress ou PrestaShop puis distribuez-les.",
     "swarm.create.service.button":"Créer des services",
     "swarm.create.service.modal.title":"Création de services",
     "swarm.create.service.modal.desc":"Chaque utilisateur peut posséder au maximum un service Wordpress et un service PrestaShop. Si un des services est déjà existant, il ne sera pas recréé.",

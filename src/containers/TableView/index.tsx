@@ -1,12 +1,11 @@
 import { TextInput } from "@cgi-learning-hub/ui";
-import { Box, Button, List, ListItemButton, ListItemText, Paper, Typography } from "@mui/material";
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import { Box, Button, Typography } from "@mui/material";
+import React, { ChangeEvent, FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DropdownList } from "@/components/DropDownList";
 import { ExpandCirclesIcon } from "@/components/SVG/ExpandCirclesIcon";
 import { TableFilters } from "@/components/TableFilters";
-import { UsersAndGroups } from "@/components/UserSelectionSection/types";
 import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
@@ -21,7 +20,6 @@ import { UpdateServicesModal } from "../UpdateServicesModal";
 import {
   buttonWrapperStyle,
   filtersAndButtonsWrapperStyle,
-  paperStyle,
   searchAndFilterWrapperStyle,
   tableViewWrapperStyle,
 } from "./styles";
@@ -42,13 +40,8 @@ export const TableView: FC = () => {
     tableSelected,
     tableQueryParams: { search },
     setTableQueryParams,
-    services,
   } = useGlobalProvider();
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
-  const [filteredUsers, setFilteredUsers] = useState<UsersAndGroups[]>([]);
-  const users: UsersAndGroups[] = services?.globalInfos.users.length
-    ? services.globalInfos.users.map(user => ({ name: `${user.lastName} ${user.firstName}`, id: user.id }))
-    : [];
   const DropDownListItems = useCreatedropDownListItems();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,17 +49,6 @@ export const TableView: FC = () => {
     setTableQueryParams(prevState => ({ ...prevState, search: value }));
     if (!isListOpen) setIsListOpen(true);
   };
-
-  useEffect(() => {
-    const lowercaseSearch = search.toLowerCase();
-    const filtered = users.reduce((acc: UsersAndGroups[], user) => {
-      if (acc.length < 5 && user.name.toLowerCase().includes(lowercaseSearch)) {
-        return [...acc, user];
-      }
-      return acc;
-    }, []);
-    setFilteredUsers(filtered);
-  }, [search]);
 
   return (
     <Box sx={tableViewWrapperStyle} onClick={() => setIsListOpen(false)}>
@@ -84,28 +66,6 @@ export const TableView: FC = () => {
               value={search}
               onChange={handleChange}
             />
-            {search.length >= 3 && isListOpen && (
-              <Paper sx={paperStyle}>
-                {filteredUsers.length ? (
-                  <List>
-                    {filteredUsers.map(item => (
-                      <ListItemButton
-                        key={item.id}
-                        onClick={() => {
-                          setTableQueryParams(prevState => ({ ...prevState, search: item.name }));
-                          setIsListOpen(false);
-                        }}>
-                        <ListItemText primary={item.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                ) : (
-                  <Typography sx={{ padding: ".5rem" }} variant="body1">
-                    {t("swarm.table.view.search.input.empty")}
-                  </Typography>
-                )}
-              </Paper>
-            )}
           </Box>
           <TableFilters />
         </Box>

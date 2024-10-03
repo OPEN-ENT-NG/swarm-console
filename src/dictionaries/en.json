@@ -1,6 +1,6 @@
 {
     "title": "Server farm",
-    "swarm.empty.services":"You haven't created any services yet. Create WordPress or Prestashop sites, then distribute them.",
+    "swarm.empty.services":"You haven't created any services yet. Create WordPress or PrestaShop sites, then distribute them.",
     "swarm.create.service.button":"Create services",
     "swarm.create.service.title":"Services creation",
     "swarm.create.service.modal.desc":"Each user can have a maximum of one WordPress service and one PrestaShop service. If one of the services already exists, it will not be recreated.",

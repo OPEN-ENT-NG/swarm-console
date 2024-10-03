@@ -22,7 +22,7 @@ export const CustomDatePicker: FC<CustomDatePickerProps> = ({ value, onChange, d
       <DatePicker
         minDate={tomorrow}
         format="DD/MM/YYYY"
-        value={value}
+        value={value ? value.subtract(1, "day") : value}
         onChange={onChange}
         slots={{
           openPickerIcon: DatePickerIcon,

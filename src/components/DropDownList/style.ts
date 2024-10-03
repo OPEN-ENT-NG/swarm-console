@@ -22,6 +22,8 @@ export const DropdownListWrapper = styled(Paper)<StyledProps>(({ theme, styledva
   marginTop: theme.spacing(1),
   backgroundColor: styledvariant === "contained" ? theme.palette.primary.main : theme.palette.background.paper,
   color: styledvariant === "contained" ? theme.palette.common.white : theme.palette.primary.main,
+  fontSize: "1rem",
+  fontWeight: "400",
   border:
     styledvariant === "outlined"
       ? `1px solid ${theme.palette.primary.main}`
