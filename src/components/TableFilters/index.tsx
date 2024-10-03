@@ -81,7 +81,7 @@ export const TableFilters: FC = () => {
       const currentIds = prevState[subType] || [];
       const allOptions =
         subType === SUBFILTERS_STATE.CLASSES
-          ? services?.globalInfos?.classes || []
+          ? services?.globalInfos?.classes.map(item => ({ name: item.name, id: item.classId })) || []
           : services?.globalInfos?.structures || [];
 
       const allOptionIds = allOptions.map(option => option.id);
@@ -112,7 +112,7 @@ export const TableFilters: FC = () => {
       : ([] as SubOption[]);
   const subOptions = services?.globalInfos
     ? toggleSubFilters === SUBFILTERS_STATE.CLASSES
-      ? services.globalInfos.classes
+      ? services.globalInfos.classes.map(item => ({ name: item.name, id: item.classId }))
       : services.globalInfos.structures
     : [];
   const subFilterToggleAllLabel =

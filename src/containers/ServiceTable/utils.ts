@@ -30,7 +30,7 @@ export const transformRawDatas = (users: User[]): RowItem[] => {
         lastName: user.services[0]?.lastName ?? "",
         firstName: user.services[0]?.firstName ?? "",
         className: classe.name,
-        classId: classe.id,
+        classId: classe.classId,
         etabName: structure.name,
         etabId: structure.id,
         services: user.services,

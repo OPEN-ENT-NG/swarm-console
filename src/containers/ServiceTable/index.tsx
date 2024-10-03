@@ -52,6 +52,8 @@ export const ServiceTable: FC = () => {
   const columns = useColumns();
   const orderBy = COLUMN_ID.NAME;
   const totalCount = services?.globalInfos.totalUsers ?? 0;
+  const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setTableQueryParams(prev => ({ ...prev, page: newPage }));
   };
@@ -74,6 +76,8 @@ export const ServiceTable: FC = () => {
         getServiceStateDisplay(service.state) === (SERVICE_STATE_DISPLAY.ACTIVE || SERVICE_STATE_DISPLAY.INACTIVE),
     );
   };
+  const isMetaCheckBoxChecked =
+    rowItems.length > 0 && !!tableSelected.length && tableSelected.length === rowItems.filter(isItemSelectable).length;
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -95,8 +99,6 @@ export const ServiceTable: FC = () => {
     return t(statusMap[statusDisplay] || "swarm.status.error");
   };
 
-  const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
-
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer>
@@ -112,7 +114,7 @@ export const ServiceTable: FC = () => {
                     {column.id === COLUMN_ID.SELECT ? (
                       <Checkbox
                         indeterminate={tableSelected.length > 0 && tableSelected.length < rowItems.length}
-                        checked={rowItems.length > 0 && tableSelected.length === rowItems.length}
+                        checked={isMetaCheckBoxChecked}
                         onChange={handleSelectAllClick}
                         inputProps={{ "aria-label": "select all services" }}
                       />
