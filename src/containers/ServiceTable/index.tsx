@@ -68,9 +68,16 @@ export const ServiceTable: FC = () => {
     }));
   };
 
+  const isItemSelectable = (item: RowItem) => {
+    return item.services.some(
+      service =>
+        getServiceStateDisplay(service.state) === (SERVICE_STATE_DISPLAY.ACTIVE || SERVICE_STATE_DISPLAY.INACTIVE),
+    );
+  };
+
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowItems;
+      const newSelected = rowItems.filter(isItemSelectable);
       setTableSelected(newSelected);
       return;
     }
@@ -143,6 +150,7 @@ export const ServiceTable: FC = () => {
           </TableHead>
           <TableBody>
             {rowItems.map((item, index) => {
+              const isSelectable = isItemSelectable(item);
               const isItemSelected = isSelected(item.userId);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
@@ -154,11 +162,13 @@ export const ServiceTable: FC = () => {
                   key={`${item.userId}-${index}`}
                   selected={isItemSelected}>
                   <TableCell sx={{ padding: 0 }} padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      inputProps={{ "aria-labelledby": labelId }}
-                      onChange={event => handleClick(event, item)}
-                    />
+                    {isSelectable && (
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ "aria-labelledby": labelId }}
+                        onChange={event => handleClick(event, item)}
+                      />
+                    )}
                   </TableCell>
                   <TableCell>{`${item.lastName} ${item.firstName}`}</TableCell>
                   <TableCell>{item.className}</TableCell>
