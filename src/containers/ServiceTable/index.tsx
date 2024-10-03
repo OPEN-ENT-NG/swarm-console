@@ -172,7 +172,7 @@ export const ServiceTable: FC = () => {
                       />
                     )}
                   </TableCell>
-                  <TableCell>{`${item.lastName} ${item.firstName}`}</TableCell>
+                  <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
                   <TableCell>{item.className}</TableCell>
                   <TableCell>{item.etabName}</TableCell>
                   <TableCell>

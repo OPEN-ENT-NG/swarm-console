@@ -26,7 +26,7 @@ export const DropdownList: FC<DropdownListProps> = ({ items, variant = "containe
           <List sx={{ paddingTop: "0", paddingBottom: "0" }}>
             {items.map((item, index) => (
               <Box key={`option-${index + Date.now()}`}>
-                {item.divider && <Divider />}
+                {item.divider && <Divider variant="middle" />}
                 <ListItem onClick={() => handleItemClick(item.OnClick)}>
                   <StyledListItemText
                     primary={<Box sx={SVGWrapperStyle}>{item.primary}</Box>}
