@@ -153,6 +153,8 @@ export const ServiceTable: FC = () => {
           <TableBody>
             {rowItems.map((item, index) => {
               const isSelectable = isItemSelectable(item);
+              console.log(isSelectable);
+              
               const isItemSelected = isSelected(item.userId);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
