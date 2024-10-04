@@ -64,6 +64,9 @@ export const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   "& .MuiListItemText-primary": {
     marginRight: theme.spacing(1),
   },
+  "& .MuiListItemText-secondary": {
+    fontWeight: "bold",
+  },
 }));
 
 export const SVGWrapperStyle = {
