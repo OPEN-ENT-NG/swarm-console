@@ -73,7 +73,8 @@ export const ServiceTable: FC = () => {
   const isItemSelectable = (item: RowItem) => {
     return item.services.some(
       service =>
-        getServiceStateDisplay(service.state) === (SERVICE_STATE_DISPLAY.ACTIVE || SERVICE_STATE_DISPLAY.INACTIVE),
+        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
+        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.INACTIVE,
     );
   };
   const isMetaCheckBoxChecked =
@@ -153,8 +154,6 @@ export const ServiceTable: FC = () => {
           <TableBody>
             {rowItems.map((item, index) => {
               const isSelectable = isItemSelectable(item);
-              console.log(isSelectable);
-              
               const isItemSelected = isSelected(item.userId);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
@@ -183,8 +182,8 @@ export const ServiceTable: FC = () => {
                         const IconComponent =
                           serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
                         const isActive =
-                          getServiceStateDisplay(serviceItem.state) ===
-                          (SERVICE_STATE_DISPLAY.ACTIVE || SERVICE_STATE_DISPLAY.INACTIVE);
+                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
+                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.INACTIVE;
                         return isActive ? (
                           <Link
                             key={serviceItem.id}
