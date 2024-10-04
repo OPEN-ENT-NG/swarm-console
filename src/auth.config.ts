@@ -46,7 +46,7 @@ type RefreshAccessToken = {
 const COOKIES_LIFE_TIME = 24 * 60 * 60;
 const COOKIE_PREFIX = process.env.NODE_ENV === "production" ? "__Secure-" : "";
 
-const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken> => {
+export const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken> => {
   const url = `${process.env.KEYCLOACK_ISSUER}/protocol/openid-connect/token`;
   const resp = await fetch(url, {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -88,12 +88,11 @@ export const authOptions: AuthOptions = {
       const nowTimeStamp = dayjs();
 
       try {
-        // we refresh token on update action
         if (trigger === "update") {
+          console.log("passe");
           return await refreshAccessToken(token);
         }
 
-        // we get intial token on sign in
         if (account && account.access_token && account.id_token && account.expires_at && account.refresh_token) {
           const tokenData = jwtDecode(account.access_token);
 
@@ -103,14 +102,11 @@ export const authOptions: AuthOptions = {
           token.expires_at = account.expires_at;
           token.refresh_token = account.refresh_token;
           return token;
-          // if time of expires is more then current date then we return existing token.
         } else if (token && nowTimeStamp.isBefore(dayjs.unix(token.expires_at))) {
           return token;
-          // this happens after user session is expired, so in this case we try to update user session
         } else {
           return await refreshAccessToken(token);
         }
-        // if session update is failed we return error and on client we are doing logout(TokenExpireController).
       } catch (error) {
         return { ...token, error: "RefreshAccessTokenError" };
       }

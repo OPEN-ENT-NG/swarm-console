@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 import { headers } from "next/headers";
+import { ReactNode } from "react";
 
 import { authOptions } from "@/auth.config";
 import { ClientLayout } from "@/layouts/ClientLayout";
@@ -11,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   const headersList = headers();
   const locale = headersList.get("x-default-locale") ?? "fr";
