@@ -26,6 +26,7 @@ import {
   SERVICE_STATE_DISPLAY,
   SERVICE_TYPE,
 } from "@/providers/GlobalProvider/enums";
+import { Service } from "@/providers/GlobalProvider/serviceType";
 import { RowItem } from "@/providers/GlobalProvider/types";
 import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
 
@@ -70,19 +71,28 @@ export const ServiceTable: FC = () => {
     }));
   };
 
-  const isItemSelectable = (item: RowItem) => {
-    return item.services.some(
-      service =>
-        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
-        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.INACTIVE,
-    );
+  const isServiceSelectable = (service: Service) => {
+    const state = getServiceStateDisplay(service.state);
+    return state === SERVICE_STATE_DISPLAY.ACTIVE || state === SERVICE_STATE_DISPLAY.INACTIVE;
   };
+
+  const isItemSelectable = (item: RowItem) => {
+    return item.services.some(isServiceSelectable);
+  };
+
+  const filterSelectableServices = (item: RowItem): RowItem => {
+    return {
+      ...item,
+      services: item.services.filter(isServiceSelectable),
+    };
+  };
+
   const isMetaCheckBoxChecked =
     rowItems.length > 0 && !!tableSelected.length && tableSelected.length === rowItems.filter(isItemSelectable).length;
 
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowItems.filter(isItemSelectable);
+      const newSelected = rowItems.filter(isItemSelectable).map(filterSelectableServices);
       setTableSelected(newSelected);
       return;
     }
@@ -90,7 +100,14 @@ export const ServiceTable: FC = () => {
   };
 
   const handleClick = (event: ChangeEvent<HTMLInputElement>, row: RowItem) => {
-    setTableSelected(prev => (event.target.checked ? [...prev, row] : prev.filter(item => item.userId !== row.userId)));
+    setTableSelected(prev => {
+      if (event.target.checked) {
+        const filteredRow = filterSelectableServices(row);
+        return [...prev, filteredRow];
+      } else {
+        return prev.filter(item => item.userId !== row.userId);
+      }
+    });
   };
 
   const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
