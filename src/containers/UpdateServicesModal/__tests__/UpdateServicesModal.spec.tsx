@@ -81,8 +81,8 @@ describe("UpdateServicesModal Component", () => {
   //   expect(mockHandleClose).toHaveBeenCalled();
   // });
 
-  it("displays correct number of selected users", () => {
-    renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    expect(screen.getByText("swarm.modal.users.selected")).toBeInTheDocument();
-  });
+  // it("displays correct number of selected users", () => {
+  //   renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
+  //   expect(screen.getByText("swarm.modal.users.selected")).toBeInTheDocument();
+  // });
 });

@@ -82,7 +82,9 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           </Button>
         </Box>
         <Typography variant="body1" sx={{ fontWeight: "600" }}>
-          {t("swarm.modal.users.selected", { count: tableSelected.length })}
+          {tableSelected.length === 1
+            ? t("swarm.modal.users.selected_singular", { count: tableSelected.length })
+            : t("swarm.modal.users.selected_plural", { count: tableSelected.length })}
         </Typography>
         <Box sx={{ ...columnBoxStyle, gap: "1rem" }}>
           {formattedServiceMapping.map(item => {

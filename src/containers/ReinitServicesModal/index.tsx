@@ -104,7 +104,9 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
         </Box>
         <Typography variant="body1">{t("swarm.reinit.service.modal.desc")}</Typography>
         <Typography variant="body1" sx={{ fontWeight: "600" }}>
-          {t("swarm.modal.users.selected", { count: tableSelected.length })}
+          {tableSelected.length === 1
+            ? t("swarm.modal.users.selected_singular", { count: tableSelected.length })
+            : t("swarm.modal.users.selected_plural", { count: tableSelected.length })}
         </Typography>
         <Typography variant="body1">{t("swarm.reinit.service.modal.label")}</Typography>
         <Stack
