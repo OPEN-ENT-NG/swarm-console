@@ -30,7 +30,7 @@
     "swarm.update.service.modal.label":"Sites {{type}}",
     "swarm.update.service.modal.in.progress":"Modification de la date de supression des services en cours...",
     "swarm.confirmation.modal.default":"Cette action est irréversible",
-    "swarm.modal.users.selected": "{{count}} utilisateur{{count > 1 ? 's' : ''}} sélectionné{{count > 1 ? 's' : ''}}",
+    "swarm.modal.users.selected": "{{count}} utilisateur{{count, plural, one{} other{s}}} sélectionné{{count, plural, one{} other{s}}}",
     "swarm.status.active":"Actif",
     "swarm.status.inactive":"Inactif",
     "swarm.status.create":"Création en cours",
