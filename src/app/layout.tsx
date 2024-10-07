@@ -18,19 +18,30 @@ export default async function RootLayout({
   const locale = headersList.get("x-default-locale") ?? "fr";
   const session: Session | null = await getServerSession(authOptions);
 
-  if (session) {
+  if (!session) {
     return (
       <html lang={locale}>
         <body className={inter.className}>
-          <ClientLayout session={session}>{children}</ClientLayout>
+          <p>Non authentifié</p>
         </body>
       </html>
     );
   }
+
+  if (!session.isManager) {
+    return (
+      <html lang={locale}>
+        <body className={inter.className}>
+          <p>Accès refusé : Rôle Manager requis</p>
+        </body>
+      </html>
+    );
+  }
+
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <p>Non authentifié</p>
+        <ClientLayout session={session}>{children}</ClientLayout>
       </body>
     </html>
   );

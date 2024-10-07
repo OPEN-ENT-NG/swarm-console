@@ -5,8 +5,8 @@ import { serviceMapping } from "@/containers/CreateServicesModal/utils";
 import { Session } from "@/types";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATE, SERVICE_STATE_DISPLAY, SERVICE_TYPE } from "./enums";
-import { DisplayModalsState, RowItem, TableQueryParamsState } from "./types";
 import { Services } from "./serviceType";
+import { DisplayModalsState, RowItem, TableQueryParamsState } from "./types";
 
 export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.CREATE]: false,

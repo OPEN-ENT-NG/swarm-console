@@ -18,6 +18,11 @@ declare module "next-auth/jwt" {
 declare module "jwt-decode" {
   export interface JwtPayload {
     realm_access: { roles: string[] };
+    resource_access?: {
+      [key: string]: {
+        roles: string[];
+      };
+    };
   }
 }
 
@@ -96,11 +101,17 @@ export const authOptions: AuthOptions = {
         if (account && account.access_token && account.id_token && account.expires_at && account.refresh_token) {
           const tokenData = jwtDecode(account.access_token);
 
-          token.roles = tokenData.realm_access.roles;
+          const isManager = tokenData.resource_access?.console?.roles.includes("manager") || false;
+
+          token.roles = [
+            ...(tokenData.realm_access?.roles || []),
+            ...(tokenData.resource_access?.console?.roles || []),
+          ];
           token.access_token = account.access_token;
           token.id_token = account.id_token;
           token.expires_at = account.expires_at;
           token.refresh_token = account.refresh_token;
+          token.isManager = isManager;
           return token;
         } else if (token && nowTimeStamp.isBefore(dayjs.unix(token.expires_at))) {
           return token;
@@ -112,7 +123,13 @@ export const authOptions: AuthOptions = {
       }
     },
     session({ session, token }) {
-      return { ...session, ...token, token: token.access_token };
+      return {
+        ...session,
+        roles: token.roles,
+        token: token.access_token,
+        isManager: token.isManager as boolean,
+        error: token.error,
+      };
     },
   },
   events: {
