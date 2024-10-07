@@ -22,8 +22,7 @@ export const useColumns: () => Column[] = () => {
 export const orderByValues = [COLUMN_ID.NAME, COLUMN_ID.CLASS, COLUMN_ID.ETAB];
 
 export const transformRawDatas = (users: User[]): RowItem[] => {
-  const filtered = users.filter(item => !!item.services.length);
-  return filtered.flatMap(user =>
+  return users.flatMap(user =>
     user.structures.flatMap(structure =>
       user.classes.map(classe => ({
         userId: user.services[0]?.userId ?? "",
