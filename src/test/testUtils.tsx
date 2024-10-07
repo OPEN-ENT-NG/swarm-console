@@ -14,6 +14,7 @@ export const renderWithProviders = (ui: React.ReactElement, { ...renderOptions }
     const session = {
       user: { name: "", email: "", image: undefined },
       token: "coucou",
+      isManager: true,
     };
     return <ClientLayout session={session}>{children}</ClientLayout>;
   }
