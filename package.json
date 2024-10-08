@@ -1,6 +1,6 @@
 {
   "name": "swarm-console",
-  "version": "0.1.0",
+  "version": "0.1-dev",
   "private": true,
   "docker": {
     "group": "app-swarm"
