@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "next lint --config .eslintrc.json",
     "test": "NEXT_PUBLIC_REMOTE_API_HOST=http://localhost:8080/api jest",
+    "test:failed": "NEXT_PUBLIC_REMOTE_API_HOST=http://localhost:8080/api jest --silent --only-failures",
     "test:watch": "jest --watchAll",
     "test:ci": "jest --ci --reporters=default --reporters=jest-junit",
     "fix": "eslint --fix src",

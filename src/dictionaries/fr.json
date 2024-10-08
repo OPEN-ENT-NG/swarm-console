@@ -18,8 +18,10 @@
     "swarm.send.service.modal.title":"Distribuer les services",
     "swarm.send.service.modal.desc":"Un mail sera envoyé aux utilisateurs pour leur transmettre les liens vers leurs sites respectifs",
     "swarm.send.service.modal.distribute.in.progress":"Mails envoyés",
-    "swarm.toggle.status.service.modal.title":"Activer/désactiver les services",
-    "swarm.toggle.status.service.modal.desc":"L'activation permet aux utilisateurs de modifier leurs services.",
+    "swarm.toggle.status.service.modal.title":"Gérer les états",
+    "swarm.toggle.service.modal.services.label":"Services à modifier :",
+    "swarm.toggle.service.modal.services.actions":"Actions possibles :",
+    "swarm.toggle.status.service.modal.desc":"L'activation/désactivation permet de gérer l'accès aux services des élèves",
     "swarm.toggle.status.service.modal.activate":"Activation",
     "swarm.toggle.status.service.modal.in.progress":"Activation ou désactivation des services...",
     "swarm.reinit.service.modal.title":"Réinitialiser les services",
@@ -68,10 +70,13 @@
     "swarm.button.reload":"Réinitialiser",
     "swarm.button.delete":"Supprimer",
     "swarm.button.activate":"Activer",
+    "swarm.button.deactivate":"Désactiver",
     "swarm.button.send":"Distribuer",
     "swarm.button.reinit":"Réinitialiser",
     "swarm.button.filters": "Filtres",
     "swarm.button.etabs":"Établissements",
     "swarm.button.classes":"Classes",
-    "swarm.button.groups":"Groupes"
+    "swarm.button.groups":"Groupes",
+    "swarm.table.rows.per.page": "lignes par page",
+    "swarm.supress.date.tooltip":"Le service sera supprimé le jour choisi à 23h59"
 }

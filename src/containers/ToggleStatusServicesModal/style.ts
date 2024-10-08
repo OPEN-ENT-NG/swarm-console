@@ -1,3 +1,5 @@
+import { SxProps } from "@mui/material";
+
 import { centerBoxStyle, columnBoxStyle } from "@/core/style/boxStyles";
 
 export const toggleWrapperStyle = {
@@ -18,6 +20,13 @@ export const SVGWrapper = {
 export const toggleServiceStackStyle = {
   width: "100%",
   marginTop: "2rem",
+};
+
+export const actionButtonsBoxStyle: SxProps = {
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  gap: "2rem",
 };
 
 export const textAndSVGWrapper = { ...centerBoxStyle, gap: "1rem" };
