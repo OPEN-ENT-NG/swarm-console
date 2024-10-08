@@ -41,7 +41,6 @@ export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose 
         pauseOnHover: true,
         draggable: true,
       });
-      handleCancel();
     } catch (error) {
       console.error(error);
     }
