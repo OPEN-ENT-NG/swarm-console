@@ -59,6 +59,7 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   useEffect(() => {
     if (servicesData) {
       setServices(servicesData);
+      if (displayModals.toggleStatusServices) return;
       setTableSelected([]);
     }
   }, [servicesData, tableQueryParams]);

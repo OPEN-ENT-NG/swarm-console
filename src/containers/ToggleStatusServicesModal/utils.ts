@@ -20,10 +20,6 @@ export const createToggleStatusBody = (
 
   const newState = isActivating ? SERVICE_STATE.REACTIVATION_SCHEDULED : SERVICE_STATE.DEACTIVATION_SCHEDULED;
 
-  if (servicesToToggle.length === 0) {
-    return [];
-  }
-
   return [
     {
       services_ids: servicesToToggle.map(service => service.id),
