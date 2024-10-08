@@ -6,10 +6,15 @@ import { InputvalueState } from "./types";
 
 export const initialInputValue: InputvalueState = {
   type: [],
-  date: null,
+  deletion_date: null,
 };
 
 export const isButtonDisabled = (state: InputvalueState): boolean => {
   const tomorrow = dayjs().add(1, "day").startOf("day");
-  return !state.type.length || !state.date || dayjs(state.date).isBefore(tomorrow) || state.date === INVALID_DATE;
+  return (
+    !state.type.length ||
+    !state.deletion_date ||
+    dayjs(state.deletion_date).isBefore(tomorrow) ||
+    state.deletion_date === INVALID_DATE
+  );
 };

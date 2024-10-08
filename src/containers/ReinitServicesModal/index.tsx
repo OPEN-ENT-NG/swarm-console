@@ -1,14 +1,19 @@
 import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Checkbox, Divider, FormControlLabel, Modal, Stack, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { extractIdsServices, useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
+import { useResetServicesMutation } from "@/services/api";
 import { ModalProps, OnChange } from "@/types";
 
 import {
@@ -20,19 +25,23 @@ import {
   serviceStackStyle,
   supressDateWrapperStyle,
 } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
 import { InputvalueState } from "./types";
 import { initialInputValue, isButtonDisabled } from "./utils";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<InputvalueState>(initialInputValue);
-  const { date, type } = inputValue;
+  const { deletion_date, type } = inputValue;
   const {
     displayModals: { confirmation },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
+  const [resetServices] = useResetServicesMutation();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
 
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
@@ -55,12 +64,29 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleDateChange = (newValue: Dayjs | null) => {
     setInputValue(prevState => ({
       ...prevState,
-      date: newValue ? newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss") : null,
+      deletion_date: newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null,
     }));
   };
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue(initialInputValue);
+  const handleSubmit = async () => {
+    if (!deletion_date || deletion_date === "Invalid Date") return;
+    const payload = {
+      services_ids: extractIdsServices(tableSelected, inputValue.type),
+      deletion_date,
+    };
+    try {
+      await resetServices(payload).unwrap();
+      toast.success(t("swarm.reinit.service.modal.reinit.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -78,7 +104,9 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
         </Box>
         <Typography variant="body1">{t("swarm.reinit.service.modal.desc")}</Typography>
         <Typography variant="body1" sx={{ fontWeight: "600" }}>
-          {t("swarm.modal.users.selected", { count: tableSelected.length })}
+          {tableSelected.length === 1
+            ? t("swarm.modal.users.selected_singular", { count: tableSelected.length })
+            : t("swarm.modal.users.selected_plural", { count: tableSelected.length })}
         </Typography>
         <Typography variant="body1">{t("swarm.reinit.service.modal.label")}</Typography>
         <Stack
@@ -89,7 +117,7 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           alignItems="center"
           flexWrap="nowrap"
           sx={serviceStackStyle}>
-          {serviceMapping.map(item => (
+          {formattedServiceMapping.map(item => (
             <Box
               key={item.label}
               onClick={e => {
@@ -109,12 +137,7 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   />
                 }
                 label={
-                  <Box
-                    sx={checkBoxLabelStyle}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleServiceTypeChange(item.name);
-                    }}>
+                  <Box sx={checkBoxLabelStyle}>
                     <Typography fontWeight="bold" variant="body1">
                       {t(`${item.label}`)}
                     </Typography>
@@ -129,7 +152,11 @@ export const ReinitServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           <Typography variant="body1" sx={{ fontWeight: "600", paddingTop: "1rem" }}>
             {t("swarm.table.column.supressDate")}
           </Typography>
-          <CustomDatePicker value={date ? dayjs(date) : null} onChange={handleDateChange} displayInfo />
+          <CustomDatePicker
+            value={deletion_date ? dayjs(deletion_date) : null}
+            onChange={handleDateChange}
+            displayInfo
+          />
         </Box>
         <Box sx={actionButtonsBoxStyle}>
           <Box sx={{ width: "6.6rem" }}>

@@ -26,6 +26,7 @@ import {
   SERVICE_STATE_DISPLAY,
   SERVICE_TYPE,
 } from "@/providers/GlobalProvider/enums";
+import { Service } from "@/providers/GlobalProvider/serviceType";
 import { RowItem } from "@/providers/GlobalProvider/types";
 import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
 
@@ -36,22 +37,24 @@ import {
   ServiceWrapperStyle,
   StatusPoint,
   serviceStatusWrapperStyle,
+  tableEmptyStyle,
   tableSortLabelWrapper,
   typoStyle,
 } from "./style";
 import { LowerCaseOrder } from "./types";
-import { formatDate, transformRawDatas, useColumns } from "./utils";
+import { formatDate, statusMap, transformRawDatas, useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
   const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected, services } = useGlobalProvider();
   const { order, page, limit } = tableQueryParams;
   const { t } = useTranslation();
   const rowItems = services?.filteredUsers.length ? transformRawDatas(services.filteredUsers) : [];
-  console.log(rowItems);
-  
+
   const columns = useColumns();
   const orderBy = COLUMN_ID.NAME;
   const totalCount = services?.globalInfos.totalUsers ?? 0;
+  const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
+
   const handleChangePage = (event: unknown, newPage: number) => {
     setTableQueryParams(prev => ({ ...prev, page: newPage }));
   };
@@ -68,9 +71,28 @@ export const ServiceTable: FC = () => {
     }));
   };
 
+  const isServiceSelectable = (service: Service) => {
+    const state = getServiceStateDisplay(service.state);
+    return state === SERVICE_STATE_DISPLAY.ACTIVE || state === SERVICE_STATE_DISPLAY.INACTIVE;
+  };
+
+  const isItemSelectable = (item: RowItem) => {
+    return item.services.some(isServiceSelectable);
+  };
+
+  const filterSelectableServices = (item: RowItem): RowItem => {
+    return {
+      ...item,
+      services: item.services.filter(isServiceSelectable),
+    };
+  };
+
+  const isMetaCheckBoxChecked =
+    rowItems.length > 0 && !!tableSelected.length && tableSelected.length === rowItems.filter(isItemSelectable).length;
+
   const handleSelectAllClick = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rowItems;
+      const newSelected = rowItems.filter(isItemSelectable).map(filterSelectableServices);
       setTableSelected(newSelected);
       return;
     }
@@ -78,17 +100,22 @@ export const ServiceTable: FC = () => {
   };
 
   const handleClick = (event: ChangeEvent<HTMLInputElement>, row: RowItem) => {
-    setTableSelected(prev => (event.target.checked ? [...prev, row] : prev.filter(item => item.userId !== row.userId)));
+    setTableSelected(prev => {
+      if (event.target.checked) {
+        const filteredRow = filterSelectableServices(row);
+        return [...prev, filteredRow];
+      } else {
+        return prev.filter(item => item.userId !== row.userId);
+      }
+    });
   };
 
   const isSelected = (userId: string) => tableSelected.some(item => item.userId === userId);
 
-  const prepareStatusText = (status: SERVICE_STATE) => {
-    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.ACTIVE) return t("swarm.status.active");
-    if (getServiceStateDisplay(status) === SERVICE_STATE_DISPLAY.INACTIVE) return t("swarm.status.inactive");
-    return t("swarm.status.waiting");
+  const prepareStatusText = (status: SERVICE_STATE): string => {
+    const statusDisplay = getServiceStateDisplay(status);
+    return t(statusMap[statusDisplay] || "swarm.status.error");
   };
-  const lowerCaseOrder: LowerCaseOrder = order === ORDER_TYPE.ASC ? "asc" : "desc";
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -105,7 +132,7 @@ export const ServiceTable: FC = () => {
                     {column.id === COLUMN_ID.SELECT ? (
                       <Checkbox
                         indeterminate={tableSelected.length > 0 && tableSelected.length < rowItems.length}
-                        checked={rowItems.length > 0 && tableSelected.length === rowItems.length}
+                        checked={isMetaCheckBoxChecked}
                         onChange={handleSelectAllClick}
                         inputProps={{ "aria-label": "select all services" }}
                       />
@@ -143,6 +170,7 @@ export const ServiceTable: FC = () => {
           </TableHead>
           <TableBody>
             {rowItems.map((item, index) => {
+              const isSelectable = isItemSelectable(item);
               const isItemSelected = isSelected(item.userId);
               const labelId = `enhanced-table-checkbox-${index}`;
               return (
@@ -153,14 +181,16 @@ export const ServiceTable: FC = () => {
                   tabIndex={-1}
                   key={`${item.userId}-${index}`}
                   selected={isItemSelected}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={isItemSelected}
-                      inputProps={{ "aria-labelledby": labelId }}
-                      onChange={event => handleClick(event, item)}
-                    />
+                  <TableCell sx={{ padding: 0 }} padding="checkbox">
+                    {isSelectable && (
+                      <Checkbox
+                        checked={isItemSelected}
+                        inputProps={{ "aria-labelledby": labelId }}
+                        onChange={event => handleClick(event, item)}
+                      />
+                    )}
                   </TableCell>
-                  <TableCell>{`${item.lastName} ${item.firstName}`}</TableCell>
+                  <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
                   <TableCell>{item.className}</TableCell>
                   <TableCell>{item.etabName}</TableCell>
                   <TableCell>
@@ -168,7 +198,9 @@ export const ServiceTable: FC = () => {
                       {item.services.map(serviceItem => {
                         const IconComponent =
                           serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
-                        const isActive = getServiceStateDisplay(serviceItem.state) !== SERVICE_STATE_DISPLAY.WAITING;
+                        const isActive =
+                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
+                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.INACTIVE;
                         return isActive ? (
                           <Link
                             key={serviceItem.id}
@@ -209,9 +241,9 @@ export const ServiceTable: FC = () => {
                 </TableRow>
               );
             })}
-            {!rowItems.length  && <TableCell>{t("swarm.table.empty")}</TableCell>}
           </TableBody>
         </Table>
+        {!rowItems.length && <Box sx={tableEmptyStyle}>{t("swarm.table.empty")}</Box>}
       </TableContainer>
       {totalCount > 10 && (
         <TablePagination

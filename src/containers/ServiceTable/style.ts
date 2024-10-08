@@ -28,16 +28,21 @@ export const serviceStatusWrapperStyle = {
   height: "1.5rem",
 };
 
-export const SVGWrapper = styled(Box)<SVGWrapperProps>(({ isActive, theme: { palette } }) => ({
+export const SVGWrapper = styled(Box, {
+  shouldForwardProp: prop => prop !== "isActive",
+})<SVGWrapperProps>(({ isActive, theme }) => ({
   width: "1.5rem",
-  color: isActive ? palette.text.secondary : palette.text.disabled,
+  color: isActive ? theme.palette.text.secondary : theme.palette.text.disabled,
 }));
 
 export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => {
   const statusColorMap = {
     [SERVICE_STATE_DISPLAY.ACTIVE]: "#228665",
     [SERVICE_STATE_DISPLAY.INACTIVE]: "#E20037",
-    [SERVICE_STATE_DISPLAY.WAITING]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.CREATION]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.ERROR]: "#E20037",
+    [SERVICE_STATE_DISPLAY.DELETION]: "#FFC900",
+    [SERVICE_STATE_DISPLAY.REINIT]: "#FFC900",
   };
 
   return {
@@ -49,3 +54,5 @@ export const StatusPoint = styled(Box)<StatusPointProps>(({ status }) => {
 });
 
 export const tableSortLabelWrapper = { position: "relative", display: "inline-block" };
+
+export const tableEmptyStyle = { ...centerBoxStyle, width: "100%", fontSize: "1rem", height: "2.5rem" };

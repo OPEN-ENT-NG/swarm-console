@@ -6,7 +6,7 @@ export type Structure = {
 };
 
 export type Class = {
-  id: string;
+  classId: string;
   name: string;
 };
 

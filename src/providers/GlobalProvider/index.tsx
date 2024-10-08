@@ -38,7 +38,6 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
   const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
   const { data: servicesData } = useGetServicesQuery(tableQueryParams);
-  console.log({servicesData,tableQueryParams});
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
     setDisplayModals(prevState => ({
@@ -58,7 +57,11 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   }, [pathname, services, router]);
 
   useEffect(() => {
-    if (servicesData) setServices(servicesData);
+    if (servicesData) {
+      setServices(servicesData);
+      if (displayModals.toggleStatusServices) return;
+      setTableSelected([]);
+    }
   }, [servicesData, tableQueryParams]);
 
   const value = useMemo<GlobalProviderContextType>(

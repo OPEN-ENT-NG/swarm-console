@@ -5,6 +5,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/fr";
+import { signIn } from "next-auth/react";
 import { FC, useEffect, useState } from "react";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
@@ -25,9 +26,13 @@ export const ClientLayout: FC<ClientLayoutProps> = ({ session, children }) => {
   const [isTokenSet, setIsTokenSet] = useState(false);
 
   useEffect(() => {
+    if (session?.error === "RefreshAccessTokenError") {
+      console.log("refreshing");
+      return void signIn("keycloak", { callbackUrl: window.location.origin });
+    }
     if (session?.token) {
       store.dispatch(setToken(session.token));
-      setIsTokenSet(true);
+      return setIsTokenSet(true);
     }
   }, [session]);
 

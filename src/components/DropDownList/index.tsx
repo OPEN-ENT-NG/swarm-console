@@ -25,15 +25,15 @@ export const DropdownList: FC<DropdownListProps> = ({ items, variant = "containe
         <DropdownListWrapper styledvariant={variant}>
           <List sx={{ paddingTop: "0", paddingBottom: "0" }}>
             {items.map((item, index) => (
-              <>
-                {item.divider && <Divider />}
-                <ListItem key={`option-${index + Date.now()}`} onClick={() => handleItemClick(item.OnClick)}>
+              <Box key={`option-${index + Date.now()}`}>
+                {item.divider && <Divider variant="middle" />}
+                <ListItem onClick={() => handleItemClick(item.OnClick)}>
                   <StyledListItemText
                     primary={<Box sx={SVGWrapperStyle}>{item.primary}</Box>}
                     secondary={item.secondary}
                   />
                 </ListItem>
-              </>
+              </Box>
             ))}
           </List>
         </DropdownListWrapper>

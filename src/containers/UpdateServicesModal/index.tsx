@@ -1,30 +1,34 @@
 import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
-import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { columnBoxStyle, flexStartBoxStyle, modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
+import { useUpdateServicesMutation } from "@/services/api";
 import { ModalProps } from "@/types";
 
 import { actionButtonsBoxStyle, supressDateWrapperStyle } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
 import { SVGWrapper } from "./style";
 import { InputValueState } from "./types";
-import { isButtonDisabled } from "./utils";
+import { createUpdateBody, isButtonDisabled } from "./utils";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<InputValueState>([]);
-  const {
-    displayModals: { confirmation },
-    handleDisplayModal,
-    tableSelected,
-  } = useGlobalProvider();
+  const { tableSelected } = useGlobalProvider();
+  const [updateServices] = useUpdateServicesMutation();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
 
   const handleCancel = () => {
     handleClose();
@@ -36,7 +40,7 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
       if (newValue === null) {
         return prevState.filter(item => item.type !== type);
       }
-      const newDate = newValue.startOf("day").format("YYYY-MM-DD HH:mm:ss");
+      const newDate = newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null;
       const existingIndex = prevState.findIndex(item => item.type === type);
       if (existingIndex !== -1) {
         return prevState.map((item, index) => (index === existingIndex ? { ...item, date: newDate } : item));
@@ -46,9 +50,22 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
     });
   };
 
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue([]);
+  const handleSubmit = async () => {
+    const payload = createUpdateBody(tableSelected, inputValue);
+    try {
+      await updateServices(payload).unwrap();
+      toast.success(t("swarm.update.service.modal.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -65,10 +82,12 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           </Button>
         </Box>
         <Typography variant="body1" sx={{ fontWeight: "600" }}>
-          {t("swarm.modal.users.selected", { count: tableSelected.length })}
+          {tableSelected.length === 1
+            ? t("swarm.modal.users.selected_singular", { count: tableSelected.length })
+            : t("swarm.modal.users.selected_plural", { count: tableSelected.length })}
         </Typography>
         <Box sx={{ ...columnBoxStyle, gap: "1rem" }}>
-          {serviceMapping.map(item => {
+          {formattedServiceMapping.map(item => {
             const date = inputValue.find(value => value.type === item.name)?.date;
             return (
               <Box sx={columnBoxStyle} key={item.name}>
@@ -105,18 +124,12 @@ export const UpdateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
               disabled={isButtonDisabled(inputValue)}
               variant="contained"
               data-testid="create-services-submit"
-              onClick={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
+              onClick={handleSubmit}
               fullWidth>
-              {t("swarm.button.reinit")}
+              {t("swarm.button.update")}
             </Button>
           </Box>
         </Box>
-        <ConfirmationModal
-          isOpen={confirmation}
-          handleClose={() => handleDisplayModal(MODAL_TYPE.CONFIRMATION)}
-          handleConfirm={handleSubmit}
-          confirmButtonLabel={t("swarm.button.reinit")}
-        />
       </Box>
     </Modal>
   );

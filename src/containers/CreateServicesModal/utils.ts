@@ -5,12 +5,12 @@ import { WordPressIcon } from "@/components/SVG/WordPressIcon";
 import { UsersAndGroups } from "@/components/UserSelectionSection/types";
 import { INVALID_DATE } from "@/core/const";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { UsersData } from "@/services/types";
 
-import { InputValueState, ServiceMap, Users } from "./types";
+import { InputValueState, ServiceMap } from "./types";
 
 export const initialInputValue: InputValueState = {
   users: [],
-  groups: [],
   classes: [],
   types: [],
   deletion_date: null,
@@ -23,7 +23,7 @@ export const serviceMapping: ServiceMap[] = [
 
 export const isButtonDisabled = (state: InputValueState): boolean => {
   const tomorrow = dayjs().add(1, "day").startOf("day");
-  const hasSelectedItems = state.users.length > 0 || state.groups.length > 0 || state.classes.length > 0;
+  const hasSelectedItems = state.users.length > 0 || state.classes.length > 0;
 
   return (
     !hasSelectedItems ||
@@ -34,46 +34,41 @@ export const isButtonDisabled = (state: InputValueState): boolean => {
   );
 };
 
-export const extractIdAndName = (data: Users): UsersAndGroups[] => {
-  const { users, classes, groups } = data;
-
-  const userItems = users.map(({ id, firstName, lastName }) => ({
+export const extractIdAndName = (data: UsersData): UsersAndGroups[] => {
+  const userItems: UsersAndGroups[] = data.map(({ id, firstName, lastName }) => ({
     name: `${firstName} ${lastName}`,
     id,
     usertype: "users",
   }));
 
-  const classItems = classes.map(({ id, name }) => ({
-    name,
-    id,
-    usertype: "classes",
-  }));
+  const classItems: UsersAndGroups[] = data.flatMap(user =>
+    user.classes.map(({ classId, name }) => ({
+      name,
+      id: classId,
+      usertype: "classes",
+    })),
+  );
 
-  const groupItems = groups.map(({ id, name }) => ({
-    name,
-    id,
-    usertype: "groups",
-  }));
+  const allItems = [...userItems, ...classItems];
 
-  return [...userItems, ...classItems, ...groupItems];
+  return allItems.filter((item, index, array) => index === array.findIndex(t => t.id === item.id));
 };
 
 export const updateInputValueFromUsersAndGroups = (
   prevState: InputValueState,
   usersAndGroups: UsersAndGroups[],
 ): InputValueState => {
-  const { users, groups, classes } = usersAndGroups.reduce(
+  const { users, classes } = usersAndGroups.reduce(
     (acc, item) => {
       const key = item.usertype as string;
       return { ...acc, [key]: [...acc[key], item.id] };
     },
-    { users: [], groups: [], classes: [] } as Record<string, string[]>,
+    { users: [], classes: [] } as Record<string, string[]>,
   );
 
   return {
     ...prevState,
     users,
-    groups,
     classes,
   };
 };

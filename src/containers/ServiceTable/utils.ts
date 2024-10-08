@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useTranslation } from "react-i18next";
 
-import { COLUMN_ID } from "@/providers/GlobalProvider/enums";
+import { COLUMN_ID, SERVICE_STATE_DISPLAY } from "@/providers/GlobalProvider/enums";
 import { User } from "@/providers/GlobalProvider/serviceType";
 import { Column, RowItem } from "@/providers/GlobalProvider/types";
 
@@ -22,15 +22,15 @@ export const useColumns: () => Column[] = () => {
 export const orderByValues = [COLUMN_ID.NAME, COLUMN_ID.CLASS, COLUMN_ID.ETAB];
 
 export const transformRawDatas = (users: User[]): RowItem[] => {
-  const filteredUsers = users.filter(item => item.services.length);
-  return filteredUsers.flatMap(user =>
+  const filtered = users.filter(item => !!item.services.length);
+  return filtered.flatMap(user =>
     user.structures.flatMap(structure =>
       user.classes.map(classe => ({
         userId: user.services[0]?.userId ?? "",
         lastName: user.services[0]?.lastName ?? "",
         firstName: user.services[0]?.firstName ?? "",
         className: classe.name,
-        classId: classe.id,
+        classId: classe.classId,
         etabName: structure.name,
         etabId: structure.id,
         services: user.services,
@@ -38,7 +38,17 @@ export const transformRawDatas = (users: User[]): RowItem[] => {
     ),
   );
 };
+
 dayjs.extend(utc);
 export const formatDate = (dateString: Date): string => {
   return dayjs(dateString).utc().format("DD/MM/YYYY");
+};
+
+export const statusMap: Record<SERVICE_STATE_DISPLAY, string> = {
+  [SERVICE_STATE_DISPLAY.ACTIVE]: "swarm.status.active",
+  [SERVICE_STATE_DISPLAY.INACTIVE]: "swarm.status.inactive",
+  [SERVICE_STATE_DISPLAY.CREATION]: "swarm.status.create",
+  [SERVICE_STATE_DISPLAY.ERROR]: "swarm.status.error",
+  [SERVICE_STATE_DISPLAY.DELETION]: "swarm.status.delete",
+  [SERVICE_STATE_DISPLAY.REINIT]: "swarm.status.reinit",
 };

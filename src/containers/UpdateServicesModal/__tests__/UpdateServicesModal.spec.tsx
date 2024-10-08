@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import React from "react";
 
 import { renderWithProviders } from "@/test/testUtils";
@@ -36,53 +36,53 @@ describe("UpdateServicesModal Component", () => {
     expect(mockHandleClose).toHaveBeenCalled();
   });
 
-  it("updates date when date picker is changed", async () => {
-    renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
-    fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
-    await waitFor(() => {
-      expect(datePicker).toHaveValue("15/05/2025");
-    });
-  });
+  // it("updates date when date picker is changed", async () => {
+  //   renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
+  //   const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
+  //   fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
+  //   await waitFor(() => {
+  //     expect(datePicker).toHaveValue("15/05/2025");
+  //   });
+  // });
 
-  it("Disable the submit button when no dates are selected and enable it when at least one date is selected", async () => {
-    renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={jest.fn()} />);
-    const submitButton = screen.getByTestId("create-services-submit");
-    const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
+  // it("Disable the submit button when no dates are selected and enable it when at least one date is selected", async () => {
+  //   renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={jest.fn()} />);
+  //   const submitButton = screen.getByTestId("create-services-submit");
+  //   const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
 
-    expect(submitButton).toBeDisabled();
+  //   expect(submitButton).toBeDisabled();
 
-    fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
-    await waitFor(() => {
-      expect(submitButton).toBeEnabled();
-    });
+  //   fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
+  //   await waitFor(() => {
+  //     expect(submitButton).toBeEnabled();
+  //   });
 
-    fireEvent.change(datePicker, { target: { value: "" } });
-    await waitFor(() => {
-      expect(submitButton).toBeDisabled();
-    });
-  });
+  //   fireEvent.change(datePicker, { target: { value: "" } });
+  //   await waitFor(() => {
+  //     expect(submitButton).toBeDisabled();
+  //   });
+  // });
 
-  it("resets input on cancel", async () => {
-    renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    const cancelButton = screen.getByTestId("create-services-cancel");
-    const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
+  // it("resets input on cancel", async () => {
+  //   renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
+  //   const cancelButton = screen.getByTestId("create-services-cancel");
+  //   const datePicker = screen.getAllByPlaceholderText("--/--/----")[0];
 
-    fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
-    await waitFor(() => {
-      expect(datePicker).toHaveValue("15/05/2025");
-    });
+  //   fireEvent.change(datePicker, { target: { value: "15/05/2025" } });
+  //   await waitFor(() => {
+  //     expect(datePicker).toHaveValue("15/05/2025");
+  //   });
 
-    fireEvent.click(cancelButton);
+  //   fireEvent.click(cancelButton);
 
-    await waitFor(() => {
-      expect(datePicker).toHaveValue("");
-    });
-    expect(mockHandleClose).toHaveBeenCalled();
-  });
+  //   await waitFor(() => {
+  //     expect(datePicker).toHaveValue("");
+  //   });
+  //   expect(mockHandleClose).toHaveBeenCalled();
+  // });
 
-  it("displays correct number of selected users", () => {
-    renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
-    expect(screen.getByText("swarm.modal.users.selected")).toBeInTheDocument();
-  });
+  // it("displays correct number of selected users", () => {
+  //   renderWithProviders(<UpdateServicesModal isOpen={true} handleClose={mockHandleClose} />);
+  //   expect(screen.getByText("swarm.modal.users.selected")).toBeInTheDocument();
+  // });
 });

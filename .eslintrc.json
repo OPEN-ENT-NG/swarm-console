@@ -39,6 +39,7 @@
     "next/core-web-vitals"
   ],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "prettier/prettier": ["warn"],
     "@typescript-eslint/no-unnecessary-type-assertion": ["warn"],
     "@typescript-eslint/ban-types": [

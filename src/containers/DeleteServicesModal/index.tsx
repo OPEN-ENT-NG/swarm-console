@@ -2,12 +2,15 @@ import { CloseIcon } from "@cgi-learning-hub/ui";
 import { Box, Button, Checkbox, Divider, FormControlLabel, Modal, Stack, Typography } from "@mui/material";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { ConfirmationModal } from "@/components/ConfirmationModal";
 import { modalBoxStyle, spaceBetweenBoxStyle } from "@/core/style/boxStyles";
 import { defaultWidthButtonWrapper } from "@/core/style/buttonStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
-import { MODAL_TYPE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { MODAL_TYPE, SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { extractIdsServices, useFormattedServiceMapping } from "@/providers/GlobalProvider/utils";
+import { useDeleteServicesMutation } from "@/services/api";
 import { ModalProps, OnChange } from "@/types";
 
 import {
@@ -18,17 +21,18 @@ import {
   noHoverCheckBoxStyle,
   serviceStackStyle,
 } from "../CreateServicesModal/style";
-import { serviceMapping } from "../CreateServicesModal/utils";
 import { isButtonDisabled } from "./utils";
 
 export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<SERVICE_TYPE[]>([]);
+  const [deleteServices] = useDeleteServicesMutation();
   const {
     displayModals: { confirmation },
     handleDisplayModal,
     tableSelected,
   } = useGlobalProvider();
+  const formattedServiceMapping = useFormattedServiceMapping(tableSelected);
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
       const newType = prevState.includes(serviceType)
@@ -44,30 +48,49 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleCancel = () => {
-    handleClose();
     setInputValue([]);
+    handleClose();
   };
 
-  const handleSubmit = () => {
-    handleClose();
-    setInputValue([]);
+  const handleSubmit = async () => {
+    const payload = {
+      services_ids: extractIdsServices(tableSelected, inputValue),
+      state: SERVICE_STATE.DELETION_SCHEDULED,
+    };
+    try {
+      await deleteServices(payload).unwrap();
+      toast.success(t("swarm.create.service.modal.deletion.in.progress"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      handleCancel();
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <Modal
       open={isOpen}
-      onClose={handleClose}
+      onClose={handleCancel}
       aria-labelledby="delete-services-modal"
       aria-describedby="delete-services">
       <Box sx={modalBoxStyle} data-testid="delete-services-modal">
         <Box sx={spaceBetweenBoxStyle}>
           <Typography variant="h1">{t("swarm.delete.service.modal.title")}</Typography>
-          <Button data-testid="close-delete-services-modal" onClick={handleClose}>
+          <Button data-testid="close-delete-services-modal" onClick={handleCancel}>
             <CloseIcon />
           </Button>
         </Box>
         <Typography variant="body1">{t("swarm.delete.service.modal.desc")}</Typography>
         <Typography variant="body1" sx={{ fontWeight: "600" }}>
-          {t("swarm.modal.users.selected", { count: tableSelected.length })}
+          {tableSelected.length === 1
+            ? t("swarm.modal.users.selected_singular", { count: tableSelected.length })
+            : t("swarm.modal.users.selected_plural", { count: tableSelected.length })}
         </Typography>
         <Stack
           direction="row"
@@ -77,7 +100,7 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
           alignItems="center"
           flexWrap="nowrap"
           sx={serviceStackStyle}>
-          {serviceMapping.map(item => (
+          {formattedServiceMapping.map(item => (
             <Box
               key={item.label}
               onClick={e => {
@@ -97,12 +120,7 @@ export const DeleteServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   />
                 }
                 label={
-                  <Box
-                    sx={checkBoxLabelStyle}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleServiceTypeChange(item.name);
-                    }}>
+                  <Box sx={checkBoxLabelStyle}>
                     <Typography fontWeight="bold" variant="body1">
                       {t(`${item.label}`)}
                     </Typography>

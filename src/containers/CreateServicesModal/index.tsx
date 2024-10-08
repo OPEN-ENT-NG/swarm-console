@@ -1,6 +1,8 @@
 import { Box, Button, CloseIcon, Typography } from "@cgi-learning-hub/ui";
 import { Checkbox, Divider, FormControlLabel, Modal, Stack } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -32,6 +34,9 @@ import {
   updateInputValueFromUsersAndGroups,
 } from "./utils";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => {
   const [inputValue, setInputValue] = useState<InputValueState>(initialInputValue);
   const [usersAndGroups, setUsersAndGroups] = useState<UsersAndGroups[]>([]);
@@ -51,6 +56,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   const handleSubmit = async () => {
     try {
       await createServices(inputValue).unwrap();
+
       toast.success(t("swarm.create.service.modal.creation.in.progress"), {
         position: "top-right",
         autoClose: 3000,
@@ -72,16 +78,17 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   const handleDateChange = (newValue: Dayjs | null) => {
+    const newDate = newValue ? newValue.endOf("day").utc().hour(23).minute(59).second(59).valueOf() : null;
     setInputValue(prevState => ({
       ...prevState,
-      deletion_date: newValue ? newValue.valueOf() : null,
+      deletion_date: newDate,
     }));
   };
 
   const handleServiceTypeChange = (serviceType: SERVICE_TYPE) => {
     setInputValue(prevState => {
       const newType = prevState.types.includes(serviceType)
-        ? prevState.types.filter(t => t !== serviceType)
+        ? prevState.types.filter(type => type !== serviceType)
         : [...prevState.types, serviceType];
       return { ...prevState, types: newType };
     });
@@ -101,6 +108,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
   };
 
   useEffect(() => {
+    if (!usersData) return;
     setInputValue(prevState => updateInputValueFromUsersAndGroups(prevState, usersAndGroups));
   }, [usersAndGroups]);
 
@@ -156,12 +164,7 @@ export const CreateServicesModal: FC<ModalProps> = ({ isOpen, handleClose }) => 
                   />
                 }
                 label={
-                  <Box
-                    sx={checkBoxLabelStyle}
-                    onClick={e => {
-                      e.preventDefault();
-                      handleServiceTypeChange(item.name);
-                    }}>
+                  <Box sx={checkBoxLabelStyle}>
                     <Typography fontWeight="bold" variant="body1">
                       {t(`${item.label}`)}
                     </Typography>
