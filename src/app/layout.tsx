@@ -45,8 +45,6 @@ export default async function RootLayout({
               align-items: center;
               height: 100vh;
               background-color: #f5f5f5;
-              border-top: 5px solid #c00000;
-              border-bottom: 5px solid #00a651;
             }
             .error-message {
               text-align: center;
