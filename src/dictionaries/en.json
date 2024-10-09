@@ -1,5 +1,5 @@
 {
-    "title": "Server farm",
+    "title": "Digital farm",
     "swarm.empty.services":"You haven't created any services yet. Create WordPress or PrestaShop sites, then distribute them.",
     "swarm.create.service.button":"Create services",
     "swarm.create.service.title":"Services creation",

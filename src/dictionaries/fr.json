@@ -1,5 +1,5 @@
 {
-    "swarm.title": "Ferme de serveurs",
+    "swarm.title": "Ferme numérique",
     "swarm.empty.services":"Vous n’avez pas encore créé de services. Créez des sites Wordpress ou PrestaShop puis distribuez-les.",
     "swarm.create.service.button":"Créer des services",
     "swarm.create.service.modal.title":"Création de services",
