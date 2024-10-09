@@ -1,4 +1,4 @@
-export const METATITLE: string = "Ferme de serveurs";
+export const METATITLE: string = "Ferme numérique";
 export const METATITLE_STATS: string = "Statistiques";
 export const INVALID_DATE: string = "Invalid Date";
 export const IMAGE_NOUVELLE_AQUITAINE: string = "images/logo_CRNA.png";
