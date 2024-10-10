@@ -34,6 +34,7 @@ export type Service = {
   lastName: string;
   serviceName: string;
   structureId: string;
+  classId: string;
   type: SERVICE_TYPE;
   created: Date;
   deletionDate: Date;

@@ -22,21 +22,24 @@ export const useColumns: () => Column[] = () => {
 export const orderByValues = [COLUMN_ID.NAME, COLUMN_ID.CLASS, COLUMN_ID.ETAB];
 
 export const transformRawDatas = (users: User[]): RowItem[] => {
-  const filtered = users.filter(item => !!item.services.length);
-  return filtered.flatMap(user =>
-    user.structures.flatMap(structure =>
-      user.classes.map(classe => ({
-        userId: user.services[0]?.userId ?? "",
-        lastName: user.services[0]?.lastName ?? "",
-        firstName: user.services[0]?.firstName ?? "",
-        className: classe.name,
-        classId: classe.classId,
-        etabName: structure.name,
-        etabId: structure.id,
+  return users
+    .filter(user => user.services.length > 0)
+    .map(user => {
+      const service = user.services[0];
+      const structure = user.structures.find(item => item.id === service.structureId);
+      const classe = user.classes.find(item => item.classId === service.classId);
+
+      return {
+        userId: service.userId,
+        lastName: service.lastName,
+        firstName: service.firstName,
+        className: classe?.name ?? "",
+        classId: classe?.classId ?? "",
+        etabName: structure?.name ?? "",
+        etabId: structure?.id ?? "",
         services: user.services,
-      })),
-    ),
-  );
+      };
+    });
 };
 
 dayjs.extend(utc);
