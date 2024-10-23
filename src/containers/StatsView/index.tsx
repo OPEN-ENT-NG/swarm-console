@@ -10,9 +10,10 @@ export const StatsView: FC = () => {
   const { servicesStats } = useGlobalProvider();
   return (
     <Box sx={statsViewWrapperStyle}>
-      {servicesStats.map(item => (
-        <ServiceStatCard key={item.type} serviceStatItem={item} />
-      ))}
+      {servicesStats.map(item => {
+        if (item.total > 0) return <ServiceStatCard key={item.type} serviceStatItem={item} />;
+        return null;
+      })}
     </Box>
   );
 };

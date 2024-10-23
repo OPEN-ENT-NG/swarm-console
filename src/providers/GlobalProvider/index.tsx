@@ -1,8 +1,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { FC, createContext, useContext, useEffect, useMemo, useState } from "react";
 
-import { useGetServicesQuery } from "@/services/api";
-import { servicesStatsMocks } from "@/test/mocks/datasMock";
+import { useGetServicesQuery, useGetStatsQuery } from "@/services/api";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, PATH } from "./enums";
 import { Services } from "./serviceType";
@@ -15,7 +14,13 @@ import {
   TableQueryParamsState,
   UserState,
 } from "./types";
-import { initialCurrentTab, initialDisplayModalsState, initialTableQueryParamsState, prepareUser } from "./utils";
+import {
+  initialCurrentTab,
+  initialDisplayModalsState,
+  initialTableQueryParamsState,
+  prepareUser,
+  transformServiceStats,
+} from "./utils";
 
 const GlobalProviderContext = createContext<GlobalProviderContextType | null>(null);
 
@@ -36,8 +41,9 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
   const [currentTab, setCurrentTab] = useState<CURRENTTAB_STATE>(initialCurrentTab(pathname));
   const [tableQueryParams, setTableQueryParams] = useState<TableQueryParamsState>(initialTableQueryParamsState);
   const [tableSelected, setTableSelected] = useState<RowItem[]>([]);
-  const [servicesStats, setServicesStats] = useState<ServiceStat[]>(servicesStatsMocks);
+  const [servicesStats, setServicesStats] = useState<ServiceStat[]>([]);
   const { data: servicesData } = useGetServicesQuery(tableQueryParams);
+  const { data: statsData } = useGetStatsQuery();
 
   const handleDisplayModal = (modalType: MODAL_TYPE) =>
     setDisplayModals(prevState => ({
@@ -63,6 +69,9 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
       setTableSelected([]);
     }
   }, [servicesData, tableQueryParams]);
+  useEffect(() => {
+    if (statsData) setServicesStats(transformServiceStats(statsData));
+  }, [statsData]);
 
   const value = useMemo<GlobalProviderContextType>(
     () => ({

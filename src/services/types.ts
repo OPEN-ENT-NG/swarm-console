@@ -1,4 +1,4 @@
-import { SERVICE_STATE } from "@/providers/GlobalProvider/enums";
+import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 
 export interface DeleteBody {
   services_ids: string[];
@@ -32,3 +32,13 @@ type UserData = {
 };
 
 export type UsersData = UserData[];
+
+interface ServiceStatRaw {
+  type: SERVICE_TYPE;
+  nbCreatedService: number;
+  nbActiveService: number;
+  nbInactiveService: number;
+  nbDeletedSoonService: number;
+}
+
+export type ServiceStatsRaw = ServiceStatRaw[];

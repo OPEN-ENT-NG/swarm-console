@@ -1,11 +1,15 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { PrestashopIcon } from "@/components/SVG/PrestashopIcon";
+import { WordPressIcon } from "@/components/SVG/WordPressIcon";
+import { SVGComponent } from "@/components/SVG/types";
 import { serviceMapping } from "@/containers/CreateServicesModal/utils";
+import { ServiceStatsRaw } from "@/services/types";
 import { Session } from "@/types";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATE, SERVICE_STATE_DISPLAY, SERVICE_TYPE } from "./enums";
-import { DisplayModalsState, RowItem, TableQueryParamsState } from "./types";
+import { DisplayModalsState, RowItem, ServiceStat, TableQueryParamsState } from "./types";
 
 export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.CREATE]: false,
@@ -110,4 +114,20 @@ export const getServiceStateDisplay = (status: SERVICE_STATE): SERVICE_STATE_DIS
     default:
       return SERVICE_STATE_DISPLAY.ERROR;
   }
+};
+
+const serviceIconMap: Record<SERVICE_TYPE, SVGComponent> = {
+  [SERVICE_TYPE.WORDPRESS]: WordPressIcon,
+  [SERVICE_TYPE.PRESTASHOP]: PrestashopIcon,
+};
+
+export const transformServiceStats = (rawStats: ServiceStatsRaw): ServiceStat[] => {
+  return rawStats.map(stat => ({
+    type: stat.type,
+    icon: serviceIconMap[stat.type],
+    total: stat.nbCreatedService,
+    active: stat.nbActiveService,
+    inactive: stat.nbInactiveService,
+    toDelete: stat.nbDeletedSoonService,
+  }));
 };

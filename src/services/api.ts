@@ -5,7 +5,15 @@ import { Services } from "@/providers/GlobalProvider/serviceType";
 import { TableQueryParamsState } from "@/providers/GlobalProvider/types";
 import { RootState } from "@/stores/store";
 
-import { DeleteBody, DistributeBody, ResetBody, ToggleStatusBody, UpdateBody, UsersData } from "./types";
+import {
+  DeleteBody,
+  DistributeBody,
+  ResetBody,
+  ServiceStatsRaw,
+  ToggleStatusBody,
+  UpdateBody,
+  UsersData,
+} from "./types";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_SERVER;
 const baseQuery = fetchBaseQuery({
@@ -20,7 +28,7 @@ const baseQuery = fetchBaseQuery({
 });
 
 export const api = createApi({
-  tagTypes: ["Services", "Users"],
+  tagTypes: ["Services", "Users", "Stats"],
   baseQuery,
   endpoints: builder => ({
     getServices: builder.query<Services, TableQueryParamsState>({
@@ -51,13 +59,17 @@ export const api = createApi({
       query: () => "/users",
       providesTags: ["Users"],
     }),
+    getStats: builder.query<ServiceStatsRaw, void>({
+      query: () => "/statistics",
+      providesTags: ["Stats"],
+    }),
     createServices: builder.mutation<void, CreateBody>({
       query: body => ({
         url: "/services",
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Services"],
+      invalidatesTags: ["Services", "Stats"],
     }),
     deleteServices: builder.mutation<void, DeleteBody>({
       query: body => ({
@@ -65,7 +77,7 @@ export const api = createApi({
         method: "DELETE",
         body,
       }),
-      invalidatesTags: ["Services"],
+      invalidatesTags: ["Services", "Stats"],
     }),
     distributeServices: builder.mutation<void, DistributeBody>({
       query: body => ({
@@ -80,7 +92,7 @@ export const api = createApi({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["Services"],
+      invalidatesTags: ["Services", "Stats"],
     }),
     resetServices: builder.mutation<void, ResetBody>({
       query: body => ({
@@ -88,7 +100,7 @@ export const api = createApi({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["Services"],
+      invalidatesTags: ["Services", "Stats"],
     }),
     toggleServices: builder.mutation<void, ToggleStatusBody>({
       query: body => ({
@@ -96,7 +108,7 @@ export const api = createApi({
         method: "PATCH",
         body,
       }),
-      invalidatesTags: ["Services"],
+      invalidatesTags: ["Services", "Stats"],
     }),
   }),
 });
@@ -104,6 +116,7 @@ export const api = createApi({
 export const {
   useGetServicesQuery,
   useGetUsersQuery,
+  useGetStatsQuery,
   useCreateServicesMutation,
   useDeleteServicesMutation,
   useDistributeServicesMutation,
