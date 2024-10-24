@@ -43,11 +43,15 @@ export const api = createApi({
         if (params.types && params.types.length > 0) {
           params.types.forEach(type => queryParams.append("types", type));
         }
-        if (params.structures && params.structures.length > 0)
-          queryParams.append("structures", params.structures.join(","));
-        if (params.classes && params.classes.length > 0) queryParams.append("classes", params.classes.join(","));
-        if (params.groups && params.groups.length > 0) queryParams.append("groups", params.groups.join(","));
-
+        if (params.structures && params.structures.length > 0) {
+          params.structures.forEach(structure => queryParams.append("structures", structure));
+        }
+        if (params.classes && params.classes.length > 0) {
+          params.classes.forEach(classe => queryParams.append("classes", classe));
+        }
+        if (params.groups && params.groups.length > 0) {
+          params.groups.forEach(group => queryParams.append("groups", group));
+        }
         return {
           url: `/services?${queryParams.toString()}`,
           method: "GET",

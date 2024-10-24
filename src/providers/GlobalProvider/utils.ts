@@ -28,7 +28,7 @@ export const initialTableQueryParamsState: TableQueryParamsState = {
   search: "",
   page: 0,
   limit: 10,
-  order: ORDER_TYPE.DESC,
+  order: ORDER_TYPE.ASC,
   types: [],
   structures: [],
   classes: [],
