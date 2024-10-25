@@ -76,6 +76,6 @@
     "swarm.button.etabs":"Establishments",
     "swarm.button.classes":"Classes",
     "swarm.button.groups":"Groups",
-    "swarm.table.rows.per.page": "rows per page",
+    "swarm.table.rows.per.page": "Rows per page",
     "swarm.supress.date.tooltip": "The service will be deleted on the chosen day at 11:59 PM"
 }

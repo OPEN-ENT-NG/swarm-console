@@ -78,6 +78,6 @@
     "swarm.button.etabs":"Établissements",
     "swarm.button.classes":"Classes",
     "swarm.button.groups":"Groupes",
-    "swarm.table.rows.per.page": "lignes par page",
+    "swarm.table.rows.per.page": "Lignes par page",
     "swarm.supress.date.tooltip":"Le service sera supprimé le jour choisi à 23h59"
 }
