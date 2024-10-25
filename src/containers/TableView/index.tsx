@@ -76,7 +76,7 @@ export const TableView: FC = () => {
                 variant="outlined"
                 data-testid="toggle-status-services-button"
                 onClick={() => handleDisplayModal(MODAL_TYPE.TOGGLE_STATUS)}>
-                {t("swarm.button.activate")}
+                {t("swarm.button.state.manage")}
               </Button>
               <DropdownList
                 items={DropDownListItems}

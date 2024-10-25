@@ -247,6 +247,7 @@ export const ServiceTable: FC = () => {
       </TableContainer>
       {totalCount > 10 && (
         <TablePagination
+          labelRowsPerPage={t("swarm.table.rows.per.page")}
           component={"div"}
           rowsPerPageOptions={[10, 25, 50]}
           count={totalCount}
