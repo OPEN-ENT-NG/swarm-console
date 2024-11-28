@@ -27,4 +27,4 @@ deploy:
   before_script:
     - echo "$KUBE_CONFIG_DEV" | base64 -d > kubeconfig
   script:
-    - kubectl --kubeconfig kubeconfig rollout restart deployment.apps/swarm-console -n swarm-dev
+    - kubectl --kubeconfig kubeconfig rollout restart deployment.apps/swarm-console -n swarm
