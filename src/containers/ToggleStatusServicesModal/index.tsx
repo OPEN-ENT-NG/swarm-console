@@ -120,7 +120,7 @@ export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose 
               data-testid="create-services-cancel"
               onClick={() => handleSubmit(false)}
               fullWidth
-              disabled={isButtonDisabled(inputValue)}>
+              disabled={isButtonDisabled(inputValue, tableSelected, false)}>
               {t("swarm.button.deactivate")}
             </Button>
           </Box>
@@ -130,7 +130,7 @@ export const ToggleStatusServicesModal: FC<ModalProps> = ({ isOpen, handleClose 
               data-testid="create-services-submit"
               onClick={() => handleSubmit(true)}
               fullWidth
-              disabled={isButtonDisabled(inputValue)}>
+              disabled={isButtonDisabled(inputValue, tableSelected, true)}>
               {t("swarm.button.activate")}
             </Button>
           </Box>
