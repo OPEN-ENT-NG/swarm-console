@@ -23,7 +23,7 @@
     "swarm.toggle.service.modal.services.actions":"Actions possibles :",
     "swarm.toggle.status.service.modal.desc":"L'activation/désactivation permet de gérer l'accès aux services des élèves",
     "swarm.toggle.status.service.modal.activate":"Activation",
-    "swarm.toggle.status.service.modal.in.progress":"Activation ou désactivation des services...",
+    "swarm.toggle.status.service.modal.in.progress":"Activation ou désactivation des services en cours",
     "swarm.reinit.service.modal.title":"Réinitialiser les services",
     "swarm.reinit.service.modal.reinit.in.progress":"Services en cours de réinitialisation...",
     "swarm.reinit.service.modal.desc":"La réinitialisation supprime et recrée les services sélectionnés",

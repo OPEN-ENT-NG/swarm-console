@@ -23,7 +23,7 @@
     "swarm.toggle.service.modal.services.actions":"Possible actions:",
     "swarm.toggle.status.service.modal.desc":"Enabling/disabling allows managing students' access to services",
     "swarm.toggle.status.service.modal.activate":"Activation",
-    "swarm.toggle.status.service.modal.in.progress":"Activation or deactivation in progress...",
+    "swarm.toggle.status.service.modal.in.progress":"Enabling or disabling services in progress",
     "swarm.confirmation.modal.default": "This action is irreversible",
     "swarm.reinit.service.modal.title": "Reset services",
     "swarm.reinit.service.modal.reinit.in.progress":"Services reinit in progress...",
