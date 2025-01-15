@@ -68,13 +68,12 @@ const handleMiddleware = async (
     secret: options.secret,
   });
 
-  console.log("Token:", token);
-
   const isAuthorized = (await options?.callbacks?.authorized?.({ req, token })) ?? !!token;
 
   if (isAuthorized) {
     return onSuccess?.(token);
   }
+
   const csrfInfo = ((await getCsrfInfo(req)) as CsrfInfo) ?? "";
 
   try {

@@ -52,12 +52,12 @@ const COOKIES_LIFE_TIME = 24 * 60 * 60;
 const COOKIE_PREFIX = process.env.NODE_ENV === "production" ? "__Secure-" : "";
 
 export const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken> => {
-  const url = `${process.env.KEYCLOACK_ISSUER}/protocol/openid-connect/token`;
+  const url = `${process.env.KEYCLOAK_ISSUER}/protocol/openid-connect/token`;
   const resp = await fetch(url, {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      client_id: process.env.KEYCLOACK_CLIENT_ID || "",
-      client_secret: process.env.KEYCLOACK_CLIENT_SECRET || "",
+      client_id: process.env.KEYCLOAK_ID || "",
+      client_secret: process.env.KEYCLOAK_SECRET || "",
       grant_type: "refresh_token",
       refresh_token: token.refresh_token,
     }),
@@ -65,7 +65,6 @@ export const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken
   });
   const refreshToken = (await resp.json()) as RefreshToken;
   if (!resp.ok) throw refreshToken;
-
   const tokenData = jwtDecode(refreshToken.access_token);
 
   return {
@@ -119,6 +118,7 @@ export const authOptions: AuthOptions = {
           return await refreshAccessToken(token);
         }
       } catch (error) {
+        console.error("Error RefreshAccessTokenError: ", error);
         return { ...token, error: "RefreshAccessTokenError" };
       }
     },
