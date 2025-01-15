@@ -79,7 +79,7 @@ export const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken
 };
 
 export const authOptions: AuthOptions = {
-  // debug: true,
+  debug: true,
   providers: [
     KeycloakProvider({
       clientId: process.env.KEYCLOAK_ID || "",
