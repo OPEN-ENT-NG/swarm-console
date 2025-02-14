@@ -24,6 +24,7 @@ export interface DisplayModalsState {
   [MODAL_TYPE.TOGGLE_STATUS]: boolean;
   [MODAL_TYPE.REINIT]: boolean;
   [MODAL_TYPE.UPDATE]: boolean;
+  [MODAL_TYPE.ADMIN_ACCESS]: boolean;
 }
 
 export type RowItem = {

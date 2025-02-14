@@ -1,6 +1,7 @@
 import {
   Box,
   Checkbox,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -12,8 +13,7 @@ import {
   TableSortLabel,
   Typography,
 } from "@mui/material";
-import Link from "next/link";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { LinkIcon } from "@/components/SVG/LinkIcon";
@@ -26,12 +26,14 @@ import {
   SERVICE_STATE_DISPLAY,
   SERVICE_TYPE,
 } from "@/providers/GlobalProvider/enums";
+import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
 import { Service } from "@/providers/GlobalProvider/serviceType";
 import { RowItem } from "@/providers/GlobalProvider/types";
 import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
 
 import { PrestashopIcon } from "../../components/SVG/PrestashopIcon";
 import { WordPressIcon } from "../../components/SVG/WordPressIcon";
+import { AdminAccessModal } from "../../containers/AdminAccessModal";
 import {
   SVGWrapper,
   ServiceWrapperStyle,
@@ -45,10 +47,19 @@ import { LowerCaseOrder } from "./types";
 import { formatDate, statusMap, transformRawDatas, useColumns } from "./utils";
 
 export const ServiceTable: FC = () => {
-  const { tableQueryParams, setTableQueryParams, tableSelected, setTableSelected, services } = useGlobalProvider();
+  const {
+    displayModals: { adminAccess },
+    tableQueryParams,
+    setTableQueryParams,
+    tableSelected,
+    setTableSelected,
+    services,
+    handleDisplayModal,
+  } = useGlobalProvider();
   const { order, page, limit } = tableQueryParams;
   const { t } = useTranslation();
   const rowItems = services?.filteredUsers.length ? transformRawDatas(services.filteredUsers) : [];
+  const [adminAccessRow, setAdminAccessRow] = useState<RowItem | null>(null);
 
   const columns = useColumns();
   const orderBy = COLUMN_ID.NAME;
@@ -115,6 +126,16 @@ export const ServiceTable: FC = () => {
   const prepareStatusText = (status: SERVICE_STATE): string => {
     const statusDisplay = getServiceStateDisplay(status);
     return t(statusMap[statusDisplay] || "swarm.status.error");
+  };
+
+  const handleAdminAccessClick = (row: RowItem): void => {
+    setAdminAccessRow(row);
+    handleDisplayModal(MODAL_TYPE.ADMIN_ACCESS);
+  };
+
+  const handleCloseAdminAccess = (): void => {
+    setAdminAccessRow(null);
+    handleDisplayModal(MODAL_TYPE.ADMIN_ACCESS);
   };
 
   return (
@@ -202,15 +223,11 @@ export const ServiceTable: FC = () => {
                           getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
                           getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.INACTIVE;
                         return isActive ? (
-                          <Link
-                            key={serviceItem.id}
-                            href={serviceItem.serviceName}
-                            target="_blank"
-                            rel="noopener noreferrer">
+                          <IconButton onClick={() => handleAdminAccessClick(item)}>
                             <SVGWrapper isActive={true}>
                               <IconComponent />
                             </SVGWrapper>
-                          </Link>
+                          </IconButton>
                         ) : (
                           <SVGWrapper key={serviceItem.id} isActive={false}>
                             <IconComponent />
@@ -257,6 +274,11 @@ export const ServiceTable: FC = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       )}
+      <AdminAccessModal
+        isOpen={adminAccess}
+        adminAccessRow={adminAccessRow}
+        handleClose={() => handleCloseAdminAccess()}
+      />
     </Paper>
   );
 };

@@ -10,6 +10,7 @@ import { Session } from "@/types";
 
 import { CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_STATE, SERVICE_STATE_DISPLAY, SERVICE_TYPE } from "./enums";
 import { DisplayModalsState, RowItem, ServiceStat, TableQueryParamsState } from "./types";
+import { Services } from "./serviceType";
 
 export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.CREATE]: false,
@@ -19,6 +20,7 @@ export const initialDisplayModalsState: DisplayModalsState = {
   [MODAL_TYPE.TOGGLE_STATUS]: false,
   [MODAL_TYPE.REINIT]: false,
   [MODAL_TYPE.UPDATE]: false,
+  [MODAL_TYPE.ADMIN_ACCESS]: false,
 };
 
 export const initialCurrentTab: (pathname: string) => CURRENTTAB_STATE = pathname =>
@@ -130,4 +132,14 @@ export const transformServiceStats = (rawStats: ServiceStatsRaw): ServiceStat[] 
     inactive: stat.nbInactiveService,
     toDelete: stat.nbDeletedSoonService,
   }));
+};
+
+export const sortServices = (services: Services) => {
+  return {
+    ...services,
+    filteredUsers: services.filteredUsers.map(user => ({
+      ...user,
+      services: [...user.services].sort((s1, s2) => s2.type.localeCompare(s1.type)),
+    })),
+  };
 };

@@ -38,6 +38,8 @@ export type Service = {
   type: SERVICE_TYPE;
   created: Date;
   deletionDate: Date;
+  ownerAdminUser: string;
+  ownerAdminPassword: string;
   state: SERVICE_STATE;
 };
 

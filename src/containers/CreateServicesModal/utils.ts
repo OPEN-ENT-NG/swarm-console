@@ -21,6 +21,11 @@ export const serviceMapping: ServiceMap[] = [
   { name: SERVICE_TYPE.PRESTASHOP, label: "swarm.prestashop.title", icon: PrestashopIcon },
 ];
 
+export const serviceLabelMapping = {
+  [SERVICE_TYPE.WORDPRESS]: "swarm.wordpress.title",
+  [SERVICE_TYPE.PRESTASHOP]: "swarm.prestashop.title",
+};
+
 export const isButtonDisabled = (state: InputValueState): boolean => {
   const tomorrow = dayjs().add(1, "day").startOf("day");
   const hasSelectedItems = state.users.length > 0 || state.classes.length > 0;

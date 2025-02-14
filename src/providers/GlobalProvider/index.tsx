@@ -19,6 +19,7 @@ import {
   initialDisplayModalsState,
   initialTableQueryParamsState,
   prepareUser,
+  sortServices,
   transformServiceStats,
 } from "./utils";
 
@@ -64,11 +65,13 @@ export const GlobalProvider: FC<GlobalProviderProps> = ({ session, children }) =
 
   useEffect(() => {
     if (servicesData) {
-      setServices(servicesData);
+      const sortedServicesData = sortServices(servicesData);
+      setServices(sortedServicesData);
       if (displayModals.toggleStatusServices) return;
       setTableSelected([]);
     }
   }, [servicesData, tableQueryParams]);
+
   useEffect(() => {
     if (statsData) setServicesStats(transformServiceStats(statsData));
   }, [statsData]);

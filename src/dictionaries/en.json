@@ -32,6 +32,7 @@
     "swarm.update.service.modal.title":"Edit services",
     "swarm.update.service.modal.label":"{{type}} sites",
     "swarm.update.service.modal.in.progress": "Modification of service deletion date in progress...",
+    "swarm.access.admin.modal.title":"Admin access",
     "swarm.modal.users.selected_singular": "{{count}} user selected",
     "swarm.modal.users.selected_plural": "{{count}} users selected",
     "swarm.status.active":"Active",
@@ -42,6 +43,7 @@
     "swarm.status.reinit":"Reinitialization in progress",
     "swarm.create":"Create",
     "swarm.cancel": "Cancel",
+    "swarm.close": "Close",
     "swarm.wordpress.title":"WordPress",
     "swarm.prestashop.title":"PrestaShop",
     "swarm.tab.main": "Services table",
@@ -77,5 +79,7 @@
     "swarm.button.classes":"Classes",
     "swarm.button.groups":"Groups",
     "swarm.table.rows.per.page": "Rows per page",
-    "swarm.supress.date.tooltip": "The service will be deleted on the chosen day at 11:59 PM"
+    "swarm.supress.date.tooltip": "The service will be deleted on the chosen day at 11:59 PM",
+    "swarm.login": "Login",
+    "swarm.password": "Password"
 }
