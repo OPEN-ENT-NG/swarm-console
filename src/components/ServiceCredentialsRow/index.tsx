@@ -5,6 +5,8 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { serviceLabelMapping } from "@/containers/CreateServicesModal/utils";
+import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { Service } from "@/providers/GlobalProvider/serviceType";
 
 import { copyButtonStyle, copyIconStyle, credentialsRowStyle, serviceTitleStyle } from "./style";
 import { ServiceCredentialsRowProps } from "./types";
@@ -24,7 +26,7 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
     }
   };
 
-  const getTextLine = (credentialType: CredentialsTypes) => {
+  const getTextLine = (credentialType: CredentialsTypes): string => {
     switch (credentialType) {
       case CredentialsTypes.LOGIN:
         return t("swarm.login") + " : " + (service.ownerAdminUser ? service.ownerAdminUser : "");
@@ -33,9 +35,24 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
     }
   };
 
+  const getServiceUrl = (service: Service): string => {
+    let suffix = "";
+    switch (service.type) {
+      case SERVICE_TYPE.WORDPRESS:
+        suffix = "/wp-admin";
+        break;
+      case SERVICE_TYPE.PRESTASHOP:
+        suffix = "/ps-admin";
+        break;
+      default:
+        break;
+    }
+    return service.serviceName + suffix;
+  };
+
   return (
     <Stack spacing={2}>
-      <Link href={service.serviceName} target="_blank" rel="noopener noreferrer">
+      <Link href={getServiceUrl(service)} target="_blank" rel="noopener noreferrer">
         <Typography variant="h3" sx={serviceTitleStyle}>
           {t("swarm.update.service.modal.label", { type: t(serviceLabelMapping[service.type]) })}
         </Typography>
