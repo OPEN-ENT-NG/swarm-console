@@ -81,5 +81,6 @@
     "swarm.table.rows.per.page": "Rows per page",
     "swarm.supress.date.tooltip": "The service will be deleted on the chosen day at 11:59 PM",
     "swarm.login": "Login",
-    "swarm.password": "Password"
+    "swarm.password": "Password",
+    "swarm.copied": "Copied !"
 }

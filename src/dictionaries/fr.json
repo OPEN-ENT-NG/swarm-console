@@ -83,5 +83,6 @@
     "swarm.table.rows.per.page": "Lignes par page",
     "swarm.supress.date.tooltip":"Le service sera supprimé le jour choisi à 23h59",
     "swarm.login": "Identifiant",
-    "swarm.password": "Mot de passe"
+    "swarm.password": "Mot de passe",
+    "swarm.copied": "Copié !"
 }

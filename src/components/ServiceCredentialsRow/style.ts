@@ -11,10 +11,16 @@ export const serviceTitleStyle = {
 };
 
 export const copyButtonStyle = {
-  padding: "6px 4px",
+  marginLeft: "0.5rem",
+  padding: "4px 0",
 };
 
 export const copyIconStyle = {
   height: "1rem",
   minWidth: "0.5rem",
+};
+
+export const copiedFeedback = {
+  transition: "opacity 0.3s ease-in-out",
+  fontWeight: "bold",
 };
