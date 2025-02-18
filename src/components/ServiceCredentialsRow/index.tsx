@@ -1,19 +1,19 @@
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 import { serviceLabelMapping } from "@/containers/CreateServicesModal/utils";
 import { SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
 import { Service } from "@/providers/GlobalProvider/serviceType";
 
-import { copiedFeedback, copyButtonStyle, copyIconStyle, credentialsRowStyle, serviceTitleStyle } from "./style";
+import { copyButtonStyle, copyIconStyle, credentialsRowStyle, serviceTitleStyle } from "./style";
 import { ServiceCredentialsRowProps } from "./types";
 
 export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service }) => {
   const { t } = useTranslation();
-  const [copied, setCopied] = useState(false);
   const enum CredentialsTypes {
     LOGIN,
     PASSWORD,
@@ -22,8 +22,14 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
   const handleCopy = async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      toast.success(t("swarm.copied"), {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
@@ -66,15 +72,6 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
           <Button onClick={() => handleCopy(service.ownerAdminUser)} sx={copyButtonStyle}>
             <ContentCopyIcon sx={copyIconStyle} />
           </Button>
-          {!copied ? (
-            <Button onClick={() => handleCopy(service.ownerAdminUser)} sx={copyButtonStyle}>
-              <ContentCopyIcon sx={copyIconStyle} />
-            </Button>
-          ) : (
-            <Typography variant="body2" sx={copiedFeedback}>
-              {t("swarm.copied")}
-            </Typography>
-          )}
         </Stack>
         <Stack sx={credentialsRowStyle}>
           <Typography variant="h3">{getTextLine(CredentialsTypes.PASSWORD)}</Typography>

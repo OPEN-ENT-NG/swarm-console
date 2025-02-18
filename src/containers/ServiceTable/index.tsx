@@ -1,7 +1,7 @@
 import {
   Box,
+  Button,
   Checkbox,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -21,12 +21,12 @@ import { centerBoxStyle } from "@/core/style/boxStyles";
 import { useGlobalProvider } from "@/providers/GlobalProvider";
 import {
   COLUMN_ID,
+  MODAL_TYPE,
   ORDER_TYPE,
   SERVICE_STATE,
   SERVICE_STATE_DISPLAY,
   SERVICE_TYPE,
 } from "@/providers/GlobalProvider/enums";
-import { MODAL_TYPE } from "@/providers/GlobalProvider/enums";
 import { Service } from "@/providers/GlobalProvider/serviceType";
 import { RowItem } from "@/providers/GlobalProvider/types";
 import { getServiceStateDisplay } from "@/providers/GlobalProvider/utils";
@@ -138,6 +138,14 @@ export const ServiceTable: FC = () => {
     handleDisplayModal(MODAL_TYPE.ADMIN_ACCESS);
   };
 
+  const isAdminAccessModalAvailable = (services: Service[]): boolean => {
+    return services.some(
+      service =>
+        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
+        getServiceStateDisplay(service.state) === SERVICE_STATE_DISPLAY.INACTIVE,
+    );
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer>
@@ -215,26 +223,25 @@ export const ServiceTable: FC = () => {
                   <TableCell>{item.className}</TableCell>
                   <TableCell>{item.etabName}</TableCell>
                   <TableCell>
-                    <Box sx={ServiceWrapperStyle}>
-                      {item.services.map(serviceItem => {
-                        const IconComponent =
-                          serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
-                        const isActive =
-                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
-                          getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.INACTIVE;
-                        return isActive ? (
-                          <IconButton onClick={() => handleAdminAccessClick(item)}>
-                            <SVGWrapper isActive={true}>
+                    <Button
+                      onClick={() => handleAdminAccessClick(item)}
+                      disabled={!isAdminAccessModalAvailable(item.services)}
+                      sx={{ width: "100%" }}>
+                      <Box sx={ServiceWrapperStyle}>
+                        {item.services.map(serviceItem => {
+                          const IconComponent =
+                            serviceItem.type === SERVICE_TYPE.PRESTASHOP ? PrestashopIcon : WordPressIcon;
+                          const isActive =
+                            getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.ACTIVE ||
+                            getServiceStateDisplay(serviceItem.state) === SERVICE_STATE_DISPLAY.INACTIVE;
+                          return (
+                            <SVGWrapper key={serviceItem.id} isActive={isActive}>
                               <IconComponent />
                             </SVGWrapper>
-                          </IconButton>
-                        ) : (
-                          <SVGWrapper key={serviceItem.id} isActive={false}>
-                            <IconComponent />
-                          </SVGWrapper>
-                        );
-                      })}
-                    </Box>
+                          );
+                        })}
+                      </Box>
+                    </Button>
                   </TableCell>
                   <TableCell>
                     <Box sx={ServiceWrapperStyle}>

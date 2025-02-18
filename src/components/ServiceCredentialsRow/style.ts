@@ -19,8 +19,3 @@ export const copyIconStyle = {
   height: "1rem",
   minWidth: "0.5rem",
 };
-
-export const copiedFeedback = {
-  transition: "opacity 0.3s ease-in-out",
-  fontWeight: "bold",
-};
