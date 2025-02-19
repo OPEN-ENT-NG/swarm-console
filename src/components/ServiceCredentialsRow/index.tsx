@@ -19,10 +19,11 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
     PASSWORD,
   }
 
-  const handleCopy = async (url: string) => {
+  const handleCopy = async (url: string, credentialType: CredentialsTypes) => {
     try {
       await navigator.clipboard.writeText(url);
-      toast.success(t("swarm.copied"), {
+      const i18nKey = credentialType === CredentialsTypes.LOGIN ? "swarm.copied.login" : "swarm.copied.password";
+      toast.success(t(i18nKey), {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -69,13 +70,13 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
       <Stack paddingLeft="1rem">
         <Stack sx={credentialsRowStyle}>
           <Typography variant="h3">{getTextLine(CredentialsTypes.LOGIN)}</Typography>
-          <Button onClick={() => handleCopy(service.ownerAdminUser)} sx={copyButtonStyle}>
+          <Button onClick={() => handleCopy(service.ownerAdminUser, CredentialsTypes.LOGIN)} sx={copyButtonStyle}>
             <ContentCopyIcon sx={copyIconStyle} />
           </Button>
         </Stack>
         <Stack sx={credentialsRowStyle}>
           <Typography variant="h3">{getTextLine(CredentialsTypes.PASSWORD)}</Typography>
-          <Button onClick={() => handleCopy(service.ownerAdminPassword)} sx={copyButtonStyle}>
+          <Button onClick={() => handleCopy(service.ownerAdminPassword, CredentialsTypes.PASSWORD)} sx={copyButtonStyle}>
             <ContentCopyIcon sx={copyIconStyle} />
           </Button>
         </Stack>

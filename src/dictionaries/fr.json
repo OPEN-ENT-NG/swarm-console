@@ -84,5 +84,7 @@
     "swarm.supress.date.tooltip":"Le service sera supprimé le jour choisi à 23h59",
     "swarm.login": "Identifiant",
     "swarm.password": "Mot de passe",
-    "swarm.copied": "Copié !"
+    "swarm.copied": "Copié !",
+    "swarm.copied.login": "Identifiant copié !",
+    "swarm.copied.password": "Mot de passe copié !"
 }
