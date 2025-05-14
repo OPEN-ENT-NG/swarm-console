@@ -47,9 +47,9 @@ export const extractIdAndName = (data: UsersData): UsersAndGroups[] => {
   }));
 
   const classItems: UsersAndGroups[] = data.flatMap(user =>
-    user.classes.map(({ classId, name }) => ({
+    user.classes.map(({ id, name }) => ({
       name,
-      id: classId,
+      id,
       usertype: "classes",
     })),
   );

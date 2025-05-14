@@ -11,6 +11,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { ChangeEvent, FC, useState } from "react";
@@ -220,8 +221,26 @@ export const ServiceTable: FC = () => {
                     )}
                   </TableCell>
                   <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
-                  <TableCell>{item.className}</TableCell>
-                  <TableCell>{item.etabName}</TableCell>
+                  <TableCell>
+                    <Box sx={centerBoxStyle}>
+                      {item.otherClasses.length <= 0 && item.mainClassName}
+                      {item.otherClasses.length > 0 && (
+                        <Tooltip title={item.otherClasses.map(classe => classe.name).join(", ")} arrow placement="top">
+                          <Box>{`${item.mainClassName}, ...`}</Box>
+                        </Tooltip>
+                      )}
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box sx={centerBoxStyle}>
+                      {item.otherStructures.length <= 0 && item.mainEtabName}
+                      {item.otherStructures.length > 0 && (
+                        <Tooltip title={item.otherStructures.map(etab => etab.name).join(", ")} arrow placement="top">
+                          <Box>{`${item.mainEtabName}, ...`}</Box>
+                        </Tooltip>
+                      )}
+                    </Box>
+                  </TableCell>
                   <TableCell>
                     <Button
                       onClick={() => handleAdminAccessClick(item)}

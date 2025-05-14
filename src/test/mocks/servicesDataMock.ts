@@ -11,10 +11,10 @@ export const completeServicesData: Services = {
       { id: "struct4", name: "School D" },
     ],
     classes: [
-      { classId: "class1", name: "Class 1" },
-      { classId: "class2", name: "Class 2" },
-      { classId: "class3", name: "Class 3" },
-      { classId: "class4", name: "Class 4" },
+      { id: "class1", name: "Class 1" },
+      { id: "class2", name: "Class 2" },
+      { id: "class3", name: "Class 3" },
+      { id: "class4", name: "Class 4" },
     ],
     groups: null,
     users: [
@@ -36,7 +36,7 @@ export const completeServicesData: Services = {
   filteredUsers: [
     {
       structures: [{ id: "struct1", name: "School A" }],
-      classes: [{ classId: "class1", name: "Class 1" }],
+      classes: [{ id: "class1", name: "Class 1" }],
       groups: [{ id: "group1", name: "Group A" }],
       services: [
         {
@@ -73,7 +73,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct2", name: "School B" }],
-      classes: [{ classId: "class2", name: "Class 2" }],
+      classes: [{ id: "class2", name: "Class 2" }],
       groups: [{ id: "group2", name: "Group B" }],
       services: [
         {
@@ -95,7 +95,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct3", name: "School C" }],
-      classes: [{ classId: "class3", name: "Class 3" }],
+      classes: [{ id: "class3", name: "Class 3" }],
       groups: [{ id: "group3", name: "Group C" }],
       services: [
         {
@@ -117,7 +117,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct4", name: "School D" }],
-      classes: [{ classId: "class4", name: "Class 4" }],
+      classes: [{ id: "class4", name: "Class 4" }],
       groups: [{ id: "group4", name: "Group D" }],
       services: [
         {
@@ -154,7 +154,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct1", name: "School A" }],
-      classes: [{ classId: "class1", name: "Class 1" }],
+      classes: [{ id: "class1", name: "Class 1" }],
       groups: [{ id: "group5", name: "Group E" }],
       services: [
         {
@@ -176,7 +176,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct2", name: "School B" }],
-      classes: [{ classId: "class2", name: "Class 2" }],
+      classes: [{ id: "class2", name: "Class 2" }],
       groups: [{ id: "group6", name: "Group F" }],
       services: [
         {
@@ -198,7 +198,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct3", name: "School C" }],
-      classes: [{ classId: "class3", name: "Class 3" }],
+      classes: [{ id: "class3", name: "Class 3" }],
       groups: [{ id: "group7", name: "Group G" }],
       services: [
         {
@@ -235,7 +235,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct4", name: "School D" }],
-      classes: [{ classId: "class4", name: "Class 4" }],
+      classes: [{ id: "class4", name: "Class 4" }],
       groups: [{ id: "group8", name: "Group H" }],
       services: [
         {
@@ -257,7 +257,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct1", name: "School A" }],
-      classes: [{ classId: "class1", name: "Class 1" }],
+      classes: [{ id: "class1", name: "Class 1" }],
       groups: [{ id: "group9", name: "Group I" }],
       services: [
         {
@@ -279,7 +279,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct2", name: "School B" }],
-      classes: [{ classId: "class2", name: "Class 2" }],
+      classes: [{ id: "class2", name: "Class 2" }],
       groups: [{ id: "group10", name: "Group J" }],
       services: [
         {
@@ -316,7 +316,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct3", name: "School C" }],
-      classes: [{ classId: "class3", name: "Class 3" }],
+      classes: [{ id: "class3", name: "Class 3" }],
       groups: [{ id: "group11", name: "Group K" }],
       services: [
         {
@@ -338,7 +338,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct4", name: "School D" }],
-      classes: [{ classId: "class4", name: "Class 4" }],
+      classes: [{ id: "class4", name: "Class 4" }],
       groups: [{ id: "group12", name: "Group L" }],
       services: [
         {
@@ -360,7 +360,7 @@ export const completeServicesData: Services = {
     },
     {
       structures: [{ id: "struct1", name: "School A" }],
-      classes: [{ classId: "class1", name: "Class 1" }],
+      classes: [{ id: "class1", name: "Class 1" }],
       groups: [{ id: "group13", name: "Group M" }],
       services: [
         {

@@ -6,17 +6,12 @@ export type Structure = {
 };
 
 export type Class = {
-  classId: string;
+  id: string;
   name: string;
 };
 
 export type Group = {
   id: string;
-  name: string;
-};
-export type Sructures = {
-  id: string;
-  externalId: string;
   name: string;
 };
 

@@ -76,7 +76,9 @@ export const ServiceCredentialsRow: FC<ServiceCredentialsRowProps> = ({ service 
         </Stack>
         <Stack sx={credentialsRowStyle}>
           <Typography variant="h3">{getTextLine(CredentialsTypes.PASSWORD)}</Typography>
-          <Button onClick={() => handleCopy(service.ownerAdminPassword, CredentialsTypes.PASSWORD)} sx={copyButtonStyle}>
+          <Button
+            onClick={() => handleCopy(service.ownerAdminPassword, CredentialsTypes.PASSWORD)}
+            sx={copyButtonStyle}>
             <ContentCopyIcon sx={copyIconStyle} />
           </Button>
         </Stack>

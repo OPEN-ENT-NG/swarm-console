@@ -4,7 +4,7 @@ import { SVGComponent } from "@/components/SVG/types";
 import { Session } from "@/types";
 
 import { COLUMN_ID, CURRENTTAB_STATE, MODAL_TYPE, ORDER_TYPE, SERVICE_TYPE } from "./enums";
-import { Service, Services } from "./serviceType";
+import { Class, Service, Services, Structure } from "./serviceType";
 
 export interface GlobalProviderProps {
   children: ReactNode;
@@ -31,10 +31,10 @@ export type RowItem = {
   userId: string;
   lastName: string;
   firstName: string;
-  className: string;
-  classId: string;
-  etabName: string;
-  etabId: string;
+  mainClassName: string;
+  mainEtabName: string;
+  otherStructures: Structure[];
+  otherClasses: Class[];
   services: Service[];
 };
 

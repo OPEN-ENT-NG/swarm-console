@@ -27,16 +27,16 @@ export const transformRawDatas = (users: User[]): RowItem[] => {
     .map(user => {
       const service = user.services[0];
       const structure = user.structures.find(item => item.id === service.structureId);
-      const classe = user.classes.find(item => item.classId === service.classId);
+      const classe = user.classes.find(item => item.id === service.classId);
 
       return {
         userId: service.userId,
         lastName: service.lastName,
         firstName: service.firstName,
-        className: classe?.name ?? "",
-        classId: classe?.classId ?? "",
-        etabName: structure?.name ?? "",
-        etabId: structure?.id ?? "",
+        mainClassName: classe?.name ?? "",
+        mainEtabName: structure?.name ?? "",
+        otherStructures: user.structures.filter(item => item.id !== service.structureId),
+        otherClasses: user.classes.filter(item => item.id !== service.classId),
         services: user.services,
       };
     });

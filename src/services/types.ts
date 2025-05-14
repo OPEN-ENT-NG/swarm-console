@@ -1,4 +1,5 @@
 import { SERVICE_STATE, SERVICE_TYPE } from "@/providers/GlobalProvider/enums";
+import { Class, Structure } from "@/providers/GlobalProvider/serviceType";
 
 export interface DeleteBody {
   services_ids: string[];
@@ -23,12 +24,8 @@ type UserData = {
   lastName: string;
   mail: string;
   profiles: null;
-  structures: string;
-  classes: {
-    classId: string;
-    name: string;
-    schoolId: string;
-  }[];
+  structures: Structure[];
+  classes: Class[];
 };
 
 export type UsersData = UserData[];

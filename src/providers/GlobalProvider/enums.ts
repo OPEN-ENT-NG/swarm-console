@@ -61,7 +61,7 @@ export enum MODAL_TYPE {
   TOGGLE_STATUS = "toggleStatusServices",
   REINIT = "reinitServices",
   UPDATE = "updateServices",
-  ADMIN_ACCESS = "adminAccess"
+  ADMIN_ACCESS = "adminAccess",
 }
 
 export enum PATH {
