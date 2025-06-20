@@ -84,5 +84,9 @@
     "swarm.password": "Password",
     "swarm.copied": "Copied !",
     "swarm.copied.login": "Login copied !",
-    "swarm.copied.password": "Password copied !"
+    "swarm.copied.password": "Password copied !",
+    "swarm.refresh": "Refresh page",
+    "swarm.error.no_session": "An error occured, your authentication failed",
+    "swarm.error.not_manager": "You do not have the rights to access this application",
+    "swarm.error.contact.manager": "Please contact your local administrator"
 }

@@ -86,5 +86,9 @@
     "swarm.password": "Mot de passe",
     "swarm.copied": "Copié !",
     "swarm.copied.login": "Identifiant copié !",
-    "swarm.copied.password": "Mot de passe copié !"
+    "swarm.copied.password": "Mot de passe copié !",
+    "swarm.refresh": "Rafraîchir la page",
+    "swarm.error.no_session": "Une erreur est survenue, vous n'avez pas pu être authentifié",
+    "swarm.error.not_manager": "Vous n'avez pas les droits nécessaires pour accéder à cette application",
+    "swarm.error.contact.manager": "Veuillez contacter votre administrateur local"
 }
