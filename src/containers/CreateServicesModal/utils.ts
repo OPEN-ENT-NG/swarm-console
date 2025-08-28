@@ -47,11 +47,13 @@ export const extractIdAndName = (data: UsersData): UsersAndGroups[] => {
   }));
 
   const classItems: UsersAndGroups[] = data.flatMap(user =>
-    user.classes.map(({ id, name }) => ({
-      name,
-      id,
-      usertype: "classes",
-    })),
+    (user.classes ?? [])
+      .filter(c => !!c?.name)
+      .map(({ id, name }) => ({
+        name: name,
+        id,
+        usertype: "classes",
+      }))
   );
 
   const allItems = [...userItems, ...classItems];
@@ -68,7 +70,7 @@ export const updateInputValueFromUsersAndGroups = (
       const key = item.usertype as string;
       return { ...acc, [key]: [...acc[key], item.id] };
     },
-    { users: [], classes: [] } as Record<string, string[]>,
+    { users: [], classes: [] } as Record,
   );
 
   return {

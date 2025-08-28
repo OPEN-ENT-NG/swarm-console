@@ -32,10 +32,10 @@ export const UserSelectionSection: UserSelectionSectionComponent = forwardRef<
 
   useEffect(() => {
     const lowercaseSearch = search.toLowerCase();
-    const filtered = users.reduce((acc: UsersAndGroups[], user) => {
+    const filtered = (users ?? []).reduce((acc: UsersAndGroups[], user) => {
       if (
         acc.length < 5 &&
-        user.name.toLowerCase().includes(lowercaseSearch) &&
+        user.name?.toLowerCase().includes(lowercaseSearch) &&
         !selectedUsers.some(selectedUser => selectedUser.id === user.id)
       ) {
         return [...acc, user];
