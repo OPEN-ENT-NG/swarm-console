@@ -67,10 +67,10 @@ export const updateInputValueFromUsersAndGroups = (
 ): InputValueState => {
   const { users, classes } = usersAndGroups.reduce(
     (acc, item) => {
-      const key = item.usertype as string;
+      const key = item.usertype as "users" | "classes";
       return { ...acc, [key]: [...acc[key], item.id] };
     },
-    { users: [], classes: [] } as Record,
+    { users: [], classes: [] } as Record<"users" | "classes", string[]>,
   );
 
   return {
