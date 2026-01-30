@@ -23,6 +23,7 @@ declare module "jwt-decode" {
         roles: string[];
       };
     };
+    groups?: string[];
   }
 }
 
@@ -73,7 +74,11 @@ export const refreshAccessToken = async (token: JWT): Promise<RefreshAccessToken
     id_token: refreshToken.id_token,
     expires_at: Math.floor(Date.now() / 1000) + refreshToken.expires_in,
     refresh_token: refreshToken.refresh_token,
-    roles: tokenData.realm_access.roles,
+    roles: [
+      ...(tokenData.realm_access?.roles || []),
+      ...(tokenData.resource_access?.console?.roles || []),
+      ...(tokenData.groups || []),
+    ],
   };
 };
 
@@ -100,11 +105,16 @@ export const authOptions: AuthOptions = {
         if (account && account.access_token && account.id_token && account.expires_at && account.refresh_token) {
           const tokenData = jwtDecode(account.access_token);
 
-          const isManager = tokenData.resource_access?.console?.roles.includes("manager") || false;
+          // Check if the user has the "manager" role either in groups or resource_access
+          const isManager =
+            tokenData.groups?.includes("manager") ||
+            tokenData.resource_access?.console?.roles.includes("manager") ||
+            false;
 
           token.roles = [
             ...(tokenData.realm_access?.roles || []),
             ...(tokenData.resource_access?.console?.roles || []),
+            ...(tokenData.groups || []),
           ];
           token.access_token = account.access_token;
           token.id_token = account.id_token;
