@@ -27,7 +27,8 @@ ENV NEXT_SHARP_PATH=/app/node_modules/sharp
 
 # Build arguments pour les variables NEXT_PUBLIC_* 
 # Ces variables sont intégrées dans le bundle au moment du build
-ENV NEXT_PUBLIC_API_SERVER=https://preprod-api-swarm.ode.tools/api
+ARG NEXT_PUBLIC_API_SERVER=https://ferme-numerique.lyceeconnecte.fr/backend
+ENV NEXT_PUBLIC_API_SERVER=${NEXT_PUBLIC_API_SERVER}
 
 RUN npm run build
 
