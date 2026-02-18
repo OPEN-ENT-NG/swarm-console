@@ -90,6 +90,11 @@ export const authOptions: AuthOptions = {
       clientSecret: process.env.KEYCLOAK_SECRET || "",
       issuer: process.env.KEYCLOAK_ISSUER,
       checks: "none",
+      authorization: {
+        params: {
+          kc_idp_hint: process.env.NEXTAUTH_KEYCLOAK_IDP_HINT || ""
+        }
+      }
     }),
   ],
   callbacks: {
